@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: bungalow-panel
     ports:
-      - "3000:3000"
+      - "3000:80"    # nginx listens on port 80 inside container
     environment:
       # ── Supabase ──
       NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
@@ -16,8 +16,8 @@ services:
       NEXTAUTH_URL: ${NEXTAUTH_URL:-https://panel.merman.sbs}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 10s
