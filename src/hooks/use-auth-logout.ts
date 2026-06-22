@@ -1,32 +1,18 @@
 "use client";
 
 import { useCallback } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/lib/auth-context";
 
 /**
  * Hook: Provides a hardened logout function.
- * Clears Supabase session, all auth cookies, and redirects to login.
+ * Uses the centralized AuthContext for session cleanup.
  */
 export function useAuthLogout() {
-  const router = useRouter();
-  const supabase = createClient();
+  const { signOut } = useAuth();
 
   const logout = useCallback(async () => {
-    try {
-      await supabase.auth.signOut();
-    } catch {
-      // Proceed with cleanup even if signOut fails
-    }
-
-    // Clear any remaining auth cookies client-side
-    const authCookies = ["sb-access-token", "sb-refresh-token", "__csrf_token"];
-    authCookies.forEach((name) => {
-      document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
-    });
-
-    router.push("/login");
-  }, [router, supabase]);
+    await signOut();
+  }, [signOut]);
 
   return logout;
 }

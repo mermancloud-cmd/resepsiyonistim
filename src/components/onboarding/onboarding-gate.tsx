@@ -3,7 +3,7 @@
 import * as React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Loader2, ClipboardList, ShieldAlert } from "lucide-react";
-import { useOnboardingGate } from "@/hooks/use-onboarding-gate";
+import { useAuth } from "@/lib/auth-context";
 
 interface OnboardingGateProps {
   children: React.ReactNode;
@@ -31,12 +31,14 @@ function isProtectedPath(pathname: string): boolean {
  * 1. Authentication — redirects to /login if not authenticated on protected paths
  * 2. Onboarding completion — redirects to /onboarding if wizard not finished
  *
- * Model: Elif AI is INACTIVE until onboarding_completed = true.
+ * Uses the centralized AuthContext for all auth state.
  */
 export function OnboardingGate({ children }: OnboardingGateProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { isLoading, isAuthenticated, onboardingCompleted } = useOnboardingGate();
+  const { isLoading, isAuthenticated, tenant } = useAuth();
+
+  const onboardingCompleted = tenant?.onboarding_completed ?? false;
 
   // Redirect unauthenticated users on protected paths to login
   React.useEffect(() => {
@@ -44,6 +46,18 @@ export function OnboardingGate({ children }: OnboardingGateProps) {
       router.replace(`/login?reason=unauthorized&redirect=${encodeURIComponent(pathname)}`);
     }
   }, [isLoading, isAuthenticated, pathname, router]);
+
+  // Redirect to onboarding if authenticated but not onboarded
+  React.useEffect(() => {
+    if (
+      !isLoading &&
+      isAuthenticated &&
+      !onboardingCompleted &&
+      pathname !== "/onboarding"
+    ) {
+      router.replace("/onboarding");
+    }
+  }, [isLoading, isAuthenticated, onboardingCompleted, pathname, router]);
 
   // While loading, show a skeleton
   if (isLoading) {
@@ -81,8 +95,8 @@ export function OnboardingGate({ children }: OnboardingGateProps) {
     return <>{children}</>;
   }
 
-  // Authenticated but onboarding not complete — show gate message
-  if (!onboardingCompleted) {
+  // Authenticated but onboarding not complete — show gate message while redirecting
+  if (!onboardingCompleted && pathname !== "/onboarding") {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background p-6">
         <div className="flex size-16 items-center justify-center rounded-2xl bg-primary/10">
@@ -102,6 +116,6 @@ export function OnboardingGate({ children }: OnboardingGateProps) {
     );
   }
 
-  // Fully onboarded — render the app
+  // Fully onboarded (or on /onboarding) — render the app
   return <>{children}</>;
 }

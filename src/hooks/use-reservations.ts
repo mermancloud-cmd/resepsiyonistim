@@ -1,5 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { mockReservations } from '@/lib/mock-data'
+import { createClient } from '@/lib/supabase/client'
+import { useAuth } from '@/lib/auth-context'
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Room {
   room_number: string
@@ -28,73 +31,87 @@ interface Reservation {
   rooms?: Room
 }
 
+// ─── Queries ──────────────────────────────────────────────────────────────────
+
+/**
+ * Fetch reservations scoped to the current tenant.
+ * Uses Supabase RLS to ensure the owner only sees their own data.
+ */
 export function useReservations(status?: string) {
+  const { tenant, isAuthenticated } = useAuth()
+  const supabase = createClient()
+
   return useQuery<{ reservations: Reservation[] }, Error>({
-    queryKey: ['reservations', status],
+    queryKey: ['reservations', status, tenant?.id],
+    enabled: isAuthenticated && !!tenant,
     queryFn: async () => {
-      try {
-        const params = status ? `?status=${encodeURIComponent(status)}` : ''
-        const response = await fetch(`/api/reservations${params}`)
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch reservations')
-        }
-        
-        return await response.json()
-      } catch (error) {
-        console.warn('API failed, falling back to mock data:', error)
-        return { reservations: mockReservations }
+      // Direct Supabase query (RLS-protected)
+      let query = supabase
+        .from('reservations')
+        .select('*, rooms(*)')
+        .eq('tenant_id', tenant!.id)
+        .order('created_at', { ascending: false })
+
+      if (status) {
+        query = query.eq('status', status)
       }
+
+      const { data, error } = await query
+      if (error) throw new Error(error.message)
+
+      return { reservations: (data ?? []) as unknown as Reservation[] }
     },
-    staleTime: 10 * 1000, // 10 seconds
+    staleTime: 10 * 1000,
   })
 }
 
 export function useReservation(id: string) {
+  const { tenant, isAuthenticated } = useAuth()
+  const supabase = createClient()
+
   return useQuery<{ reservation: Reservation }, Error>({
-    queryKey: ['reservation', id],
+    queryKey: ['reservation', id, tenant?.id],
+    enabled: isAuthenticated && !!tenant && !!id,
     queryFn: async () => {
-      try {
-        const response = await fetch(`/api/reservations/${id}`)
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch reservation')
-        }
-        
-        return await response.json()
-      } catch (error) {
-        console.warn('API failed, falling back to mock data:', error)
-        return { reservation: { ...mockReservations[0], id } }
-      }
+      const { data, error } = await supabase
+        .from('reservations')
+        .select('*, rooms(*)')
+        .eq('id', id)
+        .eq('tenant_id', tenant!.id)
+        .single()
+
+      if (error) throw new Error(error.message)
+      return { reservation: data as unknown as Reservation }
     },
-    enabled: !!id,
-    staleTime: 5 * 1000, // 5 seconds
+    staleTime: 5 * 1000,
   })
 }
 
+// ─── Mutations ────────────────────────────────────────────────────────────────
+
 export function useUpdateReservationStatus() {
   const queryClient = useQueryClient()
+  const { tenant } = useAuth()
+  const supabase = createClient()
 
   return useMutation({
-    mutationFn: async ({ 
-      id, 
-      status 
-    }: { 
+    mutationFn: async ({
+      id,
+      status
+    }: {
       id: string
-      status: 'confirmed' | 'rejected' | 'cancelled' 
+      status: 'confirmed' | 'rejected' | 'cancelled'
     }) => {
-      const response = await fetch(`/api/reservations/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status }),
-      })
+      const { data, error } = await supabase
+        .from('reservations')
+        .update({ status, updated_at: new Date().toISOString() })
+        .eq('id', id)
+        .eq('tenant_id', tenant!.id)
+        .select()
+        .single()
 
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || 'Failed to update reservation')
-      }
-
-      return await response.json()
+      if (error) throw new Error(error.message)
+      return data
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reservations'] })
@@ -105,29 +122,34 @@ export function useUpdateReservationStatus() {
 
 export function useUpdatePaymentStatus() {
   const queryClient = useQueryClient()
+  const { tenant } = useAuth()
+  const supabase = createClient()
 
   return useMutation({
-    mutationFn: async ({ 
-      id, 
-      action, 
-      notes 
-    }: { 
+    mutationFn: async ({
+      id,
+      action,
+      notes
+    }: {
       id: string
       action: 'confirm' | 'reject'
-      notes?: string 
+      notes?: string
     }) => {
-      const response = await fetch(`/api/reservations/${id}/payment`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action, notes }),
-      })
+      const paymentStatus = action === 'confirm' ? 'confirmed' : 'rejected'
+      const { data, error } = await supabase
+        .from('reservations')
+        .update({
+          payment_status: paymentStatus,
+          payment_notes: notes ?? null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', id)
+        .eq('tenant_id', tenant!.id)
+        .select()
+        .single()
 
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || 'Failed to update payment status')
-      }
-
-      return await response.json()
+      if (error) throw new Error(error.message)
+      return data
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reservations'] })
@@ -138,21 +160,22 @@ export function useUpdatePaymentStatus() {
 
 export function useCreateReservation() {
   const queryClient = useQueryClient()
+  const { tenant } = useAuth()
+  const supabase = createClient()
 
   return useMutation({
     mutationFn: async (reservationData: Partial<Reservation>) => {
-      const response = await fetch('/api/reservations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(reservationData),
-      })
+      const { data, error } = await supabase
+        .from('reservations')
+        .insert({
+          ...reservationData,
+          tenant_id: tenant!.id,
+        })
+        .select()
+        .single()
 
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || 'Failed to create reservation')
-      }
-
-      return await response.json()
+      if (error) throw new Error(error.message)
+      return data
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['reservations'] })

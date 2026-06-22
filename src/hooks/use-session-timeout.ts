@@ -1,30 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/lib/auth-context";
 import { AUTH_CONSTANTS } from "@/lib/auth-utils";
 
 /**
  * Hook: Detects user inactivity and auto-logs out after timeout.
- * Ported from Flask's 1-hour session lifetime.
+ * Uses the centralized AuthContext for session management.
  */
 export function useSessionTimeout(
   timeoutMs: number = AUTH_CONSTANTS.SESSION_INACTIVITY_TIMEOUT_MS
 ) {
-  const router = useRouter();
-  const supabase = createClient();
+  const { signOut, isAuthenticated } = useAuth();
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastActivityRef = useRef<number>(Date.now());
 
   const handleLogout = useCallback(async () => {
-    try {
-      await supabase.auth.signOut();
-    } catch {
-      // Ignore errors during signout
+    // Redirect with session_expired reason
+    if (typeof window !== "undefined") {
+      window.location.href = "/login?reason=session_expired";
     }
-    router.push("/login?reason=session_expired");
-  }, [router, supabase]);
+    await signOut();
+  }, [signOut]);
 
   const resetTimer = useCallback(() => {
     lastActivityRef.current = Date.now();
@@ -35,6 +32,12 @@ export function useSessionTimeout(
   }, [handleLogout, timeoutMs]);
 
   useEffect(() => {
+    // Only track activity when authenticated
+    if (!isAuthenticated) {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      return;
+    }
+
     const events = ["mousedown", "keydown", "touchstart", "scroll"];
     const onActivity = () => resetTimer();
     events.forEach((event) => {
@@ -63,7 +66,7 @@ export function useSessionTimeout(
         document.removeEventListener(event, onActivity);
       });
     };
-  }, [resetTimer, timeoutMs]);
+  }, [resetTimer, timeoutMs, isAuthenticated]);
 
   return { resetTimer, handleLogout };
 }
