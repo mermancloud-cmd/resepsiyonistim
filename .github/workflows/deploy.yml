@@ -25,8 +25,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (static export)
-        run: npx next build
+      - name: Build (static export + service worker)
+        run: npm run build
 
       - name: Deploy to Cloudflare Pages
         run: npx wrangler pages deploy out --project-name bungalow-panel --branch main

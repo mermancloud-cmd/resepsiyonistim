@@ -46,6 +46,7 @@ out/
 .next/
 .env.local
 .env.production
+public/sw.js
 
 # Junk
 core
