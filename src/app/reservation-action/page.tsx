@@ -466,7 +466,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
         <div className="mb-2 inline-flex size-12 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md">
           <span className="text-lg font-bold">B</span>
         </div>
-        <p className="text-xs text-muted-foreground">Bungalov Yönetim Paneli</p>
+        <p className="text-xs text-muted-foreground">İşletme Yönetim Paneli</p>
       </div>
 
       {/* Content card */}

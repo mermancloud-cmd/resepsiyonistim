@@ -23,7 +23,7 @@ export interface LocationData {
   parkingAvailable: boolean;
 }
 
-// Step 3: Oda/Bungalov Tipleri
+// Step 3: Birim Tipleri
 export interface UnitData {
   id: string;
   name: string;
@@ -182,7 +182,7 @@ export const AMENITIES_LIST = [
 export const STEP_LABELS = [
   "İşletme Bilgileri",
   "Konum ve Ulaşım",
-  "Oda/Bungalov Tipleri",
+  "Birim Tipleri",
   "Fiyatlandırma",
   "Özel Özellikler",
   "Kurallar",

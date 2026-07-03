@@ -11,14 +11,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Bungalov Yönetim Paneli",
+  title: "İşletme Yönetim Paneli",
   description:
-    "Bungalov işletmeniz için yapay zeka destekli rezervasyon yönetim paneli.",
+    "İşletmeniz için yapay zeka destekli rezervasyon yönetim paneli.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Bungalov",
+    title: "Panel",
   },
 };
 

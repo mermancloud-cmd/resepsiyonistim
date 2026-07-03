@@ -149,7 +149,7 @@ export default function SubscriptionPage() {
           <div>
             <h2 className="text-lg font-semibold tracking-tight">Abonelik</h2>
             <p className="text-xs text-muted-foreground">
-              Bungalov AI yapay zeka hizmeti aboneliği
+              AI yapay zeka hizmeti aboneliği
             </p>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default function SubscriptionPage() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-muted-foreground">Alıcı Adı</span>
-                      <span className="text-sm font-medium">Merman Bungalov İşletmeciliği</span>
+                      <span className="text-sm font-medium">Merman İşletmeciliği</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-muted-foreground">IBAN</span>
@@ -291,7 +291,7 @@ export default function SubscriptionPage() {
                 <span className="font-medium text-foreground">Abonelik Bilgisi</span>
               </p>
               <p>
-                Bungalov AI yapay zeka hizmeti aylık abonelik ile çalışır.
+                AI yapay zeka hizmeti aylık abonelik ile çalışır.
                 Ödemeler IBAN havalesi ile alınır, manuel onaylanır.
               </p>
               <p className="mt-1">

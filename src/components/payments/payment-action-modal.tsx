@@ -195,7 +195,7 @@ export function PaymentActionModal({
             <div className="flex items-start gap-2.5">
               <Home className="size-4 text-muted-foreground shrink-0 mt-0.5" />
               <div className="min-w-0">
-                <p className="text-[11px] text-muted-foreground">Oda / Bungalov</p>
+                <p className="text-[11px] text-muted-foreground">Oda / Birim</p>
                 <p className="text-sm font-medium truncate">
                   {payment.room_name}
                 </p>

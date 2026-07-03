@@ -31,7 +31,7 @@ export const locationSchema = z.object({
   parkingAvailable: z.boolean(),
 });
 
-// Step 3: Oda/Bungalov Tipleri (Room Types / Units)
+// Step 3: Birim Tipleri (Room Types / Units)
 export const unitSchema = z.object({
   id: z.string(),
   name: z.string().min(2, "Birim adı en az 2 karakter olmalıdır"),

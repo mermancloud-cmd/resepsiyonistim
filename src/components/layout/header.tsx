@@ -2,6 +2,7 @@
 
 import { Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { APP_NAME } from "@/lib/app-config";
 
 interface HeaderProps {
   notificationCount?: number;
@@ -13,7 +14,7 @@ export function Header({ notificationCount = 0 }: HeaderProps) {
       <div className="flex h-14 items-center justify-between px-4">
         {/* App name */}
         <h1 className="text-lg font-semibold tracking-tight text-foreground">
-          Bungalov
+          {APP_NAME}
         </h1>
 
         {/* Notification bell */}

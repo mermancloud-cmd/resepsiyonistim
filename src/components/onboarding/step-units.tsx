@@ -97,7 +97,7 @@ export function StepUnits({ data, onChange }: StepUnitsProps) {
   return (
     <div className="space-y-5">
       <div className="space-y-1">
-        <h3 className="text-base font-semibold">Oda / Bungalov Tipleri</h3>
+        <h3 className="text-base font-semibold">Birim Tipleri</h3>
         <p className="text-xs text-muted-foreground">
           İşletmenize ait konaklama birimlerini tanımlayın. Her tip için ad, kapasite ve adet bilgilerini girin.
         </p>
@@ -184,7 +184,7 @@ export function StepUnits({ data, onChange }: StepUnitsProps) {
                       </Label>
                       <Input
                         id={`unit-name-${unit.id}`}
-                        placeholder="örn: Deluxe Bungalov A1"
+                        placeholder="örn: Deluxe Oda A1"
                         value={unit.name}
                         onChange={(e) =>
                           updateUnit(unit.id, "name", e.target.value)

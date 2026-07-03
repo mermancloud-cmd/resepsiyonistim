@@ -1,5 +1,5 @@
 /**
- * Subscription plan definitions for Bungalow AI SaaS.
+ * Subscription plan definitions for AI SaaS.
  * IYZICO is ONLY used for these SaaS subscription payments.
  * Guest reservation payments use IBAN/havale (see /payments).
  */
@@ -11,12 +11,12 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     id: "starter",
     name: "Başlangıç",
     nameEn: "Starter",
-    description: "Küçük bungalov tesisleri için ideal başlangıç paketi.",
+    description: "Küçük tesisler için ideal başlangıç paketi.",
     price: 499,
     currency: "TRY",
     features: [
       "Aylık 500 yapay zeka mesajı",
-      "1 bungalov tesisi",
+      "1 tesis",
       "1 WhatsApp numarası",
       "Temel rezervasyon yönetimi",
       "E-posta destek",
@@ -38,7 +38,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     currency: "TRY",
     features: [
       "Aylık 5.000 yapay zeka mesajı",
-      "5 bungalov tesisi",
+      "5 tesis",
       "3 WhatsApp numarası",
       "Gelişmiş rezervasyon yönetimi",
       "Analitik dashboard",
@@ -63,7 +63,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
     currency: "TRY",
     features: [
       "Sınırsız yapay zeka mesajı",
-      "Sınırsız bungalov tesisi",
+      "Sınırsız tesis",
       "10 WhatsApp numarası",
       "API erişimi",
       "Özel entegrasyonlar",

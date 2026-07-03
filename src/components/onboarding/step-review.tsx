@@ -162,7 +162,7 @@ export function StepReview({ data, stepStatuses }: StepReviewProps) {
         <ReviewSection
           icon={Home}
           stepNumber={3}
-          label="Oda/Bungalov Tipleri"
+          label="Birim Tipleri"
           completed={isStepComplete(3)}
         >
           <p className="text-[11px] text-muted-foreground">

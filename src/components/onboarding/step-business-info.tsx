@@ -118,7 +118,7 @@ export function StepBusinessInfo({ data, onChange }: StepBusinessInfoProps) {
         <Label htmlFor="businessName">İşletme Adı *</Label>
         <Input
           id="businessName"
-          placeholder="örn: Yeşil Vadi Bungalov"
+          placeholder="örn: Yeşil Vadi İşletmesi"
           {...register("businessName")}
           aria-invalid={!!errors.businessName}
         />
