@@ -42,17 +42,15 @@ next-env.d.ts
 
 # Build artifacts
 .next_old/
-out/
-.next/
+.next_broken/
+.next_stale/
+out_old/
+core
+*.dump
+
+# Local env files
 .env.local
 .env.production
-public/sw.js
 
-# Junk
-core
-.next_stale/
-.next_broken/
-.next_old/
-out/
-.next/
-*.dump
+# PWA
+public/sw.js

@@ -27,10 +27,8 @@ import {
   Clock,
   Banknote,
   RefreshCw,
-  Shield,
   ChevronDown,
   ChevronUp,
-  AlertTriangle,
   Landmark,
   Search,
   CalendarRange,
@@ -39,10 +37,7 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  mockIyzicoSubscription,
-  type IyzicoSubscription,
-} from "@/lib/mock-data";
+
 import { IbanDetailsForm } from "@/components/payments/iban-details-form";
 import { PaymentActionModal } from "@/components/payments/payment-action-modal";
 
@@ -86,28 +81,6 @@ const statusConfig = {
   },
 } as const;
 
-const subStatusConfig = {
-  active: {
-    label: "Aktif",
-    color: "text-emerald-600",
-    bgColor: "bg-emerald-50 dark:bg-emerald-900/20",
-  },
-  past_due: {
-    label: "Gecikmiş",
-    color: "text-amber-600",
-    bgColor: "bg-amber-50 dark:bg-amber-900/20",
-  },
-  cancelled: {
-    label: "İptal",
-    color: "text-red-600",
-    bgColor: "bg-red-50 dark:bg-red-900/20",
-  },
-  trial: {
-    label: "Deneme",
-    color: "text-blue-600",
-    bgColor: "bg-blue-50 dark:bg-blue-900/20",
-  },
-} as const;
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("tr-TR", {
@@ -275,90 +248,6 @@ function IBANPaymentCard({
           </div>
         </div>
       )}
-    </Card>
-  );
-}
-
-// ─── IYZICO Subscription Card ──────────────────────────────────────────────────
-
-function IyzicoSubscriptionCard({ sub }: { sub: IyzicoSubscription }) {
-  const status = subStatusConfig[sub.status];
-  const daysLeft = Math.ceil(
-    (new Date(sub.current_period_end).getTime() - Date.now()) / 86400000
-  );
-
-  return (
-    <Card>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center gap-2 text-base">
-          <Shield className="size-5 text-primary" />
-          IYZICO Abonelik
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="font-semibold">{sub.plan_name}</p>
-            <div className="flex items-center gap-2 mt-1">
-              <span
-                className={cn(
-                  "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium",
-                  status.bgColor,
-                  status.color
-                )}
-              >
-                <span className="size-1.5 rounded-full bg-current" />
-                {status.label}
-              </span>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-lg font-bold">
-              ₺{sub.amount.toLocaleString("tr-TR")}
-              <span className="text-xs font-normal text-muted-foreground">
-                /ay
-              </span>
-            </p>
-          </div>
-        </div>
-
-        <Separator />
-
-        <div className="grid grid-cols-2 gap-3 text-xs">
-          <div>
-            <span className="text-muted-foreground">Sonraki Fatura</span>
-            <p className="font-medium mt-0.5">
-              {formatDate(sub.next_billing_date)}
-            </p>
-          </div>
-          <div>
-            <span className="text-muted-foreground">Kalan Gün</span>
-            <p className="font-medium mt-0.5">{daysLeft} gün</p>
-          </div>
-          <div>
-            <span className="text-muted-foreground">Kart</span>
-            <p className="font-medium mt-0.5">
-              ···· {sub.payment_method_last4}
-            </p>
-          </div>
-          <div>
-            <span className="text-muted-foreground">Otomatik Yenileme</span>
-            <p className="font-medium mt-0.5">
-              {sub.auto_renew ? "✓ Açık" : "✕ Kapalı"}
-            </p>
-          </div>
-        </div>
-
-        {sub.status === "past_due" && (
-          <div className="flex items-start gap-2 rounded-lg bg-amber-50 dark:bg-amber-900/20 p-3 text-xs text-amber-800 dark:text-amber-400">
-            <AlertTriangle className="size-4 shrink-0 mt-0.5" />
-            <p>
-              Ödemeniz gecikmiş. Lütfen kart bilgilerinizi güncelleyin veya
-              destek ile iletişime geçin.
-            </p>
-          </div>
-        )}
-      </CardContent>
     </Card>
   );
 }
@@ -651,8 +540,7 @@ export default function PaymentsPage() {
 
               <Separator />
 
-              {/* IYZICO Subscription */}
-              <IyzicoSubscriptionCard sub={mockIyzicoSubscription} />
+              {/* IBAN yönetimi — abonelik IBAN ile yapılıyor */}
             </div>
           </TabsContent>
 

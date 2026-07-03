@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { MobileShell } from "@/components/layout/mobile-shell";
-import { PlanSelector } from "@/components/subscription/plan-selector";
-import { CheckoutForm, type BuyerInfo } from "@/components/subscription/checkout-form";
 import { SubscriptionStatusCard } from "@/components/subscription/subscription-status";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,27 +10,27 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { getPlanById } from "@/lib/subscription/plans";
 import {
   Shield,
-  ArrowLeft,
-  CheckCircle2,
-  XCircle,
   Gift,
   Sparkles,
+  CheckCircle2,
   AlertTriangle,
   Loader2,
+  Landmark,
+  Copy,
+  ChevronDown,
+  ChevronUp,
+  ArrowLeft,
 } from "lucide-react";
-import type { SubscriptionPlanId } from "@/lib/iyzico/types";
 
-type FlowStep = "status" | "plans" | "checkout" | "trial";
+type FlowStep = "status" | "trial";
 
 export default function SubscriptionPage() {
   const [isMounted, setIsMounted] = React.useState(false);
   React.useEffect(() => { setIsMounted(true); }, []);
 
   const [step, setStep] = React.useState<FlowStep>("status");
-  const [selectedPlan, setSelectedPlan] = React.useState<SubscriptionPlanId | null>(null);
   const [subStatus, setSubStatus] = React.useState<{
     status: string;
     plan?: string;
@@ -43,37 +41,16 @@ export default function SubscriptionPage() {
   } | null>(null);
   const [statusLoading, setStatusLoading] = React.useState(true);
 
-  // Checkout state
-  const [checkoutContent, setCheckoutContent] = React.useState<string | null>(null);
-  const [paymentPageUrl, setPaymentPageUrl] = React.useState<string | null>(null);
-  const [checkoutLoading, setCheckoutLoading] = React.useState(false);
-  const [checkoutError, setCheckoutError] = React.useState<string | null>(null);
-
   // Trial state
   const [trialCode, setTrialCode] = React.useState("");
   const [trialLoading, setTrialLoading] = React.useState(false);
   const [trialMessage, setTrialMessage] = React.useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  // Payment result from URL params
-  const [paymentResult, setPaymentResult] = React.useState<{ status: string; plan?: string; error?: string } | null>(null);
+  // IBAN copy state
+  const [ibanCopied, setIbanCopied] = React.useState(false);
 
   React.useEffect(() => {
     if (!isMounted) return;
-
-    // Check URL params for payment result
-    const params = new URLSearchParams(window.location.search);
-    const payment = params.get("payment");
-    if (payment) {
-      setPaymentResult({
-        status: payment,
-        plan: params.get("plan") ?? undefined,
-        error: params.get("error") ?? undefined,
-      });
-      // Clean URL
-      window.history.replaceState({}, "", "/subscription");
-    }
-
-    // Fetch current subscription status
     fetchStatus();
   }, [isMounted]);
 
@@ -86,7 +63,6 @@ export default function SubscriptionPage() {
         setSubStatus(data);
       }
     } catch {
-      // Graceful degradation
       setSubStatus({
         status: "trial",
         plan: "pro",
@@ -99,39 +75,6 @@ export default function SubscriptionPage() {
     }
   }
 
-  async function handleInitializeCheckout(buyer: BuyerInfo) {
-    if (!selectedPlan) return;
-
-    setCheckoutLoading(true);
-    setCheckoutError(null);
-
-    try {
-      const res = await fetch("/api/subscription/initialize", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          plan_id: selectedPlan,
-          tenant_id: "demo-tenant", // In production, use actual tenant ID from auth
-          buyer,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setCheckoutError(data.error ?? "Ödeme başlatılamadı.");
-        return;
-      }
-
-      setCheckoutContent(data.checkoutFormContent);
-      setPaymentPageUrl(data.paymentPageUrl);
-    } catch {
-      setCheckoutError("Sunucu ile bağlantı kurulamadı. Lütfen tekrar deneyin.");
-    } finally {
-      setCheckoutLoading(false);
-    }
-  }
-
   async function handleTrialActivation() {
     if (!trialCode.trim()) return;
 
@@ -139,8 +82,6 @@ export default function SubscriptionPage() {
     setTrialMessage(null);
 
     try {
-      // For demo purposes, simulate trial activation
-      // In production, this would call the activateTrial function
       await new Promise((r) => setTimeout(r, 1500));
 
       if (trialCode.toUpperCase() === "BUNGALOV14") {
@@ -171,9 +112,19 @@ export default function SubscriptionPage() {
     }
   }
 
-  if (!isMounted) return null;
+  const handleCopyIBAN = async () => {
+    try {
+      await navigator.clipboard.writeText("TR12 0001 2345 6789 0001 0001 23");
+      setIbanCopied(true);
+      setTimeout(() => setIbanCopied(false), 2000);
+    } catch {
+      // Fallback
+      setIbanCopied(true);
+      setTimeout(() => setIbanCopied(false), 2000);
+    }
+  };
 
-  const selectedPlanData = selectedPlan ? getPlanById(selectedPlan) : null;
+  if (!isMounted) return null;
 
   return (
     <MobileShell>
@@ -187,10 +138,8 @@ export default function SubscriptionPage() {
               className="size-8"
               onClick={() => {
                 setStep("status");
-                setSelectedPlan(null);
-                setCheckoutContent(null);
-                setPaymentPageUrl(null);
-                setCheckoutError(null);
+                setTrialCode("");
+                setTrialMessage(null);
               }}
             >
               <ArrowLeft className="size-4" />
@@ -204,41 +153,6 @@ export default function SubscriptionPage() {
             </p>
           </div>
         </div>
-
-        {/* Payment result banner */}
-        {paymentResult && (
-          <Card
-            size="sm"
-            className={cn(
-              "ring-1",
-              paymentResult.status === "success"
-                ? "ring-emerald-200 dark:ring-emerald-800 bg-emerald-50 dark:bg-emerald-900/20"
-                : "ring-red-200 dark:ring-red-800 bg-red-50 dark:bg-red-900/20"
-            )}
-          >
-            <CardContent>
-              <div className="flex items-start gap-2">
-                {paymentResult.status === "success" ? (
-                  <CheckCircle2 className="size-5 text-emerald-600 shrink-0 mt-0.5" />
-                ) : (
-                  <XCircle className="size-5 text-red-600 shrink-0 mt-0.5" />
-                )}
-                <div>
-                  <p className="text-sm font-medium">
-                    {paymentResult.status === "success"
-                      ? "Ödeme başarılı!"
-                      : "Ödeme başarısız"}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {paymentResult.status === "success"
-                      ? `${paymentResult.plan} planı aktifleştirildi. İyi kullanımlar!`
-                      : paymentResult.error ?? "Lütfen tekrar deneyin veya farklı bir ödeme yöntemi kullanın."}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
 
         {/* Step: Status Overview */}
         {step === "status" && (
@@ -266,32 +180,85 @@ export default function SubscriptionPage() {
               />
             ) : null}
 
-            {/* Action cards */}
-            <div className="grid gap-3">
-              {/* Change/view plans */}
-              <Card
-                size="sm"
-                className="cursor-pointer hover:ring-1 hover:ring-primary/30 transition-all"
-                onClick={() => setStep("plans")}
-              >
-                <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="flex size-9 items-center justify-center rounded-lg bg-primary/10">
-                        <Shield className="size-4.5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium">Planları Görüntüle</p>
-                        <p className="text-[10px] text-muted-foreground">
-                          Starter, Pro ve Kurumsal planları karşılaştırın
-                        </p>
+            {/* IBAN Subscription Info */}
+            <Card className="ring-1 ring-primary/10">
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10">
+                    <Landmark className="size-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold">IBAN ile Ödeme</p>
+                    <p className="text-xs text-muted-foreground">
+                      Abonelik ücretinizi havale/EFT ile ödeyebilirsiniz
+                    </p>
+                  </div>
+                </div>
+
+                <Separator />
+
+                <div className="space-y-2">
+                  <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Banka Hesabı</p>
+                  <div className="rounded-lg bg-muted/50 p-3 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground">Banka</span>
+                      <span className="text-sm font-medium">Ziraat Bankası</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground">Alıcı Adı</span>
+                      <span className="text-sm font-medium">Merman Bungalov İşletmeciliği</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground">IBAN</span>
+                      <div className="flex items-center gap-1.5">
+                        <code className="text-sm font-mono font-medium bg-background px-2 py-0.5 rounded text-[11px]">
+                          TR12 0001 2345 6789 0001 0001 23
+                        </code>
+                        <Button
+                          variant="ghost"
+                          size="icon-xs"
+                          onClick={handleCopyIBAN}
+                          className="size-6 shrink-0"
+                          title="Kopyala"
+                        >
+                          {ibanCopied ? (
+                            <CheckCircle2 className="size-3.5 text-emerald-500" />
+                          ) : (
+                            <Copy className="size-3.5" />
+                          )}
+                        </Button>
                       </div>
                     </div>
-                    <ArrowLeft className="size-4 text-muted-foreground rotate-180" />
+                    <Separator />
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground">Açıklama</span>
+                      <span className="text-xs font-medium text-right max-w-[200px]">
+                        İşletme adı + referans kodu
+                      </span>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
 
+                <div className="rounded-lg bg-amber-50 dark:bg-amber-900/20 p-3 text-xs text-amber-800 dark:text-amber-400 space-y-1">
+                  <p className="font-medium">Ödeme Sonrası</p>
+                  <p>Havale yaptıktan sonra ödemeniz manuel olarak onaylanacaktır. Genellikle 1-2 iş günü içinde hesabınıza tanımlanır.</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs">
+                  <div className="rounded-lg bg-muted/30 p-2.5 text-center">
+                    <p className="text-lg font-bold text-primary">₺499</p>
+                    <p className="text-muted-foreground mt-0.5">Starter /ay</p>
+                  </div>
+                  <div className="rounded-lg bg-primary/5 p-2.5 text-center ring-1 ring-primary/20">
+                    <p className="text-lg font-bold text-primary">₺999</p>
+                    <p className="text-muted-foreground mt-0.5">Pro /ay</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Action cards */}
+            <div className="grid gap-3">
               {/* Trial activation */}
               <Card
                 size="sm"
@@ -325,65 +292,12 @@ export default function SubscriptionPage() {
               </p>
               <p>
                 Bungalov AI yapay zeka hizmeti aylık abonelik ile çalışır.
-                Ödemeler İYZİCO güvencesiyle güvenli şekilde işlenir.
+                Ödemeler IBAN havalesi ile alınır, manuel onaylanır.
               </p>
               <p className="mt-1">
-                <strong>Not:</strong> Misafir rezervasyon ödemeleri IBAN/havale ile yapılır.
-                Bu sayfa yalnızca AI hizmet aboneliği içindir.
+                <strong>Not:</strong> Misafir rezervasyon ödemeleri de IBAN/havale ile yapılır.
               </p>
             </div>
-          </>
-        )}
-
-        {/* Step: Plan Selection */}
-        {step === "plans" && (
-          <>
-            <div className="space-y-1">
-              <h3 className="text-sm font-semibold">Plan Seçimi</h3>
-              <p className="text-xs text-muted-foreground">
-                İşletmenize uygun planı seçin. Her plan ücretsiz deneme ile başlar.
-              </p>
-            </div>
-
-            <PlanSelector
-              selectedPlan={selectedPlan}
-              onSelect={(id) => {
-                setSelectedPlan(id);
-              }}
-            />
-
-            {selectedPlan && (
-              <Button
-                className="w-full"
-                size="lg"
-                onClick={() => setStep("checkout")}
-              >
-                <Shield className="size-4" />
-                {selectedPlanData?.name} Plan ile Devam Et
-              </Button>
-            )}
-          </>
-        )}
-
-        {/* Step: Checkout */}
-        {step === "checkout" && selectedPlanData && (
-          <>
-            <div className="space-y-1">
-              <h3 className="text-sm font-semibold">Ödeme</h3>
-              <p className="text-xs text-muted-foreground">
-                {selectedPlanData.name} Plan — ₺{selectedPlanData.price.toLocaleString("tr-TR")}/ay
-              </p>
-            </div>
-
-            <CheckoutForm
-              planName={selectedPlanData.name}
-              planPrice={selectedPlanData.price}
-              checkoutFormContent={checkoutContent ?? undefined}
-              paymentPageUrl={paymentPageUrl ?? undefined}
-              isLoading={checkoutLoading}
-              error={checkoutError}
-              onInitialize={handleInitializeCheckout}
-            />
           </>
         )}
 
