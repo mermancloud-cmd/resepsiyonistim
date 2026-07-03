@@ -35,7 +35,7 @@ export interface AuthActions {
   signInWithEmail: (email: string, password: string) => Promise<{ error: AuthError | null }>;
   signInWithMagicLink: (email: string) => Promise<{ error: AuthError | null }>;
   verifyOtp: (phone: string, token: string) => Promise<{ error: AuthError | null }>;
-  signUp: (email: string, password: string) => Promise<{ error: AuthError | null }>;
+  signUp: (email: string, password: string, metadata?: Record<string, unknown>) => Promise<{ data: any; error: AuthError | null }>;
   signOut: () => Promise<void>;
   refreshSession: () => Promise<void>;
 }
@@ -221,11 +221,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const signUp = useCallback(
-    async (email: string, password: string) => {
+    async (email: string, password: string, metadata?: Record<string, unknown>) => {
       setError(null);
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: metadata ? { data: metadata } : undefined,
+      });
       if (error) setError(error.message);
-      return { error };
+      return { data, error };
     },
     [supabase]
   );
