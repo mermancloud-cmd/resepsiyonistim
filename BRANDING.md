@@ -1,9 +1,8 @@
 # Resepsiyonistim — Marka Kimlik Kılavuzu
 
-**Sürüm:** 1.0 — 4 Temmuz 2026
+**Sürüm:** 1.1 — 4 Temmuz 2026
 **Marka:** Resepsiyonistim
 **Domain:** resepsiyonistim.com
-**AI Karakteri:** Elif
 
 ---
 
@@ -13,7 +12,15 @@ Resepsiyonistim, küçük konaklama işletmeleri (bungalov, tiny house, villa, b
 
 **Tek cümle ile:** "Bungalovunuzun 7/24 çalışan dijital resepsiyonisti."
 
-**AI kişiliği — Elif:** Müşterilerle konuşan yapay zeka karakterinin adıdır. Sakin, güven veren, profesyonel ve doğal bir tona sahiptir. Müşteriye "Elif" olarak tanıtır. Marka adı "Resepsiyonistim" ise işletme sahibine yönelik ürün/marka adıdır.
+### AI Kişiliği Hakkında
+
+AI resepsiyoniste bir insan ismi verilir — bu, misafirin karşısında bir insan hissi yaratmak içindir. Varsayılan isim "Elif"tir ancak **her işletme bu ismi değiştirebilir ve kişiselleştirebilir**. AI karakteri bir marka maskotu veya sabit bir persona değil; işletmenin kendi resepsiyonist gibi kullanabileceği, ismini ve tonunu özelleştirebileceği bir araçtır.
+
+Marka iletişiminde AI kişiliğine değil, **ürünün sağladığı değere** odaklan:
+- 7/24 erişilebilirlik
+- İnsan gibi doğal konuşma
+- Rezervasyon otomasyonu
+- Çok dillik (tr/en/ar)
 
 ---
 
@@ -32,113 +39,62 @@ Resepsiyonistim, küçük konaklama işletmeleri (bungalov, tiny house, villa, b
 
 ### Renk Psikolojisi
 
-- **Terracotta (#C66B47):** Toprak sıcaklığı, doğallık, güvenilirlik. Bungalov/doğa temasının ana taşıyıcısı.
-- **Orman Yeşili (#3A5A40):** Doğanın dinginliği, büyüme, istikrar. Konaklama endüstrisinin güven veren yüzü.
-- **Amber (#D9A55B):** Konukseverliğin sıcaklığı. Günbatımı, ateş başında sohbet hissi.
-- **Bej/Krem (#E8DCC8, #FAF5EF):** Ahşap dokuların açık tonu. Doğal malzeme ve samimiyet.
+- **Terracotta (#C66B47):** Toprak sıcaklığı, doğallık, güvenilirlik
+- **Orman Yeşili (#3A5A40):** Doğanın dinginliği, istikrar
+- **Amber (#D9A55B):** Konukseverliğin sıcaklığı
+- **Bej/Krem (#E8DCC8, #FAF5EF):** Ahşap dokuların açık tonu, samimiyet
 
 ### Tipografi
 
-| Rol | Font | Yedek (fallback) |
-|-----|------|------------------|
-| Başlıklar (H1-H3) | Poppins (600) | system-ui, sans-serif |
-| Gövde Metni | Inter (400, 500) | system-ui, sans-serif |
-| Kod / Teknik | JetBrains Mono (400) | monospace |
-
-Poppins: Yuvarlak, dostane ama profesyonel — markanın "sıcak ama güvenilir" tonunu yansıtır.
-Inter: Modern SaaS standartı, yüksek okunabilirlik, tarayıcı uyumu.
+| Rol | Font | Yedek |
+|-----|------|-------|
+| Başlıklar | Poppins (600) | system-ui, sans-serif |
+| Gövde | Inter (400, 500) | system-ui, sans-serif |
+| Kod | JetBrains Mono (400) | monospace |
 
 ---
 
 ## 3. Logo
 
-### Konsept
-
-Resepsiyononist zili, konukseverliğin evrenselliğini simgeleyen bir câtset. 
-
-Yeniden yorumlama: Klasik otel karşılama zili içine yerleştirilmiş bir bungalov silüeti. Zilin gövdesi 
-Ahşap dokulu, doğal bir forma sahip; üstünde küçük bir bungalov çatısı var. Zilin tokmak kısmı 
-bir yaprak dokunuşuyla son buluyor — doğa ile teknolojii birleştiren ifade.
-
-### Logo Yapısı
-
-- **Tam Logo:** Yuvarlak amblem + "Resepsiyonistim" yazısı yan yana
-- **Amblem:** Daire içinde zil+bungalov+lâle formu
-- **Wordmark:** "Resepsiyonistim" — Poppins 600, terracotta
-- **Favicon:** Sadece amblem
-
-### minimum Boyutlar
-
-- Amblem tek başına: 32px
-- Tam logo: 200px genişlik minimum
-- Favicon: 16px
+Geçici logo kullanımda. Kalıcı logo işletme sahibi tarafından ayrıca tasarlanacaktır.
 
 ---
 
 ## 4. Marka Tonu ve Ses
 
-### Marka Sesi (İşletme Sahibine)
+### İşletme Sahibine (B2B)
 
 - **Sıcak ama profesyonel** — sohbet değil satış
 - **Güven veren** — verilerle konuşur, spekülasyon yapmaz
-- **Net odaklı.** Kompleks teknolojiyi basitçe açıkla
-- **Samimi ama mesafeli** — eleştirme değil, çözümle
+- **Net ve odaklı** — kompleks teknolojiyi basitçe açıkla
+- **Samimi ama mesafeli**
 
-### Eig Sesi (Misafire / WhatsApp'da)
+### Misafire (WhatsApp)
 
-- **Sakin ve doğal** — ro botik değil
-- **Kısa mesajlar** — dokümah telif değil, WhatsApp mesajlaşması
+- **Sakin ve doğal** — robotik değil
+- **Kısa mesajlar** — dokümantasyon değil WhatsApp
 - **Tek soru tek cevap** — müşteriyi boğma
 - **Dürüst** — bilgisi yoksa "kontrol ederim" der
-- **İnsanı andırır** — yapay zeka ifadeleri (emoji, ünlem yığını, tekrar) yasak
+- **Kişiselleştirilebilir** — işletme istediği ismi ve tonu verebilir
 
 ---
 
-## 5. İsimlendirme Sistemi
+## 5. İsimlendirme
 
 | Kavram | Terim | Açıklama |
 |--------|-------|----------|
-| Ürün | Resepsiyonistim | SaaS platformu/Marmara |
-| AI Kişiliği | Elif | WhatsApp'ta misafirlerin konuştuğu karakter |
+| Ürün/Marka | Resepsiyonistim | SaaS platformu |
+| AI Kişiliği | (İşletme belirler) | Varsayılan: "Elif" — değiştirilebilir |
 | Müşteri | İşletme Sahibi | Bungalov/tiny house/villa işletmecisi |
 | Son Kullanıcı | Misafir | WhatsApp üzerinden iletişim kuran kişi |
-| Yönetim Arayüzü | Elif Panel | İşletme sahibi kontrol paneli (eski adı: bungalow-panel) |
-| API Servisi | Elif API | SQLite REST API + n8n workflow altyapısı |
-| Abonelik Planı | Serbest | Planlar ayrıca belirlenecek |
+| Yönetim Arayüzü | Yönetim Paneli | İşletme sahibi kontrol paneli |
+| API Servisi | Resepsiyonistim API | SQLite REST API + n8n altyapısı |
 
 ---
 
-## 6. Uygulama Alanları
-
-### Dijital
-
-- **Website (resepsiyonistim.com):** Landing page + özellikler + fiyatlandırma + giriş
-- **Elif Panel:** İşletme sahibi yönetim arayüzü (Next.js)
-- **GitHub:** PRIVATE repo, tüm kaynak kod
-- **WhatsApp:** Misafir iletişim kanalı (Evolution API)
-- **E-posta:** info@resepsiyonistim.com (yapılandırılacak)
-
-### Baskı (ileri tarih)
-
-- Kartvizit
-- Broşür
-- Sticker
-
-
----
-
-## 7. Yazım ve Usage
-
-- Doğru: "Resepsiyonistim", "Elif", "Elif Panel", "Elif API"
-- Yanlış: "Resepsiyonistim", "resepsiyonistim.com" olarak değil sadece marka adı
-- Depo/repo: "resepsiyonistim" (tek kelime, küçük harf)
-- Marka adı her zaman R büyük: "Resepsiyonistim"
-- Elif her zaman E büyük: "Elif"
-
----
-
-## 8. Değişiklik Geçmişi
+## 6. Değişiklik Geçmişi
 
 | Tarih | Sürüm | Değişiklik |
 |-------|-------|-------------|
 | 2026-07-04 | 1.0 | İlk oluşturma |
+| 2026-07-04 | 1.1 | Elif vurgusu azaltıldı; AI kişiliği kişiselleştirilebilir olarak yeniden konumlandı |

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resepsiyonistim — Bungalovunuzun 7/24 Dijital Resepsiyonisti</title>
+  <meta name="description" content="Bungalov, tiny house ve villa işletmeleri için WhatsApp tabanlı yapay zeka resepsiyonisti. 7/24 misafir karşılama, rezervasyon yönetimi, çok dilli destek.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">Resepsiyonist<span>im</span></a>
+      <div class="nav-links">
+        <a href="#features">Özellikler</a>
+        <a href="#how">Nasıl Çalışır</a>
+        <a href="#audience">Kimler İçin</a>
+        <a href="#pricing">Fiyatlandırma</a>
+        <a href="#faq">SSS</a>
+        <a href="#contact" class="btn btn-primary">Demo Talep Et</a>
+      </div>
+      <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <h1>Bungalovunuzun <span class="accent">7/24 dijital</span> resepsiyonisti</h1>
+        <p>WhatsApp üzerinden misafirlerinizi karşılar, sorularını yanıtlar, rezervasyon alır. Siz uyurken bile çalışır. Misafirler bir botla değil, gerçek bir resepsiyonistle konuştuğunu düşünür.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary btn-lg">Ücretsiz Dene</a>
+          <a href="#how" class="btn btn-secondary btn-lg">Nasıl Çalışır?</a>
+        </div>
+        <div class="hero-badges">
+          <div class="hero-badge"><span class="check">✓</span> 7/24 ulaşılabilir</div>
+          <div class="hero-badge"><span class="check">✓</span> 3 dil desteği</div>
+          <div class="hero-badge"><span class="check">✓</span> Kurulum 10 dakika</div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-phone">
+          <div class="hero-phone-header">
+            <div class="hero-phone-avatar">R</div>
+            <div class="hero-phone-info">
+              <h4>Resepsiyonist</h4>
+              <p>çevrimiçi</p>
+            </div>
+          </div>
+          <div class="hero-chat">
+            <div class="chat-bubble guest">Merhaba, 12-14 Temmuz için müsaitlik var mı?</div>
+            <div class="chat-bubble ai">Merhaba, hemen kontrol ediyorum. 12-14 Temmuz için 2 bungalovumuz müsait. Gecelik 2.500₺, toplam 5.000₺. Rezervasyon yapmak ister misiniz?</div>
+            <div class="chat-bubble guest">Fiyat biraz yüksek, değerlendiriyorum</div>
+            <div class="chat-bubble ai">Anlıyorum. 10-12 Temmuz'da da müsaitiz, o dönem 2.200₺'den günlük. Hangi tarihler daha uygun olur?</div>
+            <div class="chat-time">14:32</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-bar">
+    <div class="container stats-inner">
+      <div class="stat-item"><h3>%85</h3><p>Mesaja otomatik yanıt</p></div>
+      <div class="stat-item"><h3>7/24</h3><p>Kesintisiz erişim</p></div>
+      <div class="stat-item"><h3>3</h3><p>Dilde doğal konuşma</p></div>
+      <div class="stat-item"><h3>&lt;5dk</h3><p>Kurulum süresi</p></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="center">
+        <span class="section-label">Özellikler</span>
+        <h2 class="section-title">Tek WhatsApp numarası, tüm resepsiyon işleri</h2>
+        <p class="section-subtitle">Misafir karşılamadan rezervasyon tamamlamaya, ödeme takibinden raporlamaya kadar her şey.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(198,107,71,0.12)">💬</div>
+          <h3>İnsan gibi konuşma</h3>
+          <p>Yapay zeka misafirle doğal şekilde yazışır. Kısa mesajlar, tek soru tek cevap, empati. Misafir botla konuştuğunu anlamaz.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(58,90,64,0.12)">📅</div>
+          <h3>Otomatik rezervasyon</h3>
+          <p>Tarih sorgulama, müsaitlik kontrolü, fiyat hesaplama, rezervasyon oluşturma — hepsi otomatik. Siz sadece onaylarsınız.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(217,165,91,0.15)">🌐</div>
+          <h3>Çok dilli destek</h3>
+          <p>Türkçe, İngilizce ve Arapça dillerinde doğal konuşma. Misafir hangi dilden yazarsa yazsın, sistem otomatik adapte olur.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(58,90,64,0.12)">🔔</div>
+          <h3>İnsana devir</h3>
+          <p>Yapay zeka kendi başına çözemeyeceği durumda konuşmayı size devreder. Telegram bildirimi anında gelir, siz devreye girersiniz.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(198,107,71,0.12)">💳</div>
+          <h3>Kapora ve ödeme takibi</h3>
+          <p>Misafirden kapora alımı, ödeme takibi, İyzico entegrasyonu. Rezervasyon kilidi ile çift rezervasyon engellenir.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(217,165,91,0.15)">📊</div>
+          <h3>Yönetim paneli</h3>
+          <p>Rezervasyonları, mesajları, gelir metriklerini tek panelden yönetin.Performans ve memnuniyet ölçülebilir.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="section how" id="how">
+    <div class="container">
+      <div class="center">
+        <span class="section-label">Nasıl Çalışır</span>
+        <h2 class="section-title">3 adımda devreye alın</h2>
+        <p class="section-subtitle">Karmaşık kurulum yok. WhatsApp numaranızı bağlayın, tesis bilgilerinizi girin, hazır.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>WhatsApp'ı bağlayın</h3>
+          <p>Mevcut WhatsApp numaranızı sisteme tanıtın. Yeni numara almaya gerek yok. Tek tıkla entegrasyon.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Tesis bilgilerini girin</h3>
+          <p>14 adımlık kurulum sihirbazında bungalov tipi, fiyat, müsaitlik, iptal politikası, ödeme bilgilerini girin.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Misafirleri karşılayın</h3>
+          <p>Yapay zeka devreye girer. Misafirler WhatsApp'tan yazdığında otomatik yanıt alır, rezervasyon yapılır.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWCASE: MULTI-LANGUAGE -->
+  <section class="section">
+    <div class="container showcase-inner">
+      <div class="hero-visual">
+        <div class="hero-phone">
+          <div class="hero-phone-header">
+            <div class="hero-phone-avatar">R</div>
+            <div class="hero-phone-info">
+              <h4>Resepsiyonist</h4>
+              <p>çevrimiçi</p>
+            </div>
+          </div>
+          <div class="hero-chat">
+            <div class="chat-bubble guest">Hello, do you have availability this weekend?</div>
+            <div class="chat-bubble ai" style="font-size:0.82rem">Hello! Let me check. Yes, we have 2 bungalows available from 2,500₺/night. Would you like to reserve?</div>
+            <div class="chat-bubble guest" style="font-size:0.82rem">هل لديكم توفر هذا الأسبوع؟</div>
+            <div class="chat-bubble ai" style="font-size:0.78rem">مرحبا! نعم، لدينا توفر. السعر يبدأ من 2500 ليرة في الليلة. هل ترغب في الحجز؟</div>
+          </div>
+        </div>
+      </div>
+      <div class="showcase-content">
+        <span class="section-label">Çok Dilli Konuşma</span>
+        <h2>Misafiriniz hangi dilden yazarsa yazsın</h2>
+        <p>Yabancı misafirler farklı dillerden yazıyor? Sorun değil. Sistem otomatik dil tespiti yapar ve misafirin dilinde doğal şekilde yanıt verir.</p>
+        <div class="showcase-list">
+          <div class="showcase-item">
+            <div class="showcase-item-icon">✓</div>
+            <div><h4>Türkçe</h4><p>Anadil seviyesinde doğal Türkçe sohbet</p></div>
+          </div>
+          <div class="showcase-item">
+            <div class="showcase-item-icon">✓</div>
+            <div><h4>İngilizce</h4><p>Uluslararası misafirler için akıcı İngilizce</p></div>
+          </div>
+          <div class="showcase-item">
+            <div class="showcase-item-icon">✓</div>
+            <div><h4>Arapça</h4><p>Arap misafirler için doğal Arapça</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCE -->
+  <section class="section" id="audience">
+    <div class="container">
+      <div class="center">
+        <span class="section-label">Kimler İçin</span>
+        <h2 class="section-title">Küçük konaklama işletmeleri için tasarlandı</h2>
+        <p class="section-subtitle">Büyük otellerin bütçesine ihtiyaç yok. Küçük tesisler için pratik ve uygun maliyetli.</p>
+      </div>
+      <div class="audience-grid">
+        <div class="audience-card">
+          <div class="emoji">🏠</div>
+          <h3>Bungalov</h3>
+          <p>Sapanca, Abant, Fethiye... Bungalov tesisleri için optimize edilmiş</p>
+        </div>
+        <div class="audience-card">
+          <div class="emoji">🌳</div>
+          <h3>Tiny House</h3>
+          <p>Tiny house işletmecileri için uygun fiyatlı dijital resepsiyon</p>
+        </div>
+        <div class="audience-card">
+          <div class="emoji">🏖️</div>
+          <h3>Villa & Butik</h3>
+          <p>Kiralık villa ve butik konaklama için profesyonel karşılama</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section pricing" id="pricing">
+    <div class="container">
+      <div class="center">
+        <span class="section-label">Fiyatlandırma</span>
+        <h2 class="section-title">İşletmenize uygun plan</h2>
+        <p class="section-subtitle">Gizli ücret yok. İstediğiniz an başlayın, istediğiniz an bırakın.</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="plan-card">
+          <div class="plan-name">Başlangıç</div>
+          <div class="plan-price">499₺ <span>/ay</span></div>
+          <div class="plan-desc">Tek tesisi olan küçük işletmeler için</div>
+          <ul class="plan-features">
+            <li><span class="dot">✓</span> 1 tesis, 5 birim</li>
+            <li><span class="dot">✓</span> WhatsApp entegrasyonu</li>
+            <li><span class="dot">✓</span> Türkçe dil desteği</li>
+            <li><span class="dot">✓</span> Rezervasyon yönetimi</li>
+            <li><span class="dot">✓</span> Yönetim paneli</li>
+            <li class="off"><span class="dot">✓</span> Çok dilli destek</li>
+            <li class="off"><span class="dot">✓</span> İyzico ödeme</li>
+          </ul>
+          <a href="#contact" class="btn btn-secondary">Başla</a>
+        </div>
+        <div class="plan-card featured">
+          <div class="plan-badge">En Popüler</div>
+          <div class="plan-name">Profesyonel</div>
+          <div class="plan-price">999₺ <span>/ay</span></div>
+          <div class="plan-desc">Birden fazla tesisi olan işletmeler için</div>
+          <ul class="plan-features">
+            <li><span class="dot">✓</span> 3 tesis, 20 birim</li>
+            <li><span class="dot">✓</span> WhatsApp entegrasyonu</li>
+            <li><span class="dot">✓</span> 3 dil desteği (TR/EN/AR)</li>
+            <li><span class="dot">✓</span> Rezervasyon + kapora</li>
+            <li><span class="dot">✓</span> İyzico ödeme entegrasyonu</li>
+            <li><span class="dot">✓</span> Yönetim paneli + analitik</li>
+            <li><span class="dot">✓</span> Telegram bildirimleri</li>
+          </ul>
+          <a href="#contact" class="btn btn-primary">Başla</a>
+        </div>
+        <div class="plan-card">
+          <div class="plan-name">Kurumsal</div>
+          <div class="plan-price">Özel</div>
+          <div class="plan-desc">Büyük portföyler ve zincir işletmeler için</div>
+          <ul class="plan-features">
+            <li><span class="dot">✓</span> Sınırsız tesis</li>
+            <li><span class="dot">✓</span> Tüm Profesyonel özellikler</li>
+            <li><span class="dot">✓</span> API erişimi</li>
+            <li><span class="dot">✓</span> Özel entegrasyonlar</li>
+            <li><span class="dot">✓</span> Öncelikli destek</li>
+            <li><span class="dot">✓</span> Özel AI kişiselleştirme</li>
+            <li><span class="dot">✓</span> SLA garantisi</li>
+          </ul>
+          <a href="#contact" class="btn btn-secondary">İletişime Geç</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="center">
+        <span class="section-label">SSS</span>
+        <h2 class="section-title">Sıkça sorulan sorular</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Misafirler botla konuştuğunu anlar mı?<span class="arrow">+</span></div>
+          <div class="faq-a">Hayır. Yapay zeka doğal, kısa ve empatik bir şekilde yazışır. Misafirler gerçek bir resepsiyonistle konuştuğunu düşünür. Sistem emoji, ünlem yığını ve tekrar gibi yapay zeka belirtilerini engeller.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Mevcut WhatsApp numaramı kullanabilir miyim?<span class="arrow">+</span></div>
+          <div class="faq-a">Evet. Mevcut WhatsApp numaranızı sisteme bağlarsınız. Yeni numara almanıza gerek yok. Evolution API üzerinden tek tıkla entegrasyon sağlanır.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Yabancı misafirler farklı dilde yazarsa ne olur?<span class="arrow">+</span></div>
+          <div class="faq-a">Sistem otomatik olarak dil tespiti yapar (Türkçe, İngilizce, Arapça) ve misafirin dilinde yanıt verir. Ek bir kurulum gerekmez.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">AI cevap veremezse ne olur?<span class="arrow">+</span></div>
+          <div class="faq-a">Yapay zeka kendi başına çözemediği bir durumda konuşmayı size devreder. Telegram'a anında bildirim gelir, siz devreye girersiniz. Misafir bekletilmez.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Kurulum ne kadar sürer?<span class="arrow">+</span></div>
+          <div class="faq-a">Yaklaşık 10 dakika. WhatsApp numarasını bağlayın, 14 adımlık kurulum sihirbazında tesis bilgilerini girin, hazır. Teknik bilgi gerekmez.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Rezervasyon kilidi nasıl çalışır?<span class="arrow">+</span></div>
+          <div class="faq-a">Bir misafir tarih için rezervasyon başlattığında, kapora ödenene kadar o tarih diğer misafirlere kilitlenir. Çift rezervasyon engellenir. Kapora ödenmezse süre dolumunda rezervasyon otomatik iptal edilir.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final" id="contact">
+    <div class="container">
+      <h2>Misafirlerinizi karşılarken siz işinizle ilgilenin</h2>
+      <p>10 dakikada kurulum, 7/24 kesintisiz resepsiyon. Ücretsiz deneyin, memnun kalmazsanız para yok.</p>
+      <a href="mailto:info@resepsiyonistim.com" class="btn btn-amber btn-lg">Demo Talep Et</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-logo">Resepsiyonistim</div>
+          <p class="footer-desc">Bungalov, tiny house ve villa işletmeleri için 7/24 WhatsApp tabanlı yapay zeka resepsiyonisti. Küçük konaklama işletmeleri için tasarlandı.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Ürün</h4>
+          <ul>
+            <li><a href="#features">Özellikler</a></li>
+            <li><a href="#how">Nasıl Çalışır</a></li>
+            <li><a href="#pricing">Fiyatlandırma</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Şirket</h4>
+          <ul>
+            <li><a href="#">Hakkımızda</a></li>
+            <li><a href="#contact">İletişim</a></li>
+            <li><a href="#faq">SSS</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Yasal</h4>
+          <ul>
+            <li><a href="#">Gizlilik</a></li>
+            <li><a href="#">Kullanım Koşulları</a></li>
+            <li><a href="#">KVKK</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Resepsiyonistim. Tüm hakları saklıdır.</span>
+        <span>resepsiyonistim.com</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
