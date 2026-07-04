@@ -1,0 +1,39 @@
+{
+  "name": "n8n-hizli-iyilestirme",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/n8n-cli.mjs check",
+    "discover": "node scripts/n8n-cli.mjs discover",
+    "export": "node scripts/n8n-cli.mjs export",
+    "analyze": "node scripts/n8n-cli.mjs analyze",
+    "propose": "node scripts/n8n-cli.mjs propose",
+    "simulate": "node scripts/simulate-receptionist.mjs",
+    "simulate:advanced": "node scripts/simulate-receptionist-advanced.mjs",
+    "simulate:new": "node scripts/simulate-receptionist-new.mjs",
+    "simulate:batch2": "node scripts/simulate-receptionist-batch2.mjs",
+    "simulate:batch3": "node scripts/simulate-receptionist-batch3.mjs",
+    "simulate:batch4": "node scripts/simulate-receptionist-batch4.mjs",
+    "simulate:batch5": "node scripts/simulate-receptionist-batch5.mjs",
+    "simulate:batch6": "node scripts/simulate-receptionist-batch6.mjs",
+    "simulate:owner": "node scripts/simulate-owner-takeover.mjs",
+    "simulate:comprehensive": "node scripts/simulate-receptionist-comprehensive.mjs",
+    "simulate:50": "node scripts/simulate-receptionist-comprehensive.mjs",
+    "security:scan": "node scripts/security-scan.mjs",
+    "security:sanitize": "node scripts/sanitize-workflows.mjs",
+    "check:data": "node scripts/check-data-quality.mjs",
+    "import:room-photos": "node scripts/import-room-photos.mjs",
+    "simulate:whatsapp:e2e": "node scripts/simulate-whatsapp-e2e.mjs",
+    "check:onboarding": "node scripts/check-supabase-onboarding.mjs",
+    "patch:owner": "node scripts/patch-owner-takeover.mjs",
+    "patch:humanize": "node scripts/patch-receptionist-humanize.mjs",
+    "deploy": "node scripts/n8n-cli.mjs deploy",
+    "rollback": "node scripts/n8n-cli.mjs rollback",
+    "workflow": "node scripts/n8n-cli.mjs",
+    "simulate:conversion": "node scripts/simulate-receptionist-conversion.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

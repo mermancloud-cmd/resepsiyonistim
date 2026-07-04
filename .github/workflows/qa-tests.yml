@@ -1,0 +1,67 @@
+name: QA Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      category:
+        description: 'Test kategorisi (bungalov/tiny_house/villa/edge_case/sales)'
+        required: false
+        type: string
+      endpoint:
+        description: 'n8n webhook endpoint URL'
+        required: false
+        type: string
+
+env:
+  N8N_WEBHOOK_URL: ${{ vars.N8N_WEBHOOK_URL || 'https://n8n.merman.sbs/webhook/smoke-test' }}
+  HMAC_SECRET: ${{ secrets.HMAC_SECRET }}
+
+jobs:
+  qa-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python Kurulumu
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Bağımlılıkları Yükle
+        run: |
+          pip install -r tests/requirements.txt
+
+      - name: QA Testlerini Çalıştır
+        run: |
+          ARGS=""
+          if [ "${{ inputs.category }}" != "" ]; then
+            ARGS="$ARGS --cat ${{ inputs.category }}"
+          fi
+          if [ "${{ inputs.endpoint }}" != "" ]; then
+            ARGS="$ARGS --endpoint ${{ inputs.endpoint }}"
+          fi
+          cd tests
+          python bungalov_qa_v3.py $ARGS
+
+      - name: Test Raporunu Yükle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-test-report
+          path: tests/qa_v3_report.json
+          retention-days: 30
+
+      - name: Sonuçları Özetle
+        if: always()
+        run: |
+          if [ -f tests/qa_v3_report.json ]; then
+            echo "### QA Test Sonuçları" >> $GITHUB_STEP_SUMMARY
+            python tests/summarize_report.py tests/qa_v3_report.json >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Rapor dosyası bulunamadı." >> $GITHUB_STEP_SUMMARY
+          fi

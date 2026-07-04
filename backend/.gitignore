@@ -1,0 +1,17 @@
+.env
+node_modules/
+.n8n/
+local-files/
+data/exports/
+data/backups/
+data/proposed/
+data/sanitized/
+reports/
+*.log
+__pycache__/
+*.pyc
+tests/qa_v3_report.json
+tests/qa_v3_report.html
+.env.local
+data/*.db
+data/*.sqlite
