@@ -1,4 +1,4 @@
-# Merman Bungalov AI Resepsiyonist — Dağıtım Durumu
+# Resepsiyonistim — Dağıtım Durumu
 
 **Son güncelleme:** 2026-06-23
 

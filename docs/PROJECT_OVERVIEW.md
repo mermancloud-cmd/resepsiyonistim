@@ -1,6 +1,6 @@
-# Merman Bungalov AI Resepsiyonist — Proje Genel Bakış
+# Resepsiyonistim — Proje Genel Bakış
 
-**Proje:** Elif AI — WhatsApp üzerinden Merman Bungalov tesisi için yapay zeka resepsiyonist
+**Proje:** Resepsiyonistim — WhatsApp üzerinden küçük konaklama işletmeleri için yapay zeka resepsiyonist
 **Son güncelleme:** 2026-07-04
 
 ---

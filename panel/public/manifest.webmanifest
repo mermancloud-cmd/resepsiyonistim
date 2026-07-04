@@ -1,12 +1,12 @@
 {
-  "name": "Bungalow Panel",
-  "short_name": "Panel",
-  "description": "Owner panel for bungalow management",
+  "name": "Resepsiyonistim",
+  "short_name": "Resepsiyonistim",
+  "description": "Resepsiyonistim — işletmeniz için yapay zeka destekli rezervasyon yönetim paneli.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#ffffff",
-  "theme_color": "#0f766e",
+  "background_color": "#FAF5EF",
+  "theme_color": "#C66B47",
   "icons": [
     {
       "src": "/icon-192.png",

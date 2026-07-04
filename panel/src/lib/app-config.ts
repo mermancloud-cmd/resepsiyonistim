@@ -10,7 +10,7 @@
 export const APP_NAME: string =
   (typeof process !== "undefined"
     ? (process.env as Record<string, string | undefined>).NEXT_PUBLIC_APP_NAME
-    : undefined) || "Panel";
+    : undefined) || "Resepsiyonistim";
 
 export const APP_TAGLINE = "İşletme Yönetim Paneli";
 

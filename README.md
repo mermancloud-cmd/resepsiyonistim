@@ -28,7 +28,7 @@ WhatsApp Mesajı → Evolution API
   → Evolution API → WhatsApp yanıtı
   → Telegram Bot → İşletme sahibi bildirimi
 
-Elif Panel (Next.js):
+Resepsiyonistim Panel (Next.js):
   → İşletme sahibi yönetim arayüzü
   → Dashboard, rezervasyon, mesajlar, AI kontrol
   → Onboarding wizard (14 adım)
@@ -73,7 +73,7 @@ resepsiyonistim/
 │   ├── data/
 │   ├── docker-compose.yml
 │   └── package.json
-├── panel/              # Elif Panel (Next.js yönetim arayüzü)
+├── panel/              # Resepsiyonistim Panel (Next.js yönetim arayüzü)
 │   ├── src/
 │   │   ├── app/         # Next.js sayfaları
 │   │   ├── components/  # UI bileşenleri
@@ -114,7 +114,7 @@ npm run check         # API erişimi kontrol
 npm run discover      # Workflow'ları listele
 ```
 
-### Panel (Elif Panel)
+### Panel (Resepsiyonistim Panel)
 
 ```bash
 cd panel

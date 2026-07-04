@@ -11,14 +11,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "İşletme Yönetim Paneli",
+  title: "Resepsiyonistim",
   description:
-    "İşletmeniz için yapay zeka destekli rezervasyon yönetim paneli.",
+    "Resepsiyonistim — işletmeniz için yapay zeka destekli rezervasyon yönetim paneli.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Panel",
+    title: "Resepsiyonistim",
   },
 };
 
@@ -28,7 +28,7 @@ export const viewport: Viewport = {
   maximumScale: 1,
   userScalable: false,
   viewportFit: "cover",
-  themeColor: "#0f766e",
+  themeColor: "#C66B47",
 };
 
 export default function RootLayout({

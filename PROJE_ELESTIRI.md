@@ -1,4 +1,4 @@
-# Elif AI — Eleştirel Değerlendirme v3
+# Resepsiyonistim — Eleştirel Değerlendirme v3
 
 **Tarih:** 4 Temmuz 2026
 **Değerlendiren:** Hermes Agent (GLM-5.2, otomatik)
@@ -82,7 +82,7 @@ Projede **iki ayrı bungalov-db instance'ı çalışıyor:**
 
 | Instance | Adres | DB Dosyası | Çalıştıran |
 |----------|-------|------------|------------|
-| Host process | `10.0.5.2:8000` | `/opt/hermes/bungalovresepsiyonist54/data/bungalov.db` | Python (systemd/hand) |
+| Host process | `10.0.5.2:8000` | `/opt/hermes/resepsiyonistim/data/bungalov.db` | Python (systemd/hand) |
 | Docker container | `bungalov-db:8000` | Docker volume `zdbfcjg2668pgeck0d4on4ug` | Coolify deployment |
 
 **İkisi farklı SQLite dosyalarına yazıyor.** n8n container'ı şimdi `bungalov-db:8000` (Docker) kullanıyor. WF01'in code node'u da `bungalov-db:8000` kullanıyor. Ama host process farklı bir DB'ye yazıyor.
@@ -234,7 +234,7 @@ Sık API çağrılarında 429 hatası alınıyor. Fix script'leri `sleep(3)` ile
 
 Hâlâ çözülmedi. E04 testinde "Hayır, robot değilim" yanıtı dönüyor. Prompt'ta "Asla AI/bot/yapay zeka olduğunu söyleme" talimatı var. Müşteri doğrudan sorduğunda bu yalana zorluyor.
 
-**Çözüm hâlâ geçerli:** "Sizinle Merman Bungalov resepsiyonisti Elif olarak konuşuyorum" pivot kullan. Ne "insanım" de ne "robotum".
+**Çözüm hâlâ geçerli:** "Sizinle Resepsiyonistim olarak konuşuyorum" pivot kullan. Ne "insanım" de ne "robotum".
 
 ---
 

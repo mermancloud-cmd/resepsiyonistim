@@ -1,11 +1,11 @@
-# Merman Bungalov AI Resepsiyonist — n8n Workflow Envanteri
+# Resepsiyonistim — n8n Workflow Envanteri
 
 **Son güncelleme:** 2026-07-04
 **Kaynak:** Canlı n8n REST API sorgulaması + arşivlenmiş çalışma alanı yapıtları
 
 > ⚠️ **KRİTİK NOT:** 4 Temmuz 2026 itibarıyla n8n PostgreSQL volume'u silinmiş, tüm workflow'lar (WF07 hariç) kayıptır.
 > WF02 export JSON'ları repo'da `data/exports/latest/` altında mevcuttur ancak Supabase URL'leri içerir (SQLite API'e dönüştürülmeli).
-> Diğer workflow'lar için hiçbir yedek bulunmamaktadır. Ayrıntılar: [GitHub Issue #6](https://github.com/mermancloud-cmd/bungalovresepsiyonist54/issues/6)
+> Diğer workflow'lar için hiçbir yedek bulunmamaktadır. Ayrıntılar: [GitHub Issue #6](https://github.com/mermancloud-cmd/resepsiyonistim/issues/6)
 
 ---
 
@@ -56,7 +56,7 @@
 
 ### Genel Bakış
 
-WF02, Elif AI sisteminin ana işlem hattıdır. WhatsApp üzerinden gelen müşteri mesajlarını işler, dilini tespit eder, durum makinesini yönetir ve AI yanıtı üretir.
+WF02, Resepsiyonistim sisteminin ana işlem hattıdır. WhatsApp üzerinden gelen müşteri mesajlarını işler, dilini tespit eder, durum makinesini yönetir ve AI yanıtı üretir.
 
 **WF02 ID (n8n):** `LYWTQz4QGYuHm4YA`
 

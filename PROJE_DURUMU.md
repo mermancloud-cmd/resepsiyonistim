@@ -1,13 +1,13 @@
-# Merman Bungalov AI Resepsiyonist — Güncel Proje Durumu
+# Resepsiyonistim — Güncel Proje Durumu
 
 **Güncelleme:** 4 Temmuz 2026
-**Proje:** Elif AI — WhatsApp üzerinden küçük konaklama işletmeleri için yapay zeka resepsiyonist
+**Proje:** Resepsiyonistim — WhatsApp üzerinden küçük konaklama işletmeleri için yapay zeka resepsiyonist
 
 ---
 
 ## 1. Proje Özeti
 
-> ⚠️ **4 Temmuz 2026 kritik durum:** n8n PostgreSQL volume'u silindi. WF07 Smoke Test dışındaki tüm workflow'lar (WF01-WF06, WF08, WF10, WF14, WF16, WF20) kayıp. WF02 export JSON'ları repo'da mevcut ancak SQLite API'e uyarlanması gerekli. Ayrıntı: [GitHub Issue #6](https://github.com/mermancloud-cmd/bungalovresepsiyonist54/issues/6)
+> ⚠️ **4 Temmuz 2026 kritik durum:** n8n PostgreSQL volume'u silindi. WF07 Smoke Test dışındaki tüm workflow'lar (WF01-WF06, WF08, WF10, WF14, WF16, WF20) kayıp. WF02 export JSON'ları repo'da mevcut ancak SQLite API'e uyarlanması gerekli. Ayrıntı: [GitHub Issue #6](https://github.com/mermancloud-cmd/resepsiyonistim/issues/6)
 
 Küçük konaklama işletmeleri (bungalov, tiny house, villa) için geliştirilmiş AI resepsiyonist sistemi. WhatsApp üzerinden misafir sorularını yanıtlar, rezervasyon sürecini yönetir, dil tespiti yapar (tr/en/ar), ve karmaşık durumlarda insan operatöre devreder.
 
@@ -34,7 +34,7 @@ WhatsApp Mesajı → Evolution API Webhook
   → Evolution API → WhatsApp yanıtı
   → Telegram Bot → Yönetici bildirimi
 
-Owner Panel (bungalow-panel):
+Resepsiyonistim Panel (panel/):
   Next.js 16 → SQLite REST API (bungalov-db.merman.sbs)
   → Dashboard, Rezervasyon, Mesajlar, AI Kontrol
   → Onboarding Wizard (14 adım, binary gate)
@@ -64,12 +64,11 @@ Owner Panel (bungalow-panel):
 
 ---
 
-## 4. GitHub Repoları
+## 4. GitHub Repo
 
 | Repo | Tip | İçerik |
 |------|-----|--------|
-| `mermancloud-cmd/bungalovresepsiyonist54` | PRIVATE | n8n workflow yönetimi, QA test suite, simülasyon scriptleri |
-| `mermancloud-cmd/bungalow-panel` | PUBLIC | Next.js owner paneli (frontend + SQLite entegrasyonu) |
+| `mermancloud-cmd/resepsiyonistim` | PRIVATE | Monorepo: `backend/` (n8n + SQLite API + QA), `panel/` (Next.js), `docs/`, `sql/`, `landing/`, `assets/` |
 
 ---
 
@@ -92,7 +91,7 @@ Owner Panel (bungalow-panel):
 
 ---
 
-## 6. Owner Panel (bungalow-panel) — Detay
+## 6. Resepsiyonistim Panel — Detay
 
 ### Sayfalar (14)
 - `/login` — Multi-method auth (JWT api-key)
@@ -215,7 +214,7 @@ use-analytics-dashboard, use-auth-logout, use-conversations, use-dashboard-stats
 - ✅ LLM-as-judge QA sistemi (qa_master_runner.py)
 - ✅ Telegram notifier + canlı test runner
 
-### Owner Panel (bungalow-panel)
+### Resepsiyonistim Panel (panel/)
 - ✅ 14.486 satır TypeScript/TSX
 - ✅ 140+ kaynak dosya
 - ✅ 14 sayfa (login, onboarding, dashboard, reservations, messages, ai, analytics, payments, settings, subscription, reservation-action)
