@@ -1,22 +1,20 @@
-version: '3.8'
-
 services:
-  bungalow-panel:
+  resepsiyonistim:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80"
+      - "3000:3000"
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 10s
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.bungalow-panel.rule=Host(`panel.merman.sbs`) || Host(`owner.merman.sbs`) || Host(`api.merman.sbs`)"
-      - "traefik.http.routers.bungalow-panel.entrypoints=https"
-      - "traefik.http.routers.bungalow-panel.tls=true"
-      - "traefik.http.routers.bungalow-panel.tls.certresolver=letsencrypt"
-      - "traefik.http.services.bungalow-panel.loadbalancer.server.port=80"
+      - "traefik.http.routers.resepsiyonistim.rule=Host(`resepsiyonistim.com`) || Host(`www.resepsiyonistim.com`)"
+      - "traefik.http.routers.resepsiyonistim.entrypoints=https"
+      - "traefik.http.routers.resepsiyonistim.tls=true"
+      - "traefik.http.routers.resepsiyonistim.tls.certresolver=letsencrypt"
+      - "traefik.http.services.resepsiyonistim.loadbalancer.server.port=3000"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ─────────────────────────────────────────────────────────
-# coolify-deploy.sh — Deploy Bungalow Owner Panel via Coolify API
+# coolify-deploy.sh — Deploy Resepsiyonistim via Coolify API
 # ─────────────────────────────────────────────────────────
 set -euo pipefail
 
@@ -19,8 +19,8 @@ Required:
 Options:
   --repo <url>          GitHub repository URL  (default: auto-detected from git remote)
   --branch <name>       Git branch to deploy   (default: main)
-  --domain <domain>     Custom domain           (default: panel.merman.sbs)
-  --project <name>      Coolify project name    (default: bungalow-panel)
+  --domain <domain>     Custom domain           (default: resepsiyonistim.com)
+  --project <name>      Coolify project name    (default: resepsiyonistim)
   --env-file <path>     Path to .env file with secrets to upload
   -h, --help            Show this help
 
@@ -28,7 +28,7 @@ Example:
   ./coolify-deploy.sh \\
     --api-key "coolify-xxxx" \\
     --url "https://coolify.merman.sbs" \\
-    --domain "panel.merman.sbs" \\
+    --domain "resepsiyonistim.com" \\
     --env-file .env.production
 EOF
   exit 0
@@ -39,8 +39,8 @@ API_KEY=""
 COOLIFY_URL=""
 REPO_URL=""
 BRANCH="main"
-DOMAIN="panel.merman.sbs"
-PROJECT_NAME="bungalow-panel"
+DOMAIN="resepsiyonistim.com"
+PROJECT_NAME="resepsiyonistim"
 ENV_FILE=""
 
 # ── Parse args ──
@@ -96,7 +96,7 @@ api() {
 }
 
 echo -e "${CYAN}╔══════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║  Bungalow Owner Panel — Coolify Deployment   ║${NC}"
+echo -e "${CYAN}║  Resepsiyonistim — Coolify Deployment         ║${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════╝${NC}"
 echo ""
 echo -e "  Coolify URL : ${GREEN}${COOLIFY_URL}${NC}"
@@ -124,7 +124,7 @@ PROJECT_ID=$(echo "$PROJECTS" | grep -o "\"name\":\"${PROJECT_NAME}\"[^}]*\"id\"
 
 if [[ -z "$PROJECT_ID" ]]; then
   echo -e "  Project not found. Creating..."
-  CREATE_RESP=$(api POST "/projects" -d "{\"name\":\"${PROJECT_NAME}\",\"description\":\"Bungalow Owner Panel — AI-powered reservation management\"}")
+  CREATE_RESP=$(api POST "/projects" -d "{\"name\":\"${PROJECT_NAME}\",\"description\":\"Resepsiyonistim — AI-powered reservation management\"}")
   PROJECT_ID=$(echo "$CREATE_RESP" | grep -o '"id":[0-9]*' | head -1 | grep -o '[0-9]*')
   echo -e "  ${GREEN}✓ Created project (ID: ${PROJECT_ID})${NC}"
 else

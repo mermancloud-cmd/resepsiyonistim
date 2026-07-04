@@ -66,17 +66,17 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   // ─── Deployment Mode ─────────────────────────────────────────────────────
-  // "export" = Static HTML/JS/CSS, served by nginx (current production)
+  // "standalone" = Node.js server (current production)
+  //   → Next.js middleware (src/middleware.ts) runs: rate limiting, CSRF, CORS
+  //   → headers() below is effective (security headers served by Next.js)
+  //   → API route handlers and SSR are active
+  //   → Served by standalone Node.js server (Dockerfile), Coolify Traefik proxies
+  //
+  // "export" = Static HTML/JS/CSS, served by nginx (previous production)
   //   → Security headers come from nginx.conf (NOT from this config)
   //   → Middleware (src/middleware.ts) does NOT run
-  //
-  // "standalone" = Node.js server, middleware runs, headers() effective
-  //   → Switch to "standalone" when you want Next.js middleware to handle
-  //     rate limiting, CSRF, CORS, and security headers server-side
-  //   → Requires the Dockerfile.standalone (not the nginx Dockerfile)
-  //
-  // To switch: change "export" → "standalone" and use Dockerfile.standalone
-  output: "export",
+  //   → To revert: change "standalone" → "export" and use the nginx Dockerfile
+  output: "standalone",
   poweredByHeader: false,
   turbopack: {},
   typescript: {
@@ -94,7 +94,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://panel.merman.sbs",
+            value: "https://resepsiyonistim.com",
           },
           {
             key: "Access-Control-Allow-Methods",
