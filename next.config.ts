@@ -68,10 +68,10 @@ const nextConfig: NextConfig = {
   // ─── Deployment Mode ─────────────────────────────────────────────────────
   // "export" = Static HTML/JS/CSS, served by nginx (current production)
   //   → Security headers come from nginx.conf (NOT from this config)
-  //   → Middleware (src/middleware.ts) does NOT run
+  //   → Proxy (src/proxy.ts) does NOT run
   //
-  // "standalone" = Node.js server, middleware runs, headers() effective
-  //   → Switch to "standalone" when you want Next.js middleware to handle
+  // "standalone" = Node.js server, proxy runs, headers() effective
+  //   → Switch to "standalone" when you want Next.js proxy to handle
   //     rate limiting, CSRF, CORS, and security headers server-side
   //   → Requires the Dockerfile.standalone (not the nginx Dockerfile)
   //

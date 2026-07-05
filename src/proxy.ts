@@ -129,8 +129,8 @@ function getCORSHeaders(request: NextRequest): Record<string, string> {
   };
 }
 
-// --- Main Middleware ---
-export async function middleware(request: NextRequest) {
+// --- Main Proxy (formerly Middleware) ---
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Handle CORS preflight (OPTIONS) requests
