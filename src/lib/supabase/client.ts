@@ -5,9 +5,11 @@ export function createClient() {
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) {
     // During static export build, env vars may not be available.
-    // Return a stub that will throw on actual use but won't crash the build.
-    throw new Error(
-      "Supabase client requires NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY"
+    // Return a stub that won't crash prerendering but will make auth
+    // behave as logged-out at runtime if env vars are truly missing.
+    return createBrowserClient(
+      url ?? "https://placeholder.supabase.co",
+      key ?? "placeholder-key"
     );
   }
   return createBrowserClient(url, key);
