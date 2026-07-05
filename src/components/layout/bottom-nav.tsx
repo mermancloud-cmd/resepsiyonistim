@@ -7,6 +7,7 @@ import {
   CreditCard,
   BarChart3,
   Settings,
+  Smartphone,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -40,6 +41,12 @@ const NAV_ITEMS = [
     label: "Ayarlar",
     href: "/settings",
     icon: Settings,
+  },
+  {
+    id: "whatsapp" as const,
+    label: "WhatsApp",
+    href: "/whatsapp",
+    icon: Smartphone,
   },
 ];
 
