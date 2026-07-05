@@ -8,8 +8,8 @@ export function createClient() {
     // Return a stub that won't crash prerendering but will make auth
     // behave as logged-out at runtime if env vars are truly missing.
     return createBrowserClient(
-      url ?? "https://placeholder.supabase.co",
-      key ?? "placeholder-key"
+      "https://placeholder-project.supabase.co",
+      "placeholder-key"
     );
   }
   return createBrowserClient(url, key);
