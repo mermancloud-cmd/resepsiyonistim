@@ -31,7 +31,7 @@ import {
   Clock,
   ArrowLeft,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   parseActionParams,
   validateActionParams,
@@ -272,12 +272,13 @@ export default function ReservationActionPage() {
             Geçersiz Bağlantı
           </h1>
           <p className="mb-6 text-sm text-muted-foreground">{error}</p>
-          <Button asChild variant="outline">
-            <a href="/reservations">
-              <ArrowLeft className="mr-2 size-4" />
-              Rezervasyonlara Dön
-            </a>
-          </Button>
+          <a
+            href="/reservations"
+            className={cn(buttonVariants({ variant: "outline" }))}
+          >
+            <ArrowLeft className="mr-2 size-4" />
+            Rezervasyonlara Dön
+          </a>
         </div>
       </PageShell>
     );
@@ -322,15 +323,19 @@ export default function ReservationActionPage() {
           )}
 
           <div className="flex gap-3">
-            <Button asChild variant="outline" className="flex-1">
-              <a href="/reservations">
-                <ArrowLeft className="mr-2 size-4" />
-                Rezervasyonlara Dön
-              </a>
-            </Button>
-            <Button asChild variant="outline" className="flex-1">
-              <a href="/dashboard">Kontrol Paneli</a>
-            </Button>
+            <a
+              href="/reservations"
+              className={cn(buttonVariants({ variant: "outline" }), "flex-1")}
+            >
+              <ArrowLeft className="mr-2 size-4" />
+              Rezervasyonlara Dön
+            </a>
+            <a
+              href="/dashboard"
+              className={cn(buttonVariants({ variant: "outline" }), "flex-1")}
+            >
+              Kontrol Paneli
+            </a>
           </div>
         </div>
       </PageShell>
@@ -360,9 +365,12 @@ export default function ReservationActionPage() {
             >
               Tekrar Dene
             </Button>
-            <Button asChild variant="outline" className="flex-1">
-              <a href="/reservations">Rezervasyonlara Dön</a>
-            </Button>
+            <a
+              href="/reservations"
+              className={cn(buttonVariants({ variant: "outline" }), "flex-1")}
+            >
+              Rezervasyonlara Dön
+            </a>
           </div>
         </div>
       </PageShell>
@@ -434,9 +442,12 @@ export default function ReservationActionPage() {
 
         {/* Action buttons */}
         <div className="flex gap-3">
-          <Button asChild variant="outline" className="flex-1" size="lg">
-            <a href="/reservations">İptal</a>
-          </Button>
+          <a
+            href="/reservations"
+            className={cn(buttonVariants({ variant: "outline", size: "lg" }), "flex-1")}
+          >
+            İptal
+          </a>
           <Button
             onClick={handleConfirm}
             disabled={state === "confirming"}
