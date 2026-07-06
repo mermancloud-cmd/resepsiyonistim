@@ -29,6 +29,6 @@ jobs:
         run: npm run build
 
       - name: Deploy to Cloudflare Pages
-        run: npx wrangler pages deploy out --project-name bungalow-panel --branch main || echo "⚠ Deploy skipped (CLOUDFLARE_API_TOKEN not configured)"
+        run: npx wrangler pages deploy out --project-name bungalow-panel --branch main
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
