@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { CreditCard, Loader2, ShieldCheck, AlertTriangle } from "lucide-react";
 
@@ -51,6 +50,13 @@ export function CheckoutForm({
   });
 
   const [step, setStep] = React.useState<"form" | "payment">("form");
+
+  // Redirect to payment page when IYZICO returns a URL
+  React.useEffect(() => {
+    if (step === "payment" && paymentPageUrl && !isLoading) {
+      window.location.href = paymentPageUrl;
+    }
+  }, [step, paymentPageUrl, isLoading]);
 
   const handleChange = (field: keyof BuyerInfo) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setBuyer((prev) => ({ ...prev, [field]: e.target.value }));
@@ -107,9 +113,6 @@ export function CheckoutForm({
 
   // If we have a payment page URL, redirect there
   if (step === "payment" && paymentPageUrl && !isLoading) {
-    React.useEffect(() => {
-      window.location.href = paymentPageUrl;
-    }, [paymentPageUrl]);
     return (
       <Card>
         <CardContent className="p-8 text-center">
