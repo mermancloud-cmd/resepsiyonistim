@@ -144,7 +144,7 @@ export const pushSendSchema = z.object({
   title: z.string().min(1, "Başlık gereklidir").max(100),
   body: z.string().min(1, "Mesaj içeriği gereklidir").max(500),
   icon: z.string().url().optional(),
-  data: z.record(z.unknown()).optional(),
+  data: z.record(z.string(), z.unknown()).optional(),
 });
 
 // ─── Subscription Schemas ─────────────────────────────────────────────────────

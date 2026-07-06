@@ -57,7 +57,7 @@ function generateRandomString(): string {
 
 async function iyzicoPost<TResponse>(
   path: string,
-  body: Record<string, unknown>
+  body: object
 ): Promise<TResponse> {
   const config = getIyzicoConfig();
   const bodyStr = JSON.stringify(body);
