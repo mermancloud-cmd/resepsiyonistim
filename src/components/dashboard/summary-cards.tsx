@@ -32,7 +32,7 @@ export function SummaryCards() {
     },
     {
       label: "Bugün Mesaj",
-      value: ((data as any)?.messages_today ?? 47).toString(),
+      value: (data?.messages_today ?? 0).toString(),
       icon: Users,
       color: "text-violet-600",
       bgColor: "bg-violet-50 dark:bg-violet-900/20",

@@ -10,11 +10,13 @@ interface DashboardStats {
   revenue_today: number
   active_conversations: number
   ai_enabled: boolean
+  messages_today: number
   // Component display fields
   checkInsToday?: number
   checkOutsToday?: number
   occupancyRate?: number
   pendingActions?: number
+  messagesToday?: string
   aiStatus?: string
   aiMessagesHandled?: number
   aiLastActivity?: string
@@ -45,6 +47,7 @@ export function useDashboardStats() {
         revenueResult,
         conversationsResult,
         aiSettingsResult,
+        messagesTodayResult,
       ] = await Promise.all([
         // Check-ins today
         supabase
@@ -90,6 +93,13 @@ export function useDashboardStats() {
           .select('enabled')
           .eq('tenant_id', tenantId)
           .maybeSingle(),
+
+        // Messages today
+        supabase
+          .from('messages')
+          .select('id', { count: 'exact', head: true })
+          .eq('tenant_id', tenantId)
+          .gte('created_at', today),
       ])
 
       const revenue = (revenueResult.data ?? []).reduce(
@@ -110,11 +120,13 @@ export function useDashboardStats() {
         revenue_today: revenue,
         active_conversations: activeConversations,
         ai_enabled: aiSettingsResult.data?.enabled ?? false,
+        messages_today: messagesTodayResult.count ?? 0,
         // Component display fields
         checkInsToday: checkInsResult.count ?? 0,
         checkOutsToday: checkOutsResult.count ?? 0,
         occupancyRate: 0,
         pendingActions: pendingResult.count ?? 0,
+        messagesToday: (messagesTodayResult.count ?? 0).toString(),
         aiStatus: aiEnabledCount > 0 ? 'active' : 'inactive',
         aiMessagesHandled: aiEnabledCount,
       }
