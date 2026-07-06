@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/auth-context";
 import { isValidPhone, isValidOTP, sanitizeOTP } from "@/lib/auth-utils";
@@ -1172,6 +1173,13 @@ export default function LoginPage() {
         {mode === "login"
           ? "Giriş yaparak kullanım koşullarını kabul etmiş olursunuz."
           : "Kayıt olarak kullanım koşullarını kabul etmiş olursunuz."}
+      </p>
+      <p className="mt-3 text-center text-xs text-muted-foreground">
+        {mode === "login" ? (
+          <>Hesabın yok mu? <Link href="/signup" className="font-medium text-primary hover:underline">E-posta ile Kaydol</Link></>
+        ) : (
+          <>Zaten hesabın var mı? <Link href="/login" className="font-medium text-primary hover:underline">Giriş Yap</Link></>
+        )}
       </p>
     </div>
   );

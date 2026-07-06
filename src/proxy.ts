@@ -250,7 +250,7 @@ export async function proxy(request: NextRequest) {
   }
 
   // Add no-cache headers on auth pages
-  const authPages = ["/login", "/onboarding"];
+  const authPages = ["/login", "/onboarding", "/signup"];
   if (authPages.some((p) => pathname.startsWith(p))) {
     response = addNoCacheHeaders(response);
   }
