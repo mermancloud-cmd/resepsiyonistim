@@ -8,9 +8,7 @@
 
 /** Primary brand name — override via NEXT_PUBLIC_APP_NAME env */
 export const APP_NAME: string =
-  (typeof process !== "undefined"
-    ? (process.env as Record<string, string | undefined>).NEXT_PUBLIC_APP_NAME
-    : undefined) || "Panel";
+  (process.env as Record<string, string | undefined>).NEXT_PUBLIC_APP_NAME || "Panel";
 
 export const APP_TAGLINE = "İşletme Yönetim Paneli";
 
