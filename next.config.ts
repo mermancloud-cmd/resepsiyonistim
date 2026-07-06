@@ -22,9 +22,6 @@ const nextConfig: NextConfig = {
   output: "export",
   poweredByHeader: false,
   turbopack: {},
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 };
 
 export default withSerwist(nextConfig);
