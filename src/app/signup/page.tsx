@@ -60,8 +60,9 @@ export default function SignupPage() {
       }
 
       setStep("success");
-    } catch (err: any) {
-      setError(err?.message || "Beklenmeyen bir hata oluştu.");
+    } catch (err: unknown) {
+      const es = err as Record<string, unknown>;
+      setError(typeof es?.message === "string" ? es.message : "Beklenmeyen bir hata oluştu.");
     } finally {
       setLoading(false);
     }

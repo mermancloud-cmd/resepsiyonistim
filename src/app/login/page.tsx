@@ -50,12 +50,18 @@ function generatePassword(): string {
 
 // ─── Supabase error messages ──────────────────────────────────────────────────
 
-function getSupabaseErrorMessage(error: any): string {
+function getSupabaseErrorMessage(error: unknown): string {
   if (!error) return "Bilinmeyen bir hata oluştu.";
+  const err =
+    typeof error === "string" ? null : (error as Record<string, unknown>);
   const msg =
     typeof error === "string"
       ? error
-      : error.message || error.error_description || error.toString();
+      : typeof err?.message === "string"
+        ? err.message
+        : typeof err?.error_description === "string"
+          ? err.error_description
+          : String(error);
 
   if (msg.includes("User already registered"))
     return "Bu telefon numarası ile kayıtlı bir hesap zaten var.";
