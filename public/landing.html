@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resepsiyonistim — Tesisinizin 7/24 Dijital Resepsiyonisti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        whatsapp: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'slide-in-left': 'slideInLeft 0.8s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.8s ease-out forwards',
+                        'chat-bubble': 'chatBubble 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-40px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(40px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        chatBubble: {
+                            '0%': { opacity: '0', transform: 'scale(0.8) translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .observer-hidden {
+            opacity: 0;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .whatsapp-glow {
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.3), 0 0 60px rgba(16, 185, 129, 0.1);
+        }
+        .whatsapp-glow:hover {
+            box-shadow: 0 0 40px rgba(16, 185, 129, 0.45), 0 0 80px rgba(16, 185, 129, 0.15);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e3a5f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .phone-notch {
+            width: 120px;
+            height: 24px;
+            background: #1a1a1a;
+            border-radius: 0 0 14px 14px;
+            margin: 0 auto;
+        }
+        .chat-scroll::-webkit-scrollbar {
+            width: 0px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-slate-800 antialiased overflow-x-hidden">
+
+    <!-- ========== NAVBAR ========== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-18">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2.5 group">
+                    <div class="w-9 h-9 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200 group-hover:shadow-indigo-300 transition-shadow">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-bold text-slate-800 tracking-tight">Resepsiyonistim</span>
+                </a>
+
+                <!-- Center Links (Desktop) -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#nasil-calisir" class="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">Nasıl Çalışır</a>
+                    <a href="#ozellikler" class="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">Özellikler</a>
+                    <a href="#iletisim" class="text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors">İletişim</a>
+                </div>
+
+                <!-- CTA Button -->
+                <a href="https://wa.me/905427450654?text=Merhaba%2C%20yapay%20zeka%20resepsiyonistini%20denemek%20istiyorum" target="_blank" class="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl transition-all duration-200 shadow-lg shadow-emerald-200 hover:shadow-emerald-300 hover:-translate-y-0.5">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    Canlı Dene
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="relative pt-32 pb-20 lg:pt-44 lg:pb-32 overflow-hidden">
+        <!-- Subtle background gradient -->
+        <div class="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-gray-50"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-br from-indigo-50 via-transparent to-emerald-50 rounded-full blur-3xl opacity-60"></div>
+
+        <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold px-4 py-1.5 rounded-full mb-8 animate-fade-in">
+                <span class="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
+                Bungalov, Otel ve Konaklama İşletmeleri İçin
+            </div>
+
+            <!-- Main Headline -->
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight tracking-tight gradient-text observer-hidden animate-fade-in-up" style="animation-delay: 0.1s">
+                Tesisinizin 7/24 Telefonlara Bakan <span class="text-indigo-600">Dijital Resepsiyonisti.</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="mt-6 text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed observer-hidden animate-fade-in-up" style="animation-delay: 0.3s">
+                Gelen çağrıları ve rezervasyon taleplerini insan kalitesinde yanıtlayan, müşterilerinizi kaçırmayan bulut tabanlı akıllı sistem.
+            </p>
+
+            <!-- MEGA WhatsApp CTA -->
+            <div class="mt-12 observer-hidden animate-fade-in-up" style="animation-delay: 0.5s">
+                <a href="https://wa.me/905427450654?text=Merhaba%2C%20yapay%20zeka%20resepsiyonistini%20denemek%20istiyorum" target="_blank" class="group relative inline-flex flex-col items-center justify-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl px-10 py-7 sm:px-14 sm:py-8 transition-all duration-300 whatsapp-glow hover:-translate-y-1">
+                    <!-- Pulse rings -->
+                    <span class="absolute inset-0 rounded-2xl bg-emerald-400 animate-ping opacity-10"></span>
+                    <span class="absolute -inset-1 rounded-2xl border-2 border-emerald-400/30 animate-pulse-slow"></span>
+                    
+                    <!-- WhatsApp Icon + Text -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-8 h-8 sm:w-10 sm:h-10" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        <span class="text-xl sm:text-2xl font-bold tracking-tight">TEK TIKLA WHATSAPP'TA DENE</span>
+                    </div>
+                    <span class="text-sm text-emerald-100 font-medium">Form yok, kart yok; sistemimizi şimdi kendi telefonunuzda test edin</span>
+                </a>
+            </div>
+
+            <!-- Trust signals -->
+            <div class="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-slate-400 observer-hidden animate-fade-in-up" style="animation-delay: 0.7s">
+                <div class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    14 gün ücretsiz
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    Kurulum 10 dakika
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    Sözleşme yok
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== NASIL ÇALIŞIR + PHONE MOCKUP ========== -->
+    <section id="nasil-calisir" class="py-20 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16 lg:mb-20">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text observer-hidden">Nasıl Çalışır?</h2>
+                <p class="mt-4 text-lg text-slate-500 max-w-xl mx-auto observer-hidden">Müşterileriniz WhatsApp'tan yazar, dijital resepsiyonistiniz saniyeler içinde yanıt verir.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Phone Mockup -->
+                <div class="flex justify-center observer-hidden">
+                    <div class="relative w-[320px] sm:w-[360px]">
+                        <!-- Phone Frame -->
+                        <div class="bg-slate-900 rounded-[3rem] p-3 shadow-2xl shadow-slate-900/20">
+                            <div class="bg-white rounded-[2.4rem] overflow-hidden">
+                                <!-- Status Bar -->
+                                <div class="bg-white px-6 pt-4 pb-2 flex items-center justify-between">
+                                    <div class="phone-notch"></div>
+                                </div>
+                                <!-- WhatsApp Header -->
+                                <div class="bg-emerald-600 px-4 py-3 flex items-center gap-3">
+                                    <div class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center">
+                                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0 4.14-3.36 7.5-7.5 7.5S4.5 16.14 4.5 12 7.86 4.5 12 4.5s7.5 3.36 7.5 7.5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3"/></svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-white font-semibold text-sm">Resepsiyonistim</p>
+                                        <p class="text-emerald-100 text-xs">çevrimiçi</p>
+                                    </div>
+                                </div>
+                                <!-- Chat Area -->
+                                <div class="bg-[#efeae2] px-4 py-4 min-h-[380px] chat-scroll overflow-y-auto max-h-[400px]">
+                                    <!-- Date chip -->
+                                    <div class="flex justify-center mb-3">
+                                        <span class="bg-white/80 text-slate-500 text-[10px] font-medium px-3 py-1 rounded-lg shadow-sm">Bugün</span>
+                                    </div>
+                                    <!-- Customer Message -->
+                                    <div class="flex justify-end mb-2 chat-msg" data-delay="0">
+                                        <div class="bg-[#dcf8c6] rounded-2xl rounded-br-md px-3.5 py-2 max-w-[80%] shadow-sm">
+                                            <p class="text-sm text-slate-800">Merhaba, bu hafta sonu için 2 kişilik bungalov müsaitlik var mı?</p>
+                                            <p class="text-[10px] text-slate-400 text-right mt-1">14:32</p>
+                                        </div>
+                                    </div>
+                                    <!-- Bot Response -->
+                                    <div class="flex justify-start mb-2 chat-msg" data-delay="600">
+                                        <div class="bg-white rounded-2xl rounded-bl-md px-3.5 py-2 max-w-[80%] shadow-sm">
+                                            <p class="text-sm text-slate-800">Merhaba! 😊 Hoş geldiniz. Elbette, bu hafta sonu için müsaitliğimiz mevcut.</p>
+                                            <p class="text-[10px] text-slate-400 text-right mt-1">14:32</p>
+                                        </div>
+                                    </div>
+                                    <!-- Bot Response 2 -->
+                                    <div class="flex justify-start mb-2 chat-msg" data-delay="1200">
+                                        <div class="bg-white rounded-2xl rounded-bl-md px-3.5 py-2 max-w-[80%] shadow-sm">
+                                            <p class="text-sm text-slate-800">🏡 <strong>Doğa Bungalov</strong> — 2.800₺/gece<br>🌲 <strong>Orman Suite</strong> — 3.500₺/gece<br><br>Hangisiyle ilgilenirsiniz?</p>
+                                            <p class="text-[10px] text-slate-400 text-right mt-1">14:32</p>
+                                        </div>
+                                    </div>
+                                    <!-- Customer Response -->
+                                    <div class="flex justify-end mb-2 chat-msg" data-delay="1800">
+                                        <div class="bg-[#dcf8c6] rounded-2xl rounded-br-md px-3.5 py-2 max-w-[80%] shadow-sm">
+                                            <p class="text-sm text-slate-800">Doğa Bungalov güzel görünüyor, rezervasyon yapabilir miyim?</p>
+                                            <p class="text-[10px] text-slate-400 text-right mt-1">14:33</p>
+                                        </div>
+                                    </div>
+                                    <!-- Bot Confirmation -->
+                                    <div class="flex justify-start mb-2 chat-msg" data-delay="2400">
+                                        <div class="bg-white rounded-2xl rounded-bl-md px-3.5 py-2 max-w-[80%] shadow-sm">
+                                            <p class="text-sm text-slate-800">Harika seçim! ✅ Rezervasyonunuzu oluşturuyorum. Check-in: Cumartesi 14:00. Size onay mesajı göndereceğim.</p>
+                                            <p class="text-[10px] text-slate-400 text-right mt-1">14:33</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Input Bar -->
+                                <div class="bg-[#f0f0f0] px-3 py-2.5 flex items-center gap-2">
+                                    <div class="flex-1 bg-white rounded-full px-4 py-2 text-xs text-slate-400">Mesaj yazın...</div>
+                                    <div class="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Steps -->
+                <div class="space-y-10">
+                    <!-- Step 1 -->
+                    <div class="flex gap-5 observer-hidden">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-lg font-bold">1</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Müşteriniz WhatsApp'tan Yazar</h3>
+                            <p class="text-slate-500 leading-relaxed">Rezervasyon sorusu, fiyat bilgisi veya müsaitlik talebi — müşteriniz herhangi bir numarayı aramadan, alışkan olduğu kanaldan size ulaşır.</p>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="flex gap-5 observer-hidden">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-lg font-bold">2</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Dijital Resepsiyonist Anında Yanıtlar</h3>
+                            <p class="text-slate-500 leading-relaxed">Tesisinizin bilgilerine, fiyatlarına ve müsaitlik takvimine bağlı olan sistemimiz; saniyeler içinde doğru, nazik ve profesyonel cevaplar verir.</p>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="flex gap-5 observer-hidden">
+                        <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center text-lg font-bold">3</div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-800 mb-2">Rezervasyon Oluşur, Siz Bildirim Alırsınız</h3>
+                            <p class="text-slate-500 leading-relaxed">Müşteri onayını verir, rezervasyon otomatik kaydedilir. Siz ve ekibiniz tüm detayları panelinizden takip edersiniz — tek bir çağrıyı bile kaçırmazsınız.</p>
+                        </div>
+                    </div>
+
+                    <!-- CTA -->
+                    <div class="pt-4 observer-hidden">
+                        <a href="https://wa.me/905427450654?text=Merhaba%2C%20yapay%20zeka%20resepsiyonistini%20denemek%20istiyorum" target="_blank" class="inline-flex items-center gap-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-6 py-3.5 rounded-xl transition-all duration-200 shadow-lg shadow-emerald-200 hover:shadow-emerald-300 hover:-translate-y-0.5">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            Şimdi Kendi Telefonunda Dene
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== ÖZELLİKLER GRID ========== -->
+    <section id="ozellikler" class="py-20 lg:py-32 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold gradient-text observer-hidden">Konaklama İşletmenize Değer Katar</h2>
+                <p class="mt-4 text-lg text-slate-500 max-w-xl mx-auto observer-hidden">Tesisinizin ihtiyacı olan her şey tek bir akıllı sistemde.</p>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 observer-hidden group">
+                    <div class="w-14 h-14 bg-indigo-50 group-hover:bg-indigo-100 rounded-2xl flex items-center justify-center mb-6 transition-colors">
+                        <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">7/24 Kesintisiz Hizmet</h3>
+                    <p class="text-slate-500 leading-relaxed">Gece yarısı gelen rezervasyon talebi mi? Dijital resepsiyonistiniz hiçbir zaman uyumaz. Tatil, hafta sonu, mesai saati dışı — her an aynı kalitede hizmet.</p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 observer-hidden group">
+                    <div class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-2xl flex items-center justify-center mb-6 transition-colors">
+                        <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Anında Rezervasyon Yönetimi</h3>
+                    <p class="text-slate-500 leading-relaxed">Müşteri talep eder, sistem müsaitliği kontrol eder ve rezervasyonu oluşturur. Takvim çakışması olmaz, double-booking riski sıfıra iner.</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 observer-hidden group">
+                    <div class="w-14 h-14 bg-violet-50 group-hover:bg-violet-100 rounded-2xl flex items-center justify-center mb-6 transition-colors">
+                        <svg class="w-7 h-7 text-violet-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">Gelişmiş Raporlama Paneli</h3>
+                    <p class="text-slate-500 leading-relaxed">Her konuşmayı, her rezervasyonu ve her müşteri etkileşimini takip edin. Hangı saatlerde talep artıyor, hangi sorular sık soruluyor — verilerle karar verin.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FINAL CTA ========== -->
+    <section class="py-20 lg:py-28 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold gradient-text observer-hidden">Bir Çağrıyı Bile Kaçırmayın</h2>
+            <p class="mt-4 text-lg text-slate-500 observer-hidden">Her yanıtsız mesaj, boş geçen bir gece demek. Dijital resepsiyonistiniz 3 dakikada hazır, ilk günden itibaren müşteri kazanmaya başlarsınız.</p>
+            <div class="mt-10 observer-hidden">
+                <a href="https://wa.me/905427450654?text=Merhaba%2C%20yapay%20zeka%20resepsiyonistini%20denemek%20istiyorum" target="_blank" class="inline-flex items-center gap-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-200 shadow-lg shadow-emerald-200 hover:shadow-emerald-300 hover:-translate-y-0.5 text-lg">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Hemen WhatsApp'ta Başla
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer id="iletisim" class="bg-slate-900 text-slate-400 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-2.5 mb-4">
+                        <div class="w-9 h-9 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+                            </svg>
+                        </div>
+                        <span class="text-lg font-bold text-white">Resepsiyonistim</span>
+                    </div>
+                    <p class="text-sm leading-relaxed">Bungalov, otel ve konaklama işletmeleri için akıllı dijital resepsiyonist çözümü. Merman Cloud güvencesiyle.</p>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Hızlı Erişim</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li><a href="#nasil-calisir" class="hover:text-white transition-colors">Nasıl Çalışır</a></li>
+                        <li><a href="#ozellikler" class="hover:text-white transition-colors">Özellikler</a></li>
+                        <li><a href="https://wa.me/905427450654?text=Merhaba%2C%20yapay%20zeka%20resepsiyonistini%20denemek%20istiyorum" target="_blank" class="hover:text-white transition-colors">Canlı Demo</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">İletişim</h4>
+                    <ul class="space-y-2.5 text-sm">
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+                            <a href="mailto:mermancloud@gmail.com" class="hover:text-white transition-colors">mermancloud@gmail.com</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+                            <a href="tel:+905349187234" class="hover:text-white transition-colors">+90 534 918 72 34</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-slate-500">© 2025 Resepsiyonistim — Merman Cloud. Tüm hakları saklıdır.</p>
+                <p class="text-xs text-slate-600">Bungalov, Otel ve Konaklama İşletmeleri İçin Akıllı Resepsiyon Çözümü</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCROLL ANIMATIONS ========== -->
+    <script>
+        // Intersection Observer for scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('observer-hidden');
+                    entry.target.style.animation = '';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.observer-hidden').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Chat animation - messages appear sequentially
+        const chatObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const messages = entry.target.querySelectorAll('.chat-msg');
+                    messages.forEach((msg, index) => {
+                        const delay = parseInt(msg.dataset.delay) || index * 600;
+                        msg.style.opacity = '0';
+                        msg.style.transform = 'scale(0.8) translateY(10px)';
+                        msg.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                        setTimeout(() => {
+                            msg.style.opacity = '1';
+                            msg.style.transform = 'scale(1) translateY(0)';
+                        }, 400 + delay);
+                    });
+                    chatObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const phoneFrame = document.querySelector('.chat-scroll');
+        if (phoneFrame) {
+            chatObserver.observe(phoneFrame);
+        }
+
+        // Smooth navbar shadow on scroll
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-sm');
+            } else {
+                nav.classList.remove('shadow-sm');
+            }
+        });
+    </script>
+</body>
+</html>
