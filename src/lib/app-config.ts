@@ -22,4 +22,4 @@ export const BUSINESS_TYPES = [
 // Canlı WhatsApp Demo — Evolution API (Merman instance)
 // Test işletmesi Merman için bağlı gerçek WhatsApp numarası
 export const DEMO_WHATSAPP_NUMBER = "905427450654";
-export const DEMO_WHATSAPP_MESSAGE = "Merhaba! Merman'da yer ayırtmak istiyorum.";
+export const DEMO_WHATSAPP_MESSAGE = "Merhaba";
