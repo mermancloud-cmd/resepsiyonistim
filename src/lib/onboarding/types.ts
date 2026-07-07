@@ -293,7 +293,7 @@ export const DEFAULT_ONBOARDING_DATA: OnboardingData = {
   },
   greeting: {
     greetingMessage: "",
-    personaName: "Elif",
+    personaName: "Resepsiyonistim",
     personaTone: "warm",
     welcomeNote: "",
     autoReplyEnabled: true,

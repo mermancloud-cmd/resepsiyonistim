@@ -38,7 +38,7 @@ export default function AIControlPage() {
               AI Kontrol Paneli
             </h2>
             <p className="text-xs text-muted-foreground">
-              Elif — AI Misafir İlişkileri Asistanı
+              Resepsiyonistim — Dijital Resepsiyonist
             </p>
           </div>
         </div>

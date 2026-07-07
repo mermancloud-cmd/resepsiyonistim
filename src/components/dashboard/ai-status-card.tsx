@@ -29,7 +29,7 @@ export function AIStatusCard() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Bot className="size-4 text-teal-600" />
-          Elif AI Durumu
+          Resepsiyonist Durumu
         </CardTitle>
       </CardHeader>
       <CardContent>

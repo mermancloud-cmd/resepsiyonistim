@@ -241,7 +241,7 @@ export function useOnboarding(): UseOnboardingReturn {
   }, [businessId, completedCount]);
 
   // Activate the business (final binary gate)
-  // Sets onboarding_completed = true and activates Elif AI for this tenant
+  // Sets onboarding_completed = true and activates the digital receptionist for this tenant
   const activateBusiness = React.useCallback(async (): Promise<boolean> => {
     if (!businessId || !allComplete) return false;
 
@@ -280,7 +280,7 @@ export function useOnboarding(): UseOnboardingReturn {
         }
       }
 
-      // Trigger Elif AI activation for this tenant
+      // Trigger receptionist activation for this tenant
       try {
         const { error: wfError } = await supabase.rpc("activate_wf02", {
           p_tenant_id: businessId,

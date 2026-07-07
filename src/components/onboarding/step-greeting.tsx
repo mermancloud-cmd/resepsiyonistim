@@ -66,12 +66,12 @@ export function StepGreeting({ data, onChange }: StepGreetingProps) {
         </Label>
         <Input
           id="personaName"
-          placeholder="örn: Elif, Ayşe, Zeynep"
+          placeholder="örn: Resepsiyonistim"
           value={data.personaName}
           onChange={(e) => updateField("personaName", e.target.value)}
         />
         <p className="text-[11px] text-muted-foreground">
-          Misafirler bu isimle hitap edilecektir.
+          Misafirleriniz resepsiyonistinize bu isimle hitap edecek. Varsayılan: <strong>Resepsiyonistim</strong>
         </p>
       </div>
 

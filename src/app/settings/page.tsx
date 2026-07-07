@@ -242,7 +242,7 @@ export default function SettingsPage() {
               <FormField label="Asistan Adı" error={validationErrors.aiName}>
                 <Input
                   {...register("aiName")}
-                  placeholder="Elif"
+                  placeholder="Resepsiyonistim"
                   className={cn(
                     validationErrors.aiName && "border-destructive"
                   )}

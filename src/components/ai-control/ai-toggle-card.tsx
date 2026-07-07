@@ -47,7 +47,7 @@ export function AIToggleCard() {
               </div>
               <div>
                 <p className="font-semibold text-foreground">
-                  {isAIEnabled ? "Elif Aktif" : "Elif Devre Dışı"}
+                  {isAIEnabled ? "Resepsiyonist Aktif" : "Resepsiyonist Devre Dışı"}
                 </p>
                 <p className="text-sm text-muted-foreground">
                   {isAIEnabled
@@ -78,13 +78,13 @@ export function AIToggleCard() {
               <div>
                 <p className="font-medium text-foreground">
                   {isAIEnabled
-                    ? "Elif aktif olarak misafir mesajlarını yanıtlıyor"
-                    : "Elif devre dışı, tüm mesajlar size yönlendirilecek"}
+                    ? "Resepsiyonist aktif olarak misafir mesajlarını yanıtlıyor"
+                    : "Resepsiyonist devre dışı, tüm mesajlar size yönlendirilecek"}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
                   {isAIEnabled
-                    ? "AI, belirlenen kurallar çerçevesinde otomatik yanıtlar gönderiyor."
-                    : "Tüm misafir mesajları doğrudan size iletilecek. AI hiçbir mesajı yanıtlamayacak."}
+                    ? "Dijital resepsiyonist belirlenen kurallar çerçevesinde otomatik yanıtlar gönderiyor."
+                    : "Tüm misafir mesajları doğrudan size iletilecek. Dijital resepsiyonist hiçbir mesajı yanıtlamayacak."}
                 </p>
               </div>
             </div>

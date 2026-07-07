@@ -47,7 +47,7 @@ const activities: ActivityItem[] = [
     icon: CreditCard,
     iconColor: "text-blue-600",
     iconBg: "bg-blue-50",
-    description: "Elif Kaya — ₺18.750 ödeme alındı",
+    description: "Merman Bungalow — ₺18.750 ödeme alındı",
     timestamp: new Date(Date.now() - 45 * 60_000).toISOString(),
   },
   {

@@ -182,7 +182,7 @@ export const mockBusinessSettings = {
 // ─── AI Persona ────────────────────────────────────────────────────────────────
 
 export const mockAIPersona = {
-  name: "Elif",
+  name: "Resepsiyonistim",
   language: "TR" as const,
   tone: "warm" as const,
   responseSpeed: "fast" as const,

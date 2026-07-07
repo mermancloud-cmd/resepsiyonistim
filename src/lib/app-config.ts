@@ -1,6 +1,8 @@
 /** Application Configuration */
 export const APP_NAME: string =
-  (process.env as Record<string, string | undefined>).NEXT_PUBLIC_APP_NAME || "Panel";
+  (typeof process !== "undefined"
+    ? (process.env as Record<string, string | undefined>).NEXT_PUBLIC_APP_NAME
+    : undefined) || "Panel";
 
 export const APP_TAGLINE = "İşletme Yönetim Paneli";
 export const APP_DESCRIPTION = "İşletmeniz için rezervasyon yönetim paneli.";
@@ -17,5 +19,7 @@ export const BUSINESS_TYPES = [
   { value: "other", label: "Diğer" },
 ] as const;
 
-export const DEMO_WHATSAPP_NUMBER = "905555555555";
-export const DEMO_WHATSAPP_MESSAGE = "Merhaba Elif! Rezervasyon yapmak istiyorum.";
+// Canlı WhatsApp Demo — Evolution API (Merman instance)
+// Test işletmesi Merman için bağlı gerçek WhatsApp numarası
+export const DEMO_WHATSAPP_NUMBER = "905349187234";
+export const DEMO_WHATSAPP_MESSAGE = "Merhaba! Merman'da yer ayırtmak istiyorum.";
