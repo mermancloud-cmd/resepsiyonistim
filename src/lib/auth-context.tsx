@@ -35,7 +35,7 @@ export interface AuthActions {
   signInWithEmail: (email: string, password: string) => Promise<{ error: AuthError | null }>;
   signInWithMagicLink: (email: string) => Promise<{ error: AuthError | null }>;
   verifyOtp: (phone: string, token: string) => Promise<{ error: AuthError | null }>;
-  signUp: (email: string, password: string, metadata?: Record<string, unknown>) => Promise<{ data: any; error: AuthError | null }>;
+  signUp: (email: string, password: string, metadata?: Record<string, unknown>) => Promise<{ data: { user: User | null; session: Session | null } | null; error: AuthError | null }>;
   signOut: () => Promise<void>;
   refreshSession: () => Promise<void>;
 }
