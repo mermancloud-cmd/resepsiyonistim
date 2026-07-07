@@ -85,17 +85,13 @@ self.addEventListener("notificationclick", (event: NotificationEvent) => {
   const urlToOpen = event.notification.data?.url || "/";
 
   event.waitUntil(
-    (self as any).clients.matchAll({ type: "window", includeUncontrolled: true }).then((windowClients: any) => {
-      // Eğer zaten açık bir pencere varsa, onu odakla
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((windowClients) => {
       for (const client of windowClients) {
         if (client.url.includes(urlToOpen) && "focus" in client) {
-          return client.focus();
+          return (client as WindowClient).focus();
         }
       }
-      // Yoksa yeni bir pencere aç
-      if ((self as any).clients.openWindow) {
-        return (self as any).clients.openWindow(urlToOpen);
-      }
+      return self.clients.openWindow(urlToOpen);
     })
   );
 });

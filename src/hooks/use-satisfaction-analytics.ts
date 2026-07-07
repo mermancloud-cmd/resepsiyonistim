@@ -224,9 +224,8 @@ async function fetchSatisfactionAnalytics(): Promise<AnalyticsData> {
         : 0;
 
     // Conversion funnel
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const states = allConversations30d.map(
-      (c: any) => c.state as string
+      (c: { state: string }) => c.state
     );
     const started = totalConversations30d || 1;
     const infoShared = states.filter((s: string) =>

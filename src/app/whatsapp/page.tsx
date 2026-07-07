@@ -46,6 +46,11 @@ interface EvolutionInstance {
   };
 }
 
+interface ProxyResponseData {
+  base64?: string;
+  [key: string]: unknown;
+}
+
 interface ProxyResponse {
   action: string;
   instanceName: string;
@@ -53,8 +58,8 @@ interface ProxyResponse {
   statusCode?: number;
   error?: boolean;
   message?: string;
-  data?: any;
-  body?: any;
+  data?: ProxyResponseData;
+  body?: ProxyResponseData;
 }
 
 const API_URL = "https://n8n.merman.sbs/webhook/evolution-proxy";

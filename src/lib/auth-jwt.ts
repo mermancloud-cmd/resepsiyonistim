@@ -145,7 +145,7 @@ export async function getTenantForUser(
     // Get user details
     const {
       data: { user },
-    } = await (admin.auth as any).admin.getUserById(userId);
+    } = await admin.auth.admin.getUserById(userId);
     if (!user) return null;
 
     // Look up tenant from tenants table
