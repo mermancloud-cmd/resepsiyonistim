@@ -178,7 +178,6 @@ export default function SettingsPage() {
     setValidationErrors({});
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
-    console.log("Settings saved:", { ...data, amenities, businessHours });
   };
 
   const addAmenity = (amenity: string) => {

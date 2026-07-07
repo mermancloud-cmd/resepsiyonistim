@@ -140,10 +140,6 @@ export async function POST(request: NextRequest) {
         .from("push_subscriptions")
         .update({ enabled: false })
         .in("id", invalidSubscriptionIds);
-
-      console.log(
-        `${invalidSubscriptionIds.length} geçersiz abonelik devre dışı bırakıldı.`
-      );
     }
 
     return NextResponse.json({
