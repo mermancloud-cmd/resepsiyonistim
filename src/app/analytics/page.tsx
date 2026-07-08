@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useSatisfactionAnalytics } from "@/hooks/use-satisfaction-analytics";
 import { useIsMounted } from "@/hooks/use-is-mounted";
-import type { RecentFeedbackItem, AnalyticsData } from "@/lib/mock-data";
+import type { RecentFeedbackItem } from "@/lib/mock-data";
 
 // ─── Metric Card ───────────────────────────────────────────────────────────────
 
@@ -340,8 +340,7 @@ export default function AnalyticsPage() {
 
   if (!isMounted) return null;
 
-  // Type assertion for the hook data
-  const analyticsData = data as (AnalyticsData & { recentFeedback?: RecentFeedbackItem[] }) | undefined;
+  const analyticsData = data;
   const showSkeleton = isLoading && !analyticsData;
 
   return (

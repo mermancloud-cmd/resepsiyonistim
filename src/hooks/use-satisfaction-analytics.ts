@@ -26,9 +26,15 @@ export interface RecentFeedback {
   created_at: string;
 }
 
+// ─── Extended data type with feedback ─────────────────────────────────────────
+
+export type SatisfactionAnalyticsData = AnalyticsData & {
+  recentFeedback: RecentFeedback[];
+};
+
 // ─── Supabase queries ────────────────────────────────────────────────────────
 
-async function fetchSatisfactionAnalytics(): Promise<AnalyticsData> {
+async function fetchSatisfactionAnalytics(): Promise<SatisfactionAnalyticsData> {
   try {
     const supabase = createClient();
 
@@ -351,28 +357,20 @@ async function fetchSatisfactionAnalytics(): Promise<AnalyticsData> {
         funnel,
       },
       recentFeedback,
-    } as AnalyticsData & { recentFeedback: RecentFeedback[] };
+    };
   } catch {
     // Dynamic import to avoid circular deps at module level
     const { mockAnalytics } = await import("@/lib/mock-data");
-    return { ...mockAnalytics, recentFeedback: [] } as AnalyticsData & {
-      recentFeedback: RecentFeedback[];
-    };
+    return { ...mockAnalytics, recentFeedback: [] };
   }
 }
-
-// ─── Extended data type with feedback ─────────────────────────────────────────
-
-export type SatisfactionAnalyticsData = AnalyticsData & {
-  recentFeedback: RecentFeedback[];
-};
 
 // ─── Hook ────────────────────────────────────────────────────────────────────
 
 export function useSatisfactionAnalytics() {
   return useQuery<SatisfactionAnalyticsData, Error>({
     queryKey: ["satisfaction-analytics"],
-    queryFn: fetchSatisfactionAnalytics as unknown as () => Promise<SatisfactionAnalyticsData>,
+    queryFn: fetchSatisfactionAnalytics,
     staleTime: 60 * 1000, // 1 minute
     refetchInterval: 2 * 60 * 1000, // Refetch every 2 minutes
   });
