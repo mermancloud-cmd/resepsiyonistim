@@ -22,6 +22,20 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import type { MessageRole } from "@/lib/types";
+
+/** Map DB sender field ('guest'|'agent'|'ai') to MessageRole for MessageBubble. */
+function senderToRole(sender: string): MessageRole {
+  switch (sender) {
+    case "guest":
+      return "user";
+    case "ai":
+    case "agent":
+      return "assistant";
+    default:
+      return "system";
+  }
+}
 
 const stateLabels: Record<ConversationDisplayState, { label: string; className: string }> = {
   active: { label: "AI Yönetiyor", className: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400" },
@@ -130,7 +144,7 @@ export function ConversationDetail({
               {messages.map((msg) => (
                 <MessageBubble
                   key={msg.id}
-                  role={msg.sender as any}
+                  role={senderToRole(msg.sender)}
                   content={msg.content}
                   createdAt={msg.created_at}
                 />

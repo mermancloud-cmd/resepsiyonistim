@@ -8,13 +8,13 @@ import { ReservationCalendar } from "@/components/reservations/reservation-calen
 import { ReservationDetail } from "@/components/reservations/reservation-detail";
 import { List, CalendarDays, Plus, CalendarCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 import type { Reservation } from "@/lib/types";
 
 type ViewMode = "list" | "calendar";
 
 export default function ReservationsPage() {
-  const [isMounted, setIsMounted] = React.useState(false);
-  React.useEffect(() => { setIsMounted(true); }, []);
+  const isMounted = useIsMounted();
   const [viewMode, setViewMode] = React.useState<ViewMode>("list");
   const [selectedReservation, setSelectedReservation] =
     React.useState<Reservation | null>(null);

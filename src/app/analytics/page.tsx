@@ -21,6 +21,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useSatisfactionAnalytics } from "@/hooks/use-satisfaction-analytics";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 import type { RecentFeedbackItem, AnalyticsData } from "@/lib/mock-data";
 
 // ─── Metric Card ───────────────────────────────────────────────────────────────
@@ -333,10 +334,7 @@ function formatRelativeTime(dateStr: string): string {
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
 export default function AnalyticsPage() {
-  const [isMounted, setIsMounted] = React.useState(false);
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useIsMounted();
 
   const { data, isLoading, isFetching, refetch } = useSatisfactionAnalytics();
 
