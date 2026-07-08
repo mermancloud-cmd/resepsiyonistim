@@ -111,8 +111,6 @@ export function useOnboarding(): UseOnboardingReturn {
       );
 
       if (rpcError) {
-        console.warn("init_onboarding_steps RPC not available:", rpcError.message);
-
         // Build step statuses from saved progress data if available
         const progressKeys = Object.keys(progressData);
         const fallbackStatuses: OnboardingStepStatus[] = Array.from(
@@ -142,8 +140,7 @@ export function useOnboarding(): UseOnboardingReturn {
           }))
         );
       }
-    } catch (err) {
-      console.error("Failed to init onboarding:", err);
+    } catch {
       const fallbackStatuses: OnboardingStepStatus[] = Array.from(
         { length: 12 },
         (_, i) => ({
@@ -179,8 +176,6 @@ export function useOnboarding(): UseOnboardingReturn {
         });
 
         if (rpcError) {
-          console.warn("update_onboarding_progress RPC error:", rpcError.message);
-
           // Fallback: try complete_onboarding_step RPC (legacy)
           const { error: legacyError } = await supabase.rpc("complete_onboarding_step", {
             p_business_id: businessId,
@@ -189,7 +184,7 @@ export function useOnboarding(): UseOnboardingReturn {
           });
 
           if (legacyError) {
-            console.warn("complete_onboarding_step RPC also failed:", legacyError.message);
+            // Both RPCs unavailable — silent fallback
           }
         }
 
@@ -209,8 +204,7 @@ export function useOnboarding(): UseOnboardingReturn {
         }));
 
         return true;
-      } catch (err) {
-        console.error("Failed to complete step:", err);
+      } catch {
         setError(`Adım ${stepNumber} kaydedilemedi.`);
         return false;
       } finally {
@@ -255,8 +249,6 @@ export function useOnboarding(): UseOnboardingReturn {
       });
 
       if (rpcError) {
-        console.warn("activate_business RPC not available:", rpcError.message);
-
         // Fallback: directly update the bungalow/business record
         const { error: updateError } = await supabase
           .from("bungalows")
@@ -287,19 +279,17 @@ export function useOnboarding(): UseOnboardingReturn {
         });
 
         if (wfError) {
-          console.warn("activate_wf02 RPC not available:", wfError.message);
           await supabase
             .from("tenant_settings")
             .update({ ai_enabled: true, updated_at: new Date().toISOString() })
             .eq("tenant_id", businessId);
         }
-      } catch (wfErr) {
-        console.warn("WF02 activation fallback failed:", wfErr);
+      } catch {
+        // WF02 activation unavailable
       }
 
       return true;
-    } catch (err) {
-      console.error("Failed to activate:", err);
+    } catch {
       setError("İşletme aktifleştirilemedi.");
       return false;
     } finally {
