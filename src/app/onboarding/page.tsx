@@ -223,17 +223,17 @@ function OnboardingWizard() {
   // Get step data for saving
   function getStepData(step: number): Record<string, unknown> {
     switch (step) {
-      case 1: return data.business as unknown as Record<string, unknown>;
-      case 2: return data.location as unknown as Record<string, unknown>;
-      case 3: return { units: data.units } as unknown as Record<string, unknown>;
-      case 4: return data.pricing as unknown as Record<string, unknown>;
-      case 5: return data.amenities as unknown as Record<string, unknown>;
-      case 6: return data.rules as unknown as Record<string, unknown>;
-      case 7: return data.cancellation as unknown as Record<string, unknown>;
-      case 8: return data.depositPayment as unknown as Record<string, unknown>;
-      case 9: return data.surroundings as unknown as Record<string, unknown>;
-      case 10: return data.emergency as unknown as Record<string, unknown>;
-      case 11: return data.greeting as unknown as Record<string, unknown>;
+      case 1: return { ...data.business };
+      case 2: return { ...data.location };
+      case 3: return { units: data.units };
+      case 4: return { ...data.pricing };
+      case 5: return { ...data.amenities };
+      case 6: return { ...data.rules };
+      case 7: return { ...data.cancellation };
+      case 8: return { ...data.depositPayment };
+      case 9: return { ...data.surroundings };
+      case 10: return { ...data.emergency };
+      case 11: return { ...data.greeting };
       default: return {};
     }
   }
