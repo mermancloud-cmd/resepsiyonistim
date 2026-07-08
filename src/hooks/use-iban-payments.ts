@@ -72,8 +72,7 @@ export function useIBANPayments(filters?: PaymentFilters) {
 
         if (error) throw error;
         return (data as IBANPayment[]) ?? [];
-      } catch (error) {
-        console.warn("Supabase query failed, falling back to mock data:", error);
+      } catch {
         // Apply client-side filters on mock data
         let results = [...mockIBANPayments];
 
@@ -123,8 +122,7 @@ export function useApprovePayment() {
           .eq("id", id);
 
         if (error) throw error;
-      } catch (error) {
-        console.warn("Supabase mutation failed (approve), using local state:", error);
+      } catch {
         // Silently succeed — the optimistic update handles UI
       }
     },
@@ -155,8 +153,8 @@ export function useRejectPayment() {
           .eq("id", id);
 
         if (error) throw error;
-      } catch (error) {
-        console.warn("Supabase mutation failed (reject), using local state:", error);
+      } catch {
+        // Mutation failed (reject), using local state
       }
     },
     onSuccess: () => {
@@ -206,8 +204,7 @@ export function useAutoMatchPayment() {
         if (updateError) throw updateError;
 
         return { matched: true, reservation };
-      } catch (error) {
-        console.warn("Auto-match failed:", error);
+      } catch {
         return { matched: false, reason: "Eşleştirme hatası." };
       }
     },

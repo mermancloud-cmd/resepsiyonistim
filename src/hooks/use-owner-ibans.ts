@@ -58,8 +58,7 @@ export function useOwnerIBANs() {
 
         if (error) throw error;
         return (data as OwnerIBAN[]) ?? [];
-      } catch (error) {
-        console.warn("Supabase query failed, falling back to mock IBANs:", error);
+      } catch {
         return mockOwnerIBANs;
       }
     },
@@ -92,9 +91,7 @@ export function useAddIBAN() {
 
         if (error) throw error;
         return data as OwnerIBAN;
-      } catch (error) {
-        console.warn("Supabase insert failed, returning optimistic result:", error);
-        // Return optimistic result for offline/mock mode
+      } catch {
         return {
           id: `owner-iban-${Date.now()}`,
           bank_name: input.bank_name.trim(),
@@ -134,8 +131,8 @@ export function useSetDefaultIBAN() {
           .eq("id", id);
 
         if (error) throw error;
-      } catch (error) {
-        console.warn("Supabase update failed (set default):", error);
+      } catch {
+        // Supabase update failed (set default)
       }
     },
     onSuccess: () => {
@@ -175,8 +172,8 @@ export function useDeleteIBAN() {
               .eq("id", remaining[0].id);
           }
         }
-      } catch (error) {
-        console.warn("Supabase delete failed:", error);
+      } catch {
+        // Supabase delete failed
       }
     },
     onSuccess: () => {

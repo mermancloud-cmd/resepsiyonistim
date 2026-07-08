@@ -352,11 +352,7 @@ async function fetchSatisfactionAnalytics(): Promise<AnalyticsData> {
       },
       recentFeedback,
     } as AnalyticsData & { recentFeedback: RecentFeedback[] };
-  } catch (error) {
-    console.warn(
-      "Supabase satisfaction analytics query failed, falling back to mock data:",
-      error
-    );
+  } catch {
     // Dynamic import to avoid circular deps at module level
     const { mockAnalytics } = await import("@/lib/mock-data");
     return { ...mockAnalytics, recentFeedback: [] } as AnalyticsData & {

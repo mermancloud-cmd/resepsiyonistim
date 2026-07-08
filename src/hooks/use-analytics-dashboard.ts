@@ -355,11 +355,7 @@ async function fetchAnalyticsDashboard(): Promise<AnalyticsDashboardData> {
         active_rooms_count: rooms.length,
       },
     };
-  } catch (error) {
-    console.warn(
-      "Supabase analytics query failed, falling back to mock data:",
-      error
-    );
+  } catch {
     return mockDashboardData;
   }
 }
