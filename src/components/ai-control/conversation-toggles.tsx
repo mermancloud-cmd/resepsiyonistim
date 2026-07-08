@@ -87,7 +87,18 @@ function ConversationRow({ conversation, onToggleHandler }: ConversationRowProps
 
 export function ConversationToggles() {
   const [conversations, setConversations] =
-    React.useState<Conversation[]>(mockConversations as unknown as Conversation[]);
+    React.useState<Conversation[]>(
+      mockConversations.map((c) => ({
+        id: c.id,
+        guestName: c.guest_name,
+        guestPhone: c.guest_phone,
+        handler: c.ai_enabled ? "ai" : "human",
+        lastMessage: `Son mesaj ${new Date(c.last_message_at).toLocaleDateString("tr-TR")}`,
+        lastMessageAt: c.last_message_at,
+        state: c.state,
+        assigned_agent: c.assigned_agent,
+      }))
+    );
 
   const handleToggleHandler = (id: string, handler: AIHandler) => {
     setConversations((prev) =>
