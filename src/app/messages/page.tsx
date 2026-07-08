@@ -10,6 +10,7 @@ import { ConversationDetail } from "@/components/messages/conversation-detail";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search, MessageCircle } from "lucide-react";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 
 const filterTabs: { value: ConversationFilter; label: string }[] = [
   { value: "all", label: "Tümü" },
@@ -19,8 +20,7 @@ const filterTabs: { value: ConversationFilter; label: string }[] = [
 ];
 
 export default function MessagesPage() {
-  const [isMounted, setIsMounted] = React.useState(false);
-  React.useEffect(() => { setIsMounted(true); }, []);
+  const isMounted = useIsMounted();
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<ConversationFilter>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);

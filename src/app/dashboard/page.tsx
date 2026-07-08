@@ -9,14 +9,12 @@ import { RecentConversationsCard } from "@/components/dashboard/recent-conversat
 import { RevenueIndicatorsCard } from "@/components/dashboard/revenue-indicators";
 import { QuickActionsCard } from "@/components/dashboard/quick-actions";
 import { useAnalyticsDashboard } from "@/hooks/use-analytics-dashboard";
+import { useIsMounted } from "@/hooks/use-is-mounted";
 import { Banknote, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
-  const [isMounted, setIsMounted] = React.useState(false);
-  React.useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useIsMounted();
 
   const { data, isLoading, isFetching, refetch } = useAnalyticsDashboard();
 
