@@ -1,9 +1,44 @@
 import Link from "next/link";
 import { DEMO_WHATSAPP_NUMBER, DEMO_WHATSAPP_MESSAGE } from "@/lib/app-config";
+import TestimonialsSection from "@/components/testimonials-section";
+import { testimonials } from "@/lib/testimonials";
 
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-[#f7f3ee] via-white to-[#f0ebe4]">
+      {/* Schema.org Review structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: "Resepsiyonistim",
+            description:
+              "İşletmeniz için 7/24 WhatsApp tabanlı dijital resepsiyonist.",
+            review: testimonials.map((t) => ({
+              "@type": "Review",
+              reviewRating: {
+                "@type": "Rating",
+                ratingValue: t.rating,
+                bestRating: 5,
+              },
+              author: { "@type": "Person", name: t.name },
+              reviewBody: t.quote,
+            })),
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: (
+                testimonials.reduce((s, t) => s + t.rating, 0) /
+                testimonials.length
+              ).toFixed(1),
+              bestRating: 5,
+              ratingCount: testimonials.length,
+            },
+          }),
+        }}
+      />
+
       {/* Nav */}
       <header className="flex items-center justify-between px-6 py-5 max-w-6xl mx-auto w-full relative z-30">
         <div className="flex items-center gap-2.5">
@@ -198,6 +233,8 @@ export default function LandingPage() {
           </p>
         </div>
       </section>
+
+      <TestimonialsSection />
 
       {/* Features */}
       <section className="px-6 py-20 md:py-28 bg-gradient-to-b from-white/80 via-white to-white/80 relative">
