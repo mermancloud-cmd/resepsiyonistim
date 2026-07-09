@@ -1,0 +1,5 @@
+# Resepsiyonistim — Dijital Resepsiyonist
+User-agent: *
+Allow: /
+
+Sitemap: https://panel.merman.sbs/sitemap.xml

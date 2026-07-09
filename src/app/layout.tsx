@@ -26,6 +26,15 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "Panel",
   },
+  openGraph: {
+    title: "Resepsiyonistim — Dijital Resepsiyonist",
+    description:
+      "İşletmenize 7/24 çalışan, insan gibi konuşan bir dijital resepsiyonist.",
+    url: "https://panel.merman.sbs",
+    siteName: "Resepsiyonistim",
+    locale: "tr_TR",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
