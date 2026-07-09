@@ -22,7 +22,9 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useSatisfactionAnalytics } from "@/hooks/use-satisfaction-analytics";
 import { useIsMounted } from "@/hooks/use-is-mounted";
+import { useBehaviorAnalytics } from "@/hooks/use-analytics";
 import type { RecentFeedbackItem } from "@/lib/mock-data";
+import type { FunnelStep } from "@/lib/types/analytics-events";
 
 // ─── Metric Card ───────────────────────────────────────────────────────────────
 
@@ -590,7 +592,323 @@ export default function AnalyticsPage() {
             )}
           </CardContent>
         </Card>
+
+        {/* ════════════════════════════════════════════════════════════════ */}
+        {/* MÜŞTERİ DAVRANIŞ ANALİTİĞİ */}
+        {/* ════════════════════════════════════════════════════════════════ */}
+
+        <Separator className="my-1" />
+
+        {/* Section Header */}
+        <div className="flex items-center gap-2 mt-1">
+          <BarChart3 className="size-5 text-violet-500" />
+          <div>
+            <h3 className="text-base font-semibold tracking-tight">
+              Müşteri Davranış Analitiği
+            </h3>
+            <p className="text-xs text-muted-foreground">
+              Sayfa görüntüleme, özellik kullanımı ve dönüşüm hunisi
+            </p>
+          </div>
+        </div>
+
+        {/* Behavior Summary Cards */}
+        <BehaviorSummaryCards />
+
+        {/* Event Type Funnel */}
+        <BehaviorFunnelCard />
+
+        {/* Feature Adoption */}
+        <FeatureAdoptionCard />
+
+        {/* Daily Active Users */}
+        <DailyActiveUsersCard />
       </div>
     </MobileShell>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Behavior Analytics Sub-Components
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function BehaviorSummaryCards() {
+  const { data: behavior, isLoading } = useBehaviorAnalytics();
+
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      <MetricCard
+        title="Toplam Etkinlik"
+        value={isLoading ? "—" : (behavior?.totalEvents ?? 0).toLocaleString("tr-TR")}
+        subtitle="Son 30 gün"
+        icon={BarChart3}
+        accent="violet"
+        isLoading={isLoading}
+      />
+      <MetricCard
+        title="Benzersiz Ziyaretçi"
+        value={isLoading ? "—" : (behavior?.uniqueSessions ?? 0).toLocaleString("tr-TR")}
+        subtitle="Son 30 gün"
+        icon={MessageSquare}
+        accent="violet"
+        isLoading={isLoading}
+      />
+    </div>
+  );
+}
+
+function BehaviorFunnelCard() {
+  const { data: behavior, isLoading } = useBehaviorAnalytics();
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <TrendingUp className="size-4 text-violet-500" />
+            Etkinlik Hunisi
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="h-3 w-28 animate-pulse rounded bg-muted" />
+                <div className="h-6 flex-1 animate-pulse rounded bg-muted" />
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const funnel = behavior?.funnel ?? [];
+  const maxCount = Math.max(...funnel.map((f) => f.count), 1);
+
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <TrendingUp className="size-4 text-violet-500" />
+          Etkinlik Hunisi
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {funnel.length > 0 && funnel.some((f) => f.count > 0) ? (
+          <div className="flex flex-col gap-2">
+            {funnel.map((step, i) => {
+              const widthPct = (step.count / maxCount) * 100;
+              const isDrop = i > 0 && step.conversion_from_previous < 50;
+              return (
+                <div key={step.event_type} className="relative">
+                  <div className="flex items-center gap-3">
+                    <div className="w-28 shrink-0 text-right">
+                      <p className="text-[11px] font-medium truncate">
+                        {step.label}
+                      </p>
+                    </div>
+                    <div className="flex-1">
+                      <div className="h-6 rounded bg-muted overflow-hidden relative">
+                        <div
+                          className={cn(
+                            "h-full rounded transition-all flex items-center px-2",
+                            isDrop
+                              ? "bg-red-400/70 dark:bg-red-500/70"
+                              : "bg-violet-500/70 dark:bg-violet-600/70"
+                          )}
+                          style={{ width: `${Math.max(widthPct, 8)}%` }}
+                        >
+                          <span className="text-[10px] font-medium text-white whitespace-nowrap">
+                            {step.count}
+                            {i > 0
+                              ? ` (%${step.conversion_from_previous})`
+                              : ""}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground py-4 text-center">
+            Henüz etkinlik verisi yok. Panel kullanılmaya başlandıkça burada
+            görünecek.
+          </p>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function FeatureAdoptionCard() {
+  const { data: behavior, isLoading } = useBehaviorAnalytics();
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <Star className="size-4 text-amber-500" />
+            Özellik Kullanımı
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="h-3 w-32 animate-pulse rounded bg-muted" />
+                <div className="h-3 w-12 animate-pulse rounded bg-muted ml-auto" />
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const features = behavior?.featureAdoption ?? [];
+
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <Star className="size-4 text-amber-500" />
+          Özellik Kullanımı
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {features.length > 0 ? (
+          <div className="flex flex-col gap-2.5">
+            {features.map((feat) => (
+              <div
+                key={feat.feature}
+                className="flex items-center gap-2"
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium truncate">
+                      {feat.feature}
+                    </span>
+                    <span className="text-xs text-muted-foreground shrink-0 ml-2">
+                      {feat.click_count} tıklama
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 mt-0.5">
+                    <div className="flex-1 h-1.5 rounded-full bg-muted overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-amber-400"
+                        style={{
+                          width: `${Math.min(
+                            (feat.click_count /
+                              Math.max(
+                                ...features.map((f) => f.click_count)
+                              )) *
+                              100,
+                            100
+                          )}%`,
+                        }}
+                      />
+                    </div>
+                    <span className="text-[10px] text-muted-foreground shrink-0">
+                      {feat.unique_sessions} ziyaretçi
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-muted-foreground py-4 text-center">
+            Henüz özellik kullanım verisi yok.
+          </p>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function DailyActiveUsersCard() {
+  const { data: behavior, isLoading } = useBehaviorAnalytics();
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="flex items-center gap-2 text-base">
+            <BarChart3 className="size-4 text-primary" />
+            Günlük Aktif Kullanıcı
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-end gap-1 h-16">
+            {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+              <div
+                key={i}
+                className="flex-1 h-full bg-muted animate-pulse rounded-sm"
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const dailyData = behavior?.dailyActiveUsers ?? [];
+  const last14 = dailyData.slice(-14);
+  const maxViews = Math.max(...last14.map((d) => d.page_views), 1);
+
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2 text-base">
+          <BarChart3 className="size-4 text-primary" />
+          Günlük Aktif Kullanıcı
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {last14.length > 0 && maxViews > 0 ? (
+          <>
+            <div className="flex items-end gap-1 h-20">
+              {last14.map((day) => {
+                const heightPct = (day.page_views / maxViews) * 100;
+                return (
+                  <div
+                    key={day.date}
+                    className="flex-1 flex flex-col items-center gap-0.5 group relative"
+                  >
+                    <div className="absolute bottom-full mb-1 hidden group-hover:block z-10">
+                      <div className="bg-foreground/90 text-background text-[10px] px-1.5 py-0.5 rounded whitespace-nowrap">
+                        {day.date.slice(5)}: {day.page_views} görüntüleme,{" "}
+                        {day.active_sessions} oturum
+                      </div>
+                    </div>
+                    <div
+                      className="w-full rounded-sm bg-gradient-to-t from-teal-500/80 to-teal-400/60 transition-all"
+                      style={{ height: `${Math.max(heightPct, 3)}%` }}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex justify-between mt-2">
+              <span className="text-[10px] text-muted-foreground">
+                {last14[0]?.date?.slice(5) ?? ""}
+              </span>
+              <span className="text-[10px] text-muted-foreground">
+                {last14[last14.length - 1]?.date?.slice(5) ?? ""}
+              </span>
+            </div>
+          </>
+        ) : (
+          <p className="text-sm text-muted-foreground py-4 text-center">
+            Henüz günlük kullanım verisi yok.
+          </p>
+        )}
+      </CardContent>
+    </Card>
   );
 }
