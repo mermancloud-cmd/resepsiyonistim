@@ -11,9 +11,13 @@ ALTER TABLE tenants
   ADD COLUMN IF NOT EXISTS onboarding_completed_at TIMESTAMPTZ;
 
 -- Add onboarding_completed columns to businesses table (legacy, if not exists)
-ALTER TABLE businesses
-  ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false,
-  ADD COLUMN IF NOT EXISTS onboarding_completed_at TIMESTAMPTZ;
+DO $$ BEGIN
+  ALTER TABLE businesses
+    ADD COLUMN IF NOT EXISTS onboarding_completed BOOLEAN NOT NULL DEFAULT false,
+    ADD COLUMN IF NOT EXISTS onboarding_completed_at TIMESTAMPTZ;
+EXCEPTION WHEN undefined_table THEN
+  NULL; -- businesses table doesn't exist; skip
+END $$;
 
 -- Add whatsapp_number to tenants (if not exists)
 ALTER TABLE tenants
@@ -22,7 +26,7 @@ ALTER TABLE tenants
 -- Add onboarding_steps tracking table (if not exists)
 CREATE TABLE IF NOT EXISTS onboarding_steps (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  business_id UUID NOT NULL REFERENCES businesses(id) ON DELETE CASCADE,
+  business_id UUID NOT NULL, -- REFERENCES removed for forward-compat
   step_number INTEGER NOT NULL CHECK (step_number BETWEEN 1 AND 12),
   is_completed BOOLEAN NOT NULL DEFAULT false,
   step_data JSONB,
@@ -41,6 +45,8 @@ CREATE INDEX IF NOT EXISTS idx_onboarding_steps_completed
   WHERE is_completed = true;
 
 -- ─── 2. RPC: init_onboarding_steps ─────────────────────────────────────────────
+
+DROP FUNCTION IF EXISTS init_onboarding_steps(UUID);
 
 CREATE OR REPLACE FUNCTION init_onboarding_steps(p_business_id UUID)
 RETURNS TABLE (
@@ -69,6 +75,7 @@ $$;
 
 -- ─── 3. RPC: complete_onboarding_step ──────────────────────────────────────────
 
+DROP FUNCTION IF EXISTS complete_onboarding_step(UUID, INTEGER, JSONB);
 CREATE OR REPLACE FUNCTION complete_onboarding_step(
   p_business_id UUID,
   p_step_number INTEGER,
@@ -98,13 +105,7 @@ BEGIN
 
   -- If all complete, auto-set onboarding_completed on the business
   IF v_all_complete THEN
-    UPDATE businesses
-    SET onboarding_completed = true,
-        onboarding_completed_at = now(),
-        updated_at = now()
-    WHERE id = p_business_id;
-
-    -- Also update tenants table if linked
+    -- Update tenants instead (businesses table may not exist)
     UPDATE tenants
     SET onboarding_completed = true,
         onboarding_completed_at = now(),
@@ -118,6 +119,7 @@ $$;
 
 -- ─── 4. RPC: check_onboarding_complete ─────────────────────────────────────────
 
+DROP FUNCTION IF EXISTS check_onboarding_complete(UUID);
 CREATE OR REPLACE FUNCTION check_onboarding_complete(p_business_id UUID)
 RETURNS BOOLEAN
 LANGUAGE plpgsql
@@ -126,9 +128,9 @@ AS $$
 DECLARE
   v_result BOOLEAN;
 BEGIN
-  -- Check from businesses/tenants table (authoritative)
+  -- Check from tenants table (authoritative)
   SELECT COALESCE(onboarding_completed, false) INTO v_result
-  FROM businesses
+  FROM tenants
   WHERE id = p_business_id;
 
   -- Fallback: count completed steps
@@ -144,6 +146,7 @@ $$;
 
 -- ─── 5. RPC: activate_business (Binary Gate → Active) ──────────────────────────
 
+DROP FUNCTION IF EXISTS activate_business(UUID);
 CREATE OR REPLACE FUNCTION activate_business(p_business_id UUID)
 RETURNS BOOLEAN
 LANGUAGE plpgsql
@@ -162,12 +165,6 @@ BEGIN
   END IF;
 
   -- Set onboarding_completed = true
-  UPDATE businesses
-  SET onboarding_completed = true,
-      onboarding_completed_at = now(),
-      updated_at = now()
-  WHERE id = p_business_id;
-
   UPDATE tenants
   SET onboarding_completed = true,
       onboarding_completed_at = now(),
@@ -184,6 +181,7 @@ $$;
 
 -- ─── 6. RPC: activate_wf02 (Enable Elif AI for tenant) ────────────────────────
 
+DROP FUNCTION IF EXISTS activate_wf02(UUID);
 CREATE OR REPLACE FUNCTION activate_wf02(p_tenant_id UUID)
 RETURNS BOOLEAN
 LANGUAGE plpgsql
@@ -204,13 +202,17 @@ BEGIN
     SET ai_enabled = true, updated_at = now();
   END IF;
 
-  -- Log the activation event
-  INSERT INTO workflow_events (tenant_id, workflow_id, event_type, payload, created_at)
-  VALUES (p_tenant_id, 'WF02', 'activated', jsonb_build_object(
-    'activated_at', now(),
-    'source', 'onboarding_completion'
-  ), now())
-  ON CONFLICT DO NOTHING;
+  -- Log the activation event (table may not exist)
+  BEGIN
+    INSERT INTO workflow_events (tenant_id, workflow_id, event_type, payload, created_at)
+    VALUES (p_tenant_id, 'WF02', 'activated', jsonb_build_object(
+      'activated_at', now(),
+      'source', 'onboarding_completion'
+    ), now())
+    ON CONFLICT DO NOTHING;
+  EXCEPTION WHEN undefined_table THEN
+    NULL;
+  END;
 
   RETURN true;
 EXCEPTION
@@ -227,20 +229,22 @@ $$;
 ALTER TABLE onboarding_steps ENABLE ROW LEVEL SECURITY;
 
 -- Owners can read their own steps
+DROP POLICY IF EXISTS "owners_read_own_steps" ON onboarding_steps;
 CREATE POLICY "owners_read_own_steps"
   ON onboarding_steps FOR SELECT
   USING (
     business_id IN (
-      SELECT id FROM businesses WHERE owner_id = auth.uid()
+      SELECT id FROM tenants WHERE owner_id = auth.uid()
     )
   );
 
 -- Owners can update their own steps
+DROP POLICY IF EXISTS "owners_update_own_steps" ON onboarding_steps;
 CREATE POLICY "owners_update_own_steps"
   ON onboarding_steps FOR INSERT
   WITH CHECK (
     business_id IN (
-      SELECT id FROM businesses WHERE owner_id = auth.uid()
+      SELECT id FROM tenants WHERE owner_id = auth.uid()
     )
   );
 

@@ -195,6 +195,50 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['referral_codes']['Row'], 'id' | 'created_at' | 'updated_at'>
         Update: Partial<Database['public']['Tables']['referral_codes']['Insert']>
       }
+      humanization_test_scenarios: {
+        Row: {
+          id: string
+          tenant_id: string
+          name: string
+          description: string | null
+          category: 'general' | 'greeting' | 'empathy' | 'objection_handling' | 'room_presentation' | 'followup' | 'closing' | 'complaint'
+          prompt_template: string | null
+          expected_behaviors: string[]
+          evaluation_criteria: Json
+          min_target_score: number
+          is_active: boolean
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['humanization_test_scenarios']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['humanization_test_scenarios']['Insert']>
+      }
+      humanization_scores: {
+        Row: {
+          id: string
+          tenant_id: string
+          scenario_id: string
+          conversation_id: string | null
+          ai_response_text: string
+          score_naturalness: number | null
+          score_empathy: number | null
+          score_fluency: number | null
+          score_context: number | null
+          score_personalization: number | null
+          score_flow: number | null
+          score_tone: number | null
+          composite_score: number | null
+          evaluation_method: 'manual' | 'automated' | 'llm_judge'
+          evaluator_id: string | null
+          notes: string | null
+          passed: boolean | null
+          metadata: Json
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['humanization_scores']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['humanization_scores']['Insert']>
+      }
     }
   }
 }

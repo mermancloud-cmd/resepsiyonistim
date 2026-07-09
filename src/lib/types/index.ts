@@ -529,3 +529,163 @@ export interface ConversationRowWithMessages extends ConversationRow {
 export interface ReservationRowWithRoom extends ReservationRow {
   room: RoomRow;
 }
+
+// ─── Humanization Evaluation Types ──────────────────────────────────────────
+
+export type HumanizationCategory =
+  | 'general' | 'greeting' | 'empathy' | 'objection_handling'
+  | 'room_presentation' | 'followup' | 'closing' | 'complaint';
+
+export type EvaluationMethod = 'manual' | 'automated' | 'llm_judge';
+
+export interface HumanizationCriterion {
+  name: string;
+  weight: number;
+  max_score: number;
+}
+
+export interface HumanizationScenario {
+  id: string;
+  tenant_id: string;
+  name: string;
+  description: string | null;
+  category: HumanizationCategory;
+  prompt_template: string | null;
+  expected_behaviors: string[];
+  evaluation_criteria: HumanizationCriterion[];
+  min_target_score: number;
+  is_active: boolean;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface HumanizationScore {
+  id: string;
+  tenant_id: string;
+  scenario_id: string;
+  conversation_id: string | null;
+  ai_response_text: string;
+  score_naturalness: number | null;
+  score_empathy: number | null;
+  score_fluency: number | null;
+  score_context: number | null;
+  score_personalization: number | null;
+  score_flow: number | null;
+  score_tone: number | null;
+  composite_score: number | null;
+  evaluation_method: EvaluationMethod;
+  evaluator_id: string | null;
+  notes: string | null;
+  passed: boolean | null;
+  metadata: Record<string, unknown>;
+  created_at: string;
+}
+
+export interface HumanizationSummary {
+  total_evaluations: number;
+  passed_count: number;
+  fail_count: number;
+  pass_rate: number;
+  avg_composite: number;
+  avg_naturalness: number;
+  avg_empathy: number;
+  avg_fluency: number;
+  avg_context: number;
+  avg_personalization: number;
+  avg_flow: number;
+  avg_tone: number;
+  best_score: number;
+  worst_score: number;
+  scenario_count: number;
+  last_evaluated_at: string | null;
+}
+
+export interface HumanizationScenarioStats {
+  scenario_id: string;
+  scenario_name: string;
+  category: HumanizationCategory;
+  total_evaluations: number;
+  passed_count: number;
+  avg_composite: number | null;
+  avg_naturalness: number | null;
+  avg_empathy: number | null;
+  avg_fluency: number | null;
+  avg_context: number | null;
+  avg_personalization: number | null;
+  avg_flow: number | null;
+  avg_tone: number | null;
+  min_target: number;
+  last_score: number | null;
+  trend: 'improving' | 'declining' | 'stable';
+}
+
+export const HUMANIZATION_CATEGORY_LABELS: Record<HumanizationCategory, string> = {
+  general: 'Genel',
+  greeting: 'Karşılama',
+  empathy: 'Empati',
+  objection_handling: 'İtiraz Yönetimi',
+  room_presentation: 'Oda Tanıtımı',
+  followup: 'Takip',
+  closing: 'Kapanış',
+  complaint: 'Şikayet',
+};
+
+// ─── Müşteri Feedback Types ──────────────────────────────────────────────────
+
+export type FeedbackRating = 1 | 2 | 3 | 4 | 5;
+
+export const FEEDBACK_CATEGORIES = [
+  'general', 'greeting', 'accuracy', 'helpfulness',
+  'speed', 'understanding', 'human_like', 'other',
+] as const;
+
+export type FeedbackCategory = (typeof FEEDBACK_CATEGORIES)[number];
+
+export const FEEDBACK_CATEGORY_LABELS: Record<FeedbackCategory, string> = {
+  general: 'Genel',
+  greeting: 'Karşılama',
+  accuracy: 'Doğruluk',
+  helpfulness: 'Yardımseverlik',
+  speed: 'Hız',
+  understanding: 'Anlayış',
+  human_like: 'İnsanlık',
+  other: 'Diğer',
+};
+
+export interface MusteriFeedback {
+  id: string;
+  tenant_id: string;
+  conversation_id: string | null;
+  rating: FeedbackRating;
+  category: FeedbackCategory;
+  comment_text: string | null;
+  metadata: Record<string, unknown>;
+  submitted_at: string;
+  created_at: string;
+}
+
+export interface MusteriFeedbackSummary {
+  total_feedback: number;
+  avg_rating: number;
+  positive_count: number;
+  negative_count: number;
+  neutral_count: number;
+  category_breakdown: Record<string, number>;
+}
+
+export interface MusteriFeedbackTrend {
+  date: string;
+  avg_rating: number;
+  count: number;
+}
+
+export const HUMANIZATION_SCORE_LABELS: Record<string, string> = {
+  score_naturalness: 'Doğallık',
+  score_empathy: 'Empati',
+  score_fluency: 'Akıcılık',
+  score_context: 'Bağlam',
+  score_personalization: 'Kişiselleştirme',
+  score_flow: 'Akış',
+  score_tone: 'Ton',
+};

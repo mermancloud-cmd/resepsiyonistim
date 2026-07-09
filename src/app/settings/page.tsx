@@ -25,6 +25,9 @@ import {
   MapPin,
   Plus,
   X,
+  Globe,
+  Copy,
+  Check,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mockBusinessSettings, mockAIPersona } from "@/lib/mock-data";
@@ -46,6 +49,14 @@ interface FormData {
   aiTone: "warm" | "professional" | "casual" | "luxury";
   aiResponseSpeed: "fast" | "balanced" | "thoughtful";
   aiMaxTurns: number;
+  // Widget settings
+  widgetEnabled: boolean;
+  widgetPrimary: string;
+  widgetPosition: "right" | "left";
+  widgetGreeting: string;
+  widgetTheme: "light" | "dark" | "auto";
+  widgetBusinessName: string;
+  widgetLogo: string;
 }
 
 function validateForm(data: FormData): Record<string, string> {
@@ -121,6 +132,13 @@ const SUGGESTED_AMENITIES = [
   "Evcil hayvan dostu",
 ];
 
+// ─── Helpers ───────────────────────────────────────────────────────────────────
+
+function getWidgetEmbedCode(): string {
+  const origin = typeof window !== "undefined" ? window.location.origin : "https://panel.merman.sbs";
+  return `<script src="${origin}/widget.js" data-business-name="İşletmeniz" data-whatsapp-number="905427450654" defer></script>`;
+}
+
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
 export default function SettingsPage() {
@@ -148,6 +166,14 @@ export default function SettingsPage() {
       aiTone: mockAIPersona.tone,
       aiResponseSpeed: mockAIPersona.responseSpeed,
       aiMaxTurns: mockAIPersona.maxConversationTurns,
+      // Widget defaults
+      widgetEnabled: true,
+      widgetPrimary: "#0f766e",
+      widgetPosition: "right",
+      widgetGreeting: "Merhaba! Size nasıl yardımcı olabilirim?",
+      widgetTheme: "auto",
+      widgetBusinessName: mockBusinessSettings.businessName,
+      widgetLogo: "",
     },
   });
 
@@ -162,12 +188,14 @@ export default function SettingsPage() {
   const [businessHours, setBusinessHours] = React.useState<
     Record<string, DayHours>
   >(mockBusinessSettings.businessHours);
+  const [copySuccess, setCopySuccess] = React.useState(false);
 
   const webPushEnabled = watch("webPushEnabled");
   const telegramEnabled = watch("telegramEnabled");
   const whatsappEnabled = watch("whatsappEnabled");
   const aiTone = watch("aiTone");
   const aiResponseSpeed = watch("aiResponseSpeed");
+  const widgetEnabled = watch("widgetEnabled");
 
   const onSubmit = (data: FormData) => {
     const errs = validateForm(data);
@@ -198,6 +226,24 @@ export default function SettingsPage() {
     }));
   };
 
+  const handleCopyEmbedCode = async () => {
+    try {
+      await navigator.clipboard.writeText(getWidgetEmbedCode());
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2500);
+    } catch {
+      // Fallback: select text from a temp element
+      const ta = document.createElement("textarea");
+      ta.value = getWidgetEmbedCode();
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2500);
+    }
+  };
+
   const toneOptions = [
     { value: "warm" as const, label: "Sıcak", desc: "Samimi ve misafirperver" },
     { value: "professional" as const, label: "Profesyonel", desc: "Resmi ve kurumsal" },
@@ -223,7 +269,7 @@ export default function SettingsPage() {
           <div>
             <h2 className="text-lg font-semibold tracking-tight">Ayarlar</h2>
             <p className="text-xs text-muted-foreground">
-              İşletme, asistan ve uygulama ayarları
+              İşletme, asistan, widget ve uygulama ayarları
             </p>
           </div>
         </div>
@@ -589,6 +635,167 @@ export default function SettingsPage() {
                 Bu metin misafirlere rezervasyon sırasında gösterilecektir.
               </p>
             </FormField>
+          </CardContent>
+        </Card>
+
+        {/* ─── Widget Settings ─────────────────────────────────────────── */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Globe className="size-5 text-sky-600 dark:text-sky-400" />
+              Web Widget Ayarları
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col gap-4">
+              {/* Enable toggle */}
+              <div className="flex items-center justify-between rounded-lg border border-border/50 p-3">
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Widget Aktif</p>
+                  <p className="text-xs text-muted-foreground">
+                    Web sitenizde sohbet butonunu gösterir
+                  </p>
+                </div>
+                <Switch
+                  checked={widgetEnabled}
+                  onCheckedChange={(checked) =>
+                    setValue("widgetEnabled", checked ?? false)
+                  }
+                />
+              </div>
+
+              {widgetEnabled && (
+                <>
+                  {/* Primary color */}
+                  <FormField label="Renk (birincil)">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="color"
+                        value={watch("widgetPrimary")}
+                        onChange={(e) =>
+                          setValue("widgetPrimary", e.target.value)
+                        }
+                        className="size-9 rounded-lg border border-input cursor-pointer"
+                      />
+                      <Input
+                        {...register("widgetPrimary")}
+                        placeholder="#0f766e"
+                        className="flex-1 font-mono text-xs"
+                      />
+                    </div>
+                  </FormField>
+
+                  {/* Position */}
+                  <FormField label="Pozisyon">
+                    <div className="grid grid-cols-2 gap-2">
+                      {[
+                        { value: "right" as const, label: "Sağ Alt" },
+                        { value: "left" as const, label: "Sol Alt" },
+                      ].map((opt) => (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => setValue("widgetPosition", opt.value)}
+                          className={cn(
+                            "rounded-lg border p-3 text-center transition-all",
+                            watch("widgetPosition") === opt.value
+                              ? "border-primary bg-primary/5 ring-1 ring-primary/30"
+                              : "border-border/50 hover:border-border"
+                          )}
+                        >
+                          <p className="text-sm font-medium">{opt.label}</p>
+                        </button>
+                      ))}
+                    </div>
+                  </FormField>
+
+                  {/* Greeting */}
+                  <FormField label="Karşılama Mesajı">
+                    <Input
+                      {...register("widgetGreeting")}
+                      placeholder="Merhaba! Size nasıl yardımcı olabilirim?"
+                    />
+                  </FormField>
+
+                  {/* Business name for widget */}
+                  <FormField label="İşletme Adı (Widget)">
+                    <Input
+                      {...register("widgetBusinessName")}
+                      placeholder="Merman Bungalov"
+                    />
+                  </FormField>
+
+                  {/* Theme */}
+                  <FormField label="Tema">
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { value: "light" as const, label: "Aydınlık" },
+                        { value: "dark" as const, label: "Karanlık" },
+                        { value: "auto" as const, label: "Otomatik" },
+                      ].map((opt) => (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => setValue("widgetTheme", opt.value)}
+                          className={cn(
+                            "rounded-lg border p-2.5 text-center transition-all",
+                            watch("widgetTheme") === opt.value
+                              ? "border-primary bg-primary/5 ring-1 ring-primary/30"
+                              : "border-border/50 hover:border-border"
+                          )}
+                        >
+                          <p className="text-xs font-medium">{opt.label}</p>
+                        </button>
+                      ))}
+                    </div>
+                  </FormField>
+
+                  {/* Logo URL */}
+                  <FormField label="Logo URL (opsiyonel)">
+                    <Input
+                      {...register("widgetLogo")}
+                      placeholder="https://..."
+                    />
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Yuvarlak kırpılır. Boş bırakılırsa varsayılan avatar kullanılır.
+                    </p>
+                  </FormField>
+
+                  {/* Embed code */}
+                  <Separator />
+                  <div>
+                    <p className="text-sm font-medium mb-1.5">Embed Kodu</p>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Bu kodu web sitenizin &lt;head&gt; veya &lt;body&gt; kısmına ekleyin:
+                    </p>
+                    <div className="relative">
+                      <pre className="rounded-lg bg-muted p-3 text-xs overflow-x-auto whitespace-pre-wrap font-mono text-muted-foreground border border-border/50">
+                        {getWidgetEmbedCode()}
+                      </pre>
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        className="absolute top-2 right-2 h-7 text-xs gap-1"
+                        onClick={handleCopyEmbedCode}
+                      >
+                        {copySuccess ? (
+                          <>
+                            <Check className="size-3 text-emerald-500" />
+                            Kopyalandı
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="size-3" />
+                            Kopyala
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           </CardContent>
         </Card>
 
