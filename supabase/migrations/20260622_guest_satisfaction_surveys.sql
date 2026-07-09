@@ -41,6 +41,18 @@ CREATE INDEX IF NOT EXISTS idx_surveys_rating
 ALTER TABLE public.guest_satisfaction_surveys ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.guest_satisfaction_surveys FORCE ROW LEVEL SECURITY;
 
+-- Create helper function if it doesn't exist
+CREATE OR REPLACE FUNCTION public.get_user_tenant_id_legacy()
+RETURNS UUID
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT COALESCE(
+    (SELECT id FROM public.tenants WHERE owner_id = auth.uid() LIMIT 1),
+    (SELECT tenant_id FROM public.tenant_settings LIMIT 1)
+  );
+$$;
+
 -- Tenant isolation: SELECT
 DROP POLICY IF EXISTS "tenant_isolation_select" ON public.guest_satisfaction_surveys;
 CREATE POLICY "tenant_isolation_select" ON public.guest_satisfaction_surveys

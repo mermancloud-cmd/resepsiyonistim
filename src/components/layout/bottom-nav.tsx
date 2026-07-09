@@ -9,6 +9,7 @@ import {
   Settings,
   Gift,
   FlaskConical,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -38,6 +39,12 @@ const NAV_ITEMS = [
     icon: BarChart3,
   },
   {
+    id: "reports" as const,
+    label: "Raporlar",
+    href: "/reports",
+    icon: BarChart3,
+  },
+  {
     id: "settings" as const,
     label: "Ayarlar",
     href: "/settings",
@@ -54,6 +61,12 @@ const NAV_ITEMS = [
     label: "A/B Test",
     href: "/ab-test",
     icon: FlaskConical,
+  },
+  {
+    id: "humanization" as const,
+    label: "Humanizasyon",
+    href: "/humanization",
+    icon: Sparkles,
   },
 ];
 

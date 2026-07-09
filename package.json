@@ -24,6 +24,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.79.0",
+    "recharts": "^3.9.2",
     "serwist": "^9.5.11",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260621.1",
+    "@next/bundle-analyzer": "^16.2.10",
     "@serwist/build": "^9.5.11",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
