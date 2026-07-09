@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/lib/auth-context'
+import { useFacilities } from '@/hooks/use-facilities'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -14,6 +15,7 @@ interface Room {
 interface Reservation {
   id: string
   tenant_id: string
+  facility_id: string | null
   guest_name: string
   guest_email: string
   guest_phone: string | null
@@ -39,10 +41,11 @@ interface Reservation {
  */
 export function useReservations(status?: string) {
   const { tenant, isAuthenticated } = useAuth()
+  const { selectedFacilityId } = useFacilities()
   const supabase = createClient()
 
   return useQuery<{ reservations: Reservation[] }, Error>({
-    queryKey: ['reservations', status, tenant?.id],
+    queryKey: ['reservations', status, tenant?.id, selectedFacilityId],
     enabled: isAuthenticated && !!tenant,
     queryFn: async () => {
       // Direct Supabase query (RLS-protected)
@@ -54,6 +57,10 @@ export function useReservations(status?: string) {
 
       if (status) {
         query = query.eq('status', status)
+      }
+
+      if (selectedFacilityId) {
+        query = query.eq('facility_id', selectedFacilityId)
       }
 
       const { data, error } = await query

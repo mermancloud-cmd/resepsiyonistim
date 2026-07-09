@@ -1,0 +1,17 @@
+[
+{
+  "query": "CREATE OR REPLACE FUNCTION public.user_has_permission(p_permission TEXT) RETURNS BOOLEAN LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = public AS $func$ DECLARE parts TEXT[]; resource TEXT; action TEXT; perms JSONB; BEGIN parts := string_to_array(p_permission, '.'); resource := parts[1]; action := parts[2]; SELECT r.permissions INTO perms FROM user_roles ur JOIN roles r ON r.id = ur.role_id WHERE ur.user_id = auth.uid() LIMIT 1; IF perms IS NULL THEN RETURN false; END IF; IF perms ? '*::*' THEN RETURN (perms->>'*::*')::boolean; END IF; IF perms ? resource AND (perms->resource) ? '*' THEN RETURN ((perms->resource)->>'*')::boolean; END IF; IF perms ? resource AND (perms->resource) ? action THEN RETURN ((perms->resource)->>action)::boolean; END IF; RETURN false; END; $func$;"
+},
+{
+  "query": "CREATE OR REPLACE FUNCTION public.get_user_tenant_id() RETURNS uuid LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$ SELECT COALESCE((SELECT tenant_id FROM public.user_roles WHERE user_id = auth.uid() LIMIT 1), (SELECT t.id FROM public.tenants t WHERE t.owner_id = auth.uid() LIMIT 1), (SELECT b.id FROM public.bungalows b WHERE b.owner_id = auth.uid() LIMIT 1)); $$;"
+},
+{
+  "query": "CREATE OR REPLACE FUNCTION public.get_user_tenant_id_legacy() RETURNS uuid LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$ SELECT COALESCE((SELECT tenant_id FROM public.user_roles WHERE user_id = auth.uid() LIMIT 1), (SELECT t.id FROM public.tenants t WHERE t.owner_id = auth.uid() LIMIT 1), (SELECT b.id FROM public.bungalows b WHERE b.owner_id = auth.uid() LIMIT 1)); $$;"
+},
+{
+  "query": "ALTER TABLE IF EXISTS public.roles ENABLE ROW LEVEL SECURITY; ALTER TABLE IF EXISTS public.roles FORCE ROW LEVEL SECURITY; DROP POLICY IF EXISTS \"rbac_roles_select\" ON public.roles; CREATE POLICY \"rbac_roles_select\" ON public.roles FOR SELECT USING (EXISTS (SELECT 1 FROM public.user_roles WHERE user_id = auth.uid()));"
+},
+{
+  "query": "ALTER TABLE IF EXISTS public.user_roles ENABLE ROW LEVEL SECURITY; ALTER TABLE IF EXISTS public.user_roles FORCE ROW LEVEL SECURITY; DROP POLICY IF EXISTS \"rbac_user_roles_select\" ON public.user_roles; CREATE POLICY \"rbac_user_roles_select\" ON public.user_roles FOR SELECT USING (user_id = auth.uid());"
+}
+]

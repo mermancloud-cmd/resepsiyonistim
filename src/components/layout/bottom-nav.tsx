@@ -10,6 +10,7 @@ import {
   Gift,
   FlaskConical,
   Sparkles,
+  Star,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -31,6 +32,12 @@ const NAV_ITEMS = [
     label: "Ödemeler",
     href: "/payments",
     icon: CreditCard,
+  },
+  {
+    id: "feedback" as const,
+    label: "Görüşler",
+    href: "/feedback",
+    icon: Star,
   },
   {
     id: "analytics" as const,

@@ -13,6 +13,7 @@ export interface Database {
         Row: {
           id: string
           tenant_id: string
+          facility_id: string | null
           guest_phone: string
           guest_name: string | null
           state: 'active' | 'closed' | 'pending'
@@ -50,6 +51,7 @@ export interface Database {
         Row: {
           id: string
           tenant_id: string
+          facility_id: string | null
           guest_name: string
           guest_email: string
           guest_phone: string | null
@@ -72,6 +74,7 @@ export interface Database {
         Row: {
           id: string
           tenant_id: string
+          facility_id: string | null
           room_number: string
           room_type: string
           capacity: number
@@ -238,6 +241,72 @@ export interface Database {
         }
         Insert: Omit<Database['public']['Tables']['humanization_scores']['Row'], 'id' | 'created_at'>
         Update: Partial<Database['public']['Tables']['humanization_scores']['Insert']>
+      }
+      musteri_feedback: {
+        Row: {
+          id: string
+          tenant_id: string
+          facility_id: string | null
+          conversation_id: string | null
+          rating: number
+          category: 'genel' | 'hiz' | 'rezervasyon' | 'oda_bilgisi' | 'fiyat' | 'iletisim' | 'insan_kalitesi' | 'diger'
+          comment: string | null
+          submitted_at: string
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['musteri_feedback']['Row'], 'id' | 'created_at' | 'submitted_at'>
+        Update: Partial<Database['public']['Tables']['musteri_feedback']['Insert']>
+      }
+      feedback_with_humanization: {
+        Row: {
+          feedback_id: string
+          tenant_id: string
+          conversation_id: string | null
+          rating: number
+          category: string
+          comment: string | null
+          submitted_at: string
+          total_score: number | null
+          naturalness: number | null
+          empathy: number | null
+          fluency: number | null
+          context_awareness: number | null
+          personalization: number | null
+          conversation_flow: number | null
+          tone_appropriateness: number | null
+          scored_at: string | null
+        }
+        Insert: never
+        Update: never
+      }
+      facilities: {
+        Row: {
+          id: string
+          tenant_id: string
+          name: string
+          slug: string
+          address: string | null
+          phone: string | null
+          type: 'hotel' | 'villa' | 'bungalov' | 'apart' | 'pansiyon' | 'glamping' | 'tinyhouse' | 'diger'
+          status: 'active' | 'inactive' | 'maintenance'
+          settings: Json
+          sort_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['facilities']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['facilities']['Insert']>
+      }
+      facility_users: {
+        Row: {
+          id: string
+          facility_id: string
+          user_id: string
+          role: 'manager' | 'staff' | 'viewer'
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['facility_users']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['facility_users']['Insert']>
       }
     }
   }

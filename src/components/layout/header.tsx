@@ -3,6 +3,7 @@
 import { Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { APP_NAME } from "@/lib/app-config";
+import { FacilitySwitcher } from "@/components/layout/facility-switcher";
 
 interface HeaderProps {
   notificationCount?: number;
@@ -11,15 +12,18 @@ interface HeaderProps {
 export function Header({ notificationCount = 0 }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur-md">
-      <div className="flex h-14 items-center justify-between px-4">
-        {/* App name */}
-        <h1 className="text-lg font-semibold tracking-tight text-foreground">
-          {APP_NAME}
-        </h1>
+      <div className="flex h-14 items-center justify-between px-4 gap-2">
+        {/* Left side: app name + facility switcher */}
+        <div className="flex items-center gap-2 min-w-0">
+          <h1 className="text-lg font-semibold tracking-tight text-foreground shrink-0">
+            {APP_NAME}
+          </h1>
+          <FacilitySwitcher />
+        </div>
 
         {/* Notification bell */}
         <button
-          className="touch-target relative rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="touch-target relative shrink-0 rounded-full p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           aria-label="Bildirimler"
         >
           <Bell className="size-5" />

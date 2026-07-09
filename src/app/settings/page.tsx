@@ -859,6 +859,38 @@ export default function SettingsPage() {
 
         <Separator />
 
+        {/* ─── Facilities Link ────────────────────────────────────────── */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base flex items-center gap-2">
+              <Building2 className="size-5 text-primary" />
+              Tesis Yönetimi
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-3">
+              Birden fazla tesisiniz varsa buradan yönetebilirsiniz.
+            </p>
+            <Button
+              variant="outline"
+              className="w-full gap-2"
+              size="lg"
+              type="button"
+              onClick={() => {
+                // Next.js navigation — use window.location as fallback
+                if (typeof window !== "undefined") {
+                  window.location.href = "/settings/facilities";
+                }
+              }}
+            >
+              <Building2 className="size-4" />
+              Tesisleri Yönet
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Separator />
+
         {/* ─── Account ─────────────────────────────────────────────────── */}
         <Card>
           <CardHeader>

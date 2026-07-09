@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/lib/auth-context'
+import { useFacilities } from '@/hooks/use-facilities'
 
 // Re-export types for components that import from this hook
 export type { ConversationState } from '@/lib/types'
@@ -13,6 +14,7 @@ export type ConversationDisplayState = 'active' | 'closed' | 'pending' | 'taken_
 export interface Conversation {
   id: string
   tenant_id: string
+  facility_id: string | null
   guest_name: string | null
   guest_phone: string
   state: 'active' | 'closed' | 'pending'
@@ -63,10 +65,11 @@ interface ConversationDetail {
  */
 export function useConversations(search?: string) {
   const { tenant, isAuthenticated } = useAuth()
+  const { selectedFacilityId } = useFacilities()
   const supabase = createClient()
 
   return useQuery<{ conversations: Conversation[]; total: number }, Error>({
-    queryKey: ['conversations', search, tenant?.id],
+    queryKey: ['conversations', search, tenant?.id, selectedFacilityId],
     enabled: isAuthenticated && !!tenant,
     queryFn: async () => {
       let query = supabase
@@ -79,6 +82,10 @@ export function useConversations(search?: string) {
         query = query.or(
           `guest_name.ilike.%${search}%,guest_phone.ilike.%${search}%`
         )
+      }
+
+      if (selectedFacilityId) {
+        query = query.eq('facility_id', selectedFacilityId)
       }
 
       const { data, error, count } = await query

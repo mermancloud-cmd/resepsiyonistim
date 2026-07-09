@@ -250,7 +250,7 @@ export default function LandingPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-5">
-            {features.map((f, i) => (
+            {features.map((f) => (
               <div
                 key={f.title}
                 className="group relative rounded-2xl border border-teal-100/60 bg-white/60 backdrop-blur-sm p-7 space-y-4 hover:border-amber-200/60 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"

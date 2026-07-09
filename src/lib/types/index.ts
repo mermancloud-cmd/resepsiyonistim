@@ -2,6 +2,35 @@
 // Bungalow Owner Panel — Type Definitions
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// ─── Facility Types (O3) ─────────────────────────────────────────────────────
+
+export type FacilityType = 'hotel' | 'villa' | 'bungalov' | 'apart' | 'pansiyon' | 'glamping' | 'tinyhouse' | 'diger';
+export type FacilityStatus = 'active' | 'inactive' | 'maintenance';
+export type FacilityUserRole = 'manager' | 'staff' | 'viewer';
+
+export interface Facility {
+  id: string;
+  tenant_id: string;
+  name: string;
+  slug: string;
+  address: string | null;
+  phone: string | null;
+  type: FacilityType;
+  status: FacilityStatus;
+  settings: Record<string, unknown>;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FacilityUser {
+  id: string;
+  facility_id: string;
+  user_id: string;
+  role: FacilityUserRole;
+  created_at: string;
+}
+
 // ─── UI Types (component-facing, camelCase) ─────────────────────────────────
 
 export type ReservationStatus =
@@ -25,6 +54,7 @@ export interface Guest {
 
 export interface Reservation {
   id: string;
+  facilityId?: string;
   guest: Guest;
   roomName: string;
   checkIn: string; // ISO date
@@ -160,6 +190,7 @@ export type DbPaymentStatus = (typeof DB_PAYMENT_STATUSES)[number];
 export interface ConversationRow {
   id: string;
   tenant_id: string;
+  facility_id: string | null;
   guest_phone: string;
   state: ConversationState;
   message_count: number;
@@ -180,6 +211,7 @@ export interface MessageRow {
 export interface ReservationRow {
   id: string;
   tenant_id: string;
+  facility_id: string | null;
   conversation_id: string | null;
   guest_name: string;
   guest_phone: string;
@@ -200,6 +232,7 @@ export interface ReservationRow {
 export interface RoomRow {
   id: string;
   tenant_id: string;
+  facility_id: string | null;
   name: string;
   description: string | null;
   capacity: number;
@@ -652,6 +685,11 @@ export const FEEDBACK_CATEGORY_LABELS: Record<FeedbackCategory, string> = {
   human_like: 'İnsanlık',
   other: 'Diğer',
 };
+// ─── Müşteri Feedback Types (I3) ─────────────────────────────────────────
+
+export type FeedbackCategory =
+  | 'genel' | 'hiz' | 'rezervasyon' | 'oda_bilgisi'
+  | 'fiyat' | 'iletisim' | 'insan_kalitesi' | 'diger';
 
 export interface MusteriFeedback {
   id: string;
@@ -661,6 +699,11 @@ export interface MusteriFeedback {
   category: FeedbackCategory;
   comment_text: string | null;
   metadata: Record<string, unknown>;
+  facility_id: string | null;
+  conversation_id: string | null;
+  rating: number;
+  category: FeedbackCategory;
+  comment: string | null;
   submitted_at: string;
   created_at: string;
 }
@@ -689,3 +732,43 @@ export const HUMANIZATION_SCORE_LABELS: Record<string, string> = {
   score_flow: 'Akış',
   score_tone: 'Ton',
 };
+export interface FeedbackSummary {
+  total_count: number;
+  avg_rating: number;
+  rating_distribution: { rating: number; count: number }[];
+  category_breakdown: { category: string; count: number; avg_rating: number }[];
+  weekly_trend: { week: string; count: number; avg_rating: number }[];
+  recent_comments: {
+    id: string;
+    rating: number;
+    category: string;
+    comment: string | null;
+    submitted_at: string;
+    conversation_id: string | null;
+  }[];
+}
+
+export interface FeedbackTrendPoint {
+  date: string;
+  count: number;
+  avg_rating: number;
+}
+
+export interface FeedbackWithHumanization {
+  feedback_id: string;
+  tenant_id: string;
+  conversation_id: string | null;
+  rating: number;
+  category: string;
+  comment: string | null;
+  submitted_at: string;
+  total_score: number | null;
+  naturalness: number | null;
+  empathy: number | null;
+  fluency: number | null;
+  context_awareness: number | null;
+  personalization: number | null;
+  conversation_flow: number | null;
+  tone_appropriateness: number | null;
+  scored_at: string | null;
+}
