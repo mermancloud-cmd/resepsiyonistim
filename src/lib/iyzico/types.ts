@@ -91,7 +91,7 @@ export interface IyzicoPaymentResult {
 
 // ─── Subscription Domain Types ─────────────────────────────────────────────────
 
-export type SubscriptionPlanId = "starter" | "pro" | "enterprise";
+export type SubscriptionPlanId = "starter" | "pro" | "business" | "enterprise";
 
 export interface SubscriptionPlan {
   id: SubscriptionPlanId;
