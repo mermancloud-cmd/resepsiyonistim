@@ -26,7 +26,6 @@
  */
 
 import { createClient } from "@/lib/supabase/client";
-import type { PostgrestQueryBuilder } from "@supabase/supabase-js";
 
 // ─── Tables that are tenant-scoped ────────────────────────────────────────────
 
