@@ -47,6 +47,10 @@ export const TENANT_SCOPED_TABLES = [
   "push_subscriptions",
   "analytics_events",
   "guest_satisfaction_surveys",
+  "referrals",
+  "referral_codes",
+  "ab_tests",
+  "ab_test_results",
 ] as const;
 
 export type TenantScopedTable = (typeof TENANT_SCOPED_TABLES)[number];

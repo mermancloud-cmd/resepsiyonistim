@@ -426,6 +426,100 @@ export interface PricingRuleRow {
   updated_at: string;
 }
 
+// ─── Referral Types ───────────────────────────────────────────────────────────
+
+export type ReferralStatus = "pending" | "converted" | "rewarded" | "expired";
+export type RewardType = "discount" | "credit" | "free_night" | "cash";
+
+export interface Referral {
+  id: string;
+  tenant_id: string;
+  referrer_name: string;
+  referrer_phone: string;
+  referee_name: string | null;
+  referee_phone: string | null;
+  referee_email: string | null;
+  status: ReferralStatus;
+  reward_type: RewardType;
+  reward_amount: number;
+  reward_currency: string;
+  reward_claimed_at: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ReferralCode {
+  id: string;
+  tenant_id: string;
+  code: string;
+  description: string | null;
+  is_active: boolean;
+  max_uses: number | null;
+  current_uses: number;
+  reward_type: RewardType;
+  reward_amount: number;
+  reward_currency: string;
+  expires_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ReferralStats {
+  total_referrals: number;
+  pending_count: number;
+  converted_count: number;
+  rewarded_count: number;
+  total_reward_amount: number;
+  conversion_rate: number;
+  active_codes: number;
+}
+
+// ─── A/B Test Types ───────────────────────────────────────────────────────────
+
+export type ABTestTargetMetric = 'satisfaction_score' | 'completion_rate' | 'response_time' | 'conversion_rate';
+
+export interface ABTest {
+  id: string;
+  tenant_id: string;
+  name: string;
+  description: string | null;
+  variant_a_name: string;
+  variant_b_name: string;
+  target_metric: ABTestTargetMetric;
+  is_active: boolean;
+  start_at: string | null;
+  end_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ABTestResult {
+  id: string;
+  test_id: string;
+  tenant_id: string;
+  conversation_id: string | null;
+  variant: 'control' | 'treatment';
+  satisfaction_score: number | null;
+  completion_rate: number | null;
+  response_time_seconds: number | null;
+  message_count: number | null;
+  was_handoff: boolean;
+  converted: boolean;
+  metadata: Record<string, unknown>;
+  recorded_at: string;
+}
+
+export interface ABTestSummary {
+  variant: string;
+  total_count: number;
+  avg_satisfaction: number | null;
+  avg_completion_rate: number | null;
+  avg_response_time: number | null;
+  handoff_rate: number | null;
+  conversion_rate: number | null;
+}
+
 // ─── Composite / Join Types ──────────────────────────────────────────────────
 
 export interface ConversationRowWithMessages extends ConversationRow {

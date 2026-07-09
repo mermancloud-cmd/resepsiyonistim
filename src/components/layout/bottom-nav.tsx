@@ -7,7 +7,8 @@ import {
   CreditCard,
   BarChart3,
   Settings,
-  Smartphone,
+  Gift,
+  FlaskConical,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -43,10 +44,16 @@ const NAV_ITEMS = [
     icon: Settings,
   },
   {
-    id: "whatsapp" as const,
-    label: "WhatsApp",
-    href: "/whatsapp",
-    icon: Smartphone,
+    id: "referral" as const,
+    label: "Referans",
+    href: "/referral",
+    icon: Gift,
+  },
+  {
+    id: "ab-test" as const,
+    label: "A/B Test",
+    href: "/ab-test",
+    icon: FlaskConical,
   },
 ];
 

@@ -118,6 +118,83 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['guest_satisfaction_surveys']['Row'], 'id' | 'created_at' | 'submitted_at'>
         Update: Partial<Database['public']['Tables']['guest_satisfaction_surveys']['Insert']>
       }
+      referrals: {
+        Row: {
+          id: string
+          tenant_id: string
+          referrer_name: string
+          referrer_phone: string
+          referee_name: string | null
+          referee_phone: string | null
+          referee_email: string | null
+          status: 'pending' | 'converted' | 'rewarded' | 'expired'
+          reward_type: 'discount' | 'credit' | 'free_night' | 'cash'
+          reward_amount: number
+          reward_currency: string
+          reward_claimed_at: string | null
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['referrals']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['referrals']['Insert']>
+      }
+      ab_tests: {
+        Row: {
+          id: string
+          tenant_id: string
+          name: string
+          description: string | null
+          variant_a_name: string
+          variant_b_name: string
+          target_metric: 'satisfaction_score' | 'completion_rate' | 'response_time' | 'conversion_rate'
+          is_active: boolean
+          start_at: string | null
+          end_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['ab_tests']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['ab_tests']['Insert']>
+      }
+      ab_test_results: {
+        Row: {
+          id: string
+          test_id: string
+          tenant_id: string
+          conversation_id: string | null
+          variant: 'control' | 'treatment'
+          satisfaction_score: number | null
+          completion_rate: number | null
+          response_time_seconds: number | null
+          message_count: number | null
+          was_handoff: boolean
+          converted: boolean
+          metadata: Json
+          recorded_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['ab_test_results']['Row'], 'id' | 'recorded_at'>
+        Update: Partial<Database['public']['Tables']['ab_test_results']['Insert']>
+      }
+      referral_codes: {
+        Row: {
+          id: string
+          tenant_id: string
+          code: string
+          description: string | null
+          is_active: boolean
+          max_uses: number | null
+          current_uses: number
+          reward_type: 'discount' | 'credit' | 'free_night' | 'cash'
+          reward_amount: number
+          reward_currency: string
+          expires_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['referral_codes']['Row'], 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['referral_codes']['Insert']>
+      }
     }
   }
 }

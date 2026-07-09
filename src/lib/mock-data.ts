@@ -5,6 +5,52 @@
 
 import type { Reservation } from "@/lib/types";
 
+// ─── A/B Test Mock Data ───────────────────────────────────────────────────────
+
+export const mockABTests = [
+  {
+    id: 'ab-test-1',
+    tenant_id: 'default',
+    name: 'Persona Tonu A/B Testi',
+    description: 'Resmi vs samimi dil kullanımının memnuniyet üzerindeki etkisi',
+    variant_a_name: 'Resmi',
+    variant_b_name: 'Samimi',
+    target_metric: 'satisfaction_score' as const,
+    is_active: true,
+    start_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+    end_at: null,
+    created_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'ab-test-2',
+    tenant_id: 'default',
+    name: 'Açılış Mesajı Testi',
+    description: 'Kısa vs detaylı açılış mesajının dönüşüme etkisi',
+    variant_a_name: 'Kısa',
+    variant_b_name: 'Detaylı',
+    target_metric: 'conversion_rate' as const,
+    is_active: false,
+    start_at: new Date(Date.now() - 30 * 86400000).toISOString(),
+    end_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+    created_at: new Date(Date.now() - 30 * 86400000).toISOString(),
+    updated_at: new Date(Date.now() - 2 * 86400000).toISOString(),
+  },
+]
+
+export const mockABTestSummaries = [
+  { variant: 'control', total_count: 45, avg_satisfaction: 3.8, avg_completion_rate: 72.4, avg_response_time: 145, handoff_rate: 18.5, conversion_rate: 22.3 },
+  { variant: 'treatment', total_count: 48, avg_satisfaction: 4.2, avg_completion_rate: 81.6, avg_response_time: 112, handoff_rate: 12.8, conversion_rate: 31.5 },
+]
+
+export const mockABTestResults = [
+  { id: 'res-1', test_id: 'ab-test-1', tenant_id: 'default', conversation_id: 'conv-001', variant: 'control' as const, satisfaction_score: 3.5, completion_rate: 70.0, response_time_seconds: 180, message_count: 12, was_handoff: false, converted: true, metadata: {}, recorded_at: new Date().toISOString() },
+  { id: 'res-2', test_id: 'ab-test-1', tenant_id: 'default', conversation_id: 'conv-002', variant: 'treatment' as const, satisfaction_score: 4.5, completion_rate: 90.0, response_time_seconds: 90, message_count: 15, was_handoff: false, converted: true, metadata: {}, recorded_at: new Date().toISOString() },
+  { id: 'res-3', test_id: 'ab-test-1', tenant_id: 'default', conversation_id: 'conv-003', variant: 'control' as const, satisfaction_score: 2.5, completion_rate: 45.0, response_time_seconds: 300, message_count: 6, was_handoff: true, converted: false, metadata: {}, recorded_at: new Date().toISOString() },
+]
+
+// ─── Dashboard Mock Data ──────────────────────────────────────────────────────
+
 export const mockDashboardStats = {
   check_ins_today: 3,
   check_outs_today: 2,
@@ -404,3 +450,136 @@ export const mockAnalytics: AnalyticsData = {
     ],
   },
 }
+
+// ─── Referral Mock Data ─────────────────────────────────────────────────────
+
+export const mockReferralStats = {
+  total_referrals: 24,
+  pending_count: 8,
+  converted_count: 12,
+  rewarded_count: 4,
+  total_reward_amount: 4500,
+  conversion_rate: 50,
+  active_codes: 2,
+}
+
+export const mockReferrals = [
+  {
+    id: 'ref-001',
+    tenant_id: '596ce2d7-4ac4-4bc3-aff6-fa18b4bfd999',
+    referrer_name: 'Ahmet Yılmaz',
+    referrer_phone: '905321234567',
+    referee_name: 'Mehmet Demir',
+    referee_phone: '905329876543',
+    referee_email: 'mehmet@example.com',
+    status: 'converted' as const,
+    reward_type: 'discount' as const,
+    reward_amount: 500,
+    reward_currency: 'TRY',
+    reward_claimed_at: new Date(Date.now() - 86400000 * 3).toISOString(),
+    notes: null,
+    created_at: new Date(Date.now() - 86400000 * 30).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 3).toISOString(),
+  },
+  {
+    id: 'ref-002',
+    tenant_id: '596ce2d7-4ac4-4bc3-aff6-fa18b4bfd999',
+    referrer_name: 'Ayşe Kaya',
+    referrer_phone: '905321112233',
+    referee_name: 'Ali Öztürk',
+    referee_phone: '905324455667',
+    referee_email: null,
+    status: 'pending' as const,
+    reward_type: 'credit' as const,
+    reward_amount: 300,
+    reward_currency: 'TRY',
+    reward_claimed_at: null,
+    notes: 'Henüz rezervasyon yapmadı',
+    created_at: new Date(Date.now() - 86400000 * 7).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 7).toISOString(),
+  },
+  {
+    id: 'ref-003',
+    tenant_id: '596ce2d7-4ac4-4bc3-aff6-fa18b4bfd999',
+    referrer_name: 'Can Tekin',
+    referrer_phone: '905327778899',
+    referee_name: 'Zeynep Yıldız',
+    referee_phone: '905325550011',
+    referee_email: 'zeynep@example.com',
+    status: 'rewarded' as const,
+    reward_type: 'free_night' as const,
+    reward_amount: 1,
+    reward_currency: 'gece',
+    reward_claimed_at: new Date(Date.now() - 86400000 * 1).toISOString(),
+    notes: 'Ücretsiz gece hakkı kullanıldı',
+    created_at: new Date(Date.now() - 86400000 * 45).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 1).toISOString(),
+  },
+  {
+    id: 'ref-004',
+    tenant_id: '596ce2d7-4ac4-4bc3-aff6-fa18b4bfd999',
+    referrer_name: 'Elif Arslan',
+    referrer_phone: '905329990000',
+    referee_name: null,
+    referee_phone: null,
+    referee_email: null,
+    status: 'expired' as const,
+    reward_type: 'discount' as const,
+    reward_amount: 250,
+    reward_currency: 'TRY',
+    reward_claimed_at: null,
+    notes: '30 gün içinde dönüşüm olmadı',
+    created_at: new Date(Date.now() - 86400000 * 60).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 30).toISOString(),
+  },
+  {
+    id: 'ref-005',
+    tenant_id: '596ce2d7-4ac4-4bc3-aff6-fa18b4bfd999',
+    referrer_name: 'Burak Şahin',
+    referrer_phone: '905321110022',
+    referee_name: 'Deniz Yılmaz',
+    referee_phone: '905323334455',
+    referee_email: 'deniz@example.com',
+    status: 'pending' as const,
+    reward_type: 'cash' as const,
+    reward_amount: 200,
+    reward_currency: 'TRY',
+    reward_claimed_at: null,
+    notes: null,
+    created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 2).toISOString(),
+  },
+]
+
+export const mockReferralCodes = [
+  {
+    id: 'rc-001',
+    tenant_id: '596ce2d7-4ac4-4bc3-aff6-fa18b4bfd999',
+    code: 'DAVET500',
+    description: 'Yeni misafirlere özel 500₺ indirim',
+    is_active: true,
+    max_uses: 50,
+    current_uses: 12,
+    reward_type: 'discount' as const,
+    reward_amount: 500,
+    reward_currency: 'TRY',
+    expires_at: new Date(Date.now() + 86400000 * 90).toISOString(),
+    created_at: new Date(Date.now() - 86400000 * 60).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 1).toISOString(),
+  },
+  {
+    id: 'rc-002',
+    tenant_id: '596ce2d7-4ac4-4bc3-aff6-fa18b4bfd999',
+    code: 'ARKADAS200',
+    description: 'Arkadaşını getir 200₺ kredi kazan',
+    is_active: true,
+    max_uses: 100,
+    current_uses: 5,
+    reward_type: 'credit' as const,
+    reward_amount: 200,
+    reward_currency: 'TRY',
+    expires_at: null,
+    created_at: new Date(Date.now() - 86400000 * 30).toISOString(),
+    updated_at: new Date(Date.now() - 86400000 * 5).toISOString(),
+  },
+]
