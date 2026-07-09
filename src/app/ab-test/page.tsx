@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+
 import {
   FlaskConical,
   BarChart3,
@@ -19,10 +19,7 @@ import {
   TrendingUp,
   ThumbsUp,
   Clock,
-  MessageSquare,
   Users,
-  Activity,
-  Target,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -141,28 +138,6 @@ function ComparisonBar({ label, control, treatment, metric }: {
         </div>
         <span className="w-14 shrink-0 text-muted-foreground">Tedavi: {tVal}</span>
       </div>
-    </div>
-  );
-}
-
-// ─── Skeleton ─────────────────────────────────────────────────────────────────
-
-function SkeletonLine({ className }: { className?: string }) {
-  return <div className={cn("h-4 w-full animate-pulse rounded bg-muted", className)} />;
-}
-
-function SkeletonCard() {
-  return (
-    <div className="flex flex-col gap-3 rounded-lg border border-border/50 p-3.5">
-      <div className="flex items-start justify-between">
-        <div className="flex flex-col gap-1.5">
-          <SkeletonLine className="h-4 w-28" />
-          <SkeletonLine className="h-3 w-20" />
-        </div>
-        <SkeletonLine className="h-5 w-16 rounded-full" />
-      </div>
-      <SkeletonLine className="h-3 w-full" />
-      <SkeletonLine className="h-3 w-3/4" />
     </div>
   );
 }
@@ -415,10 +390,6 @@ function TestResultsDashboard({ test, summaries, results }: {
 // ─── Main Page ─────────────────────────────────────────────────────────────────
 
 export default function ABTestPage() {
-  const [isMounted, setIsMounted] = React.useState(false);
-  React.useEffect(() => { setIsMounted(true); }, []);
-  if (!isMounted) return null;
-
   return <ABTestPageContent />;
 }
 
@@ -426,10 +397,9 @@ function ABTestPageContent() {
   const [showCreate, setShowCreate] = React.useState(false);
   const [selectedTestId, setSelectedTestId] = React.useState<string | null>(null);
 
-  const { data: tests, isLoading: testsLoading } = useABTests();
-  const { data: summaries, isLoading: summariesLoading } = useABTestSummary(selectedTestId ?? undefined);
-  const { data: results, isLoading: resultsLoading } = useABTestResults(selectedTestId ?? undefined);
-
+  const { data: tests } = useABTests();
+  const { data: summaries } = useABTestSummary(selectedTestId ?? undefined);
+  const { data: results } = useABTestResults(selectedTestId ?? undefined);
   const toggleTest = useToggleABTest();
 
   // Fallback to mock
@@ -521,12 +491,7 @@ function ABTestPageContent() {
         ) : (
           /* Test list */
           <div className="flex flex-col gap-2.5">
-            {testsLoading ? (
-              <>
-                <SkeletonCard />
-                <SkeletonCard />
-              </>
-            ) : displayTests.length === 0 ? (
+            {displayTests.length === 0 ? (
               <div className="flex flex-col items-center gap-2 py-10 text-muted-foreground">
                 <FlaskConical className="size-8" />
                 <p className="text-sm">Henüz A/B testi oluşturulmamış</p>
