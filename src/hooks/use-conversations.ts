@@ -85,7 +85,7 @@ export function useConversations(search?: string) {
       if (error) throw new Error(error.message)
 
       return {
-        conversations: (data ?? []) as unknown as Conversation[],
+        conversations: (data ?? []) as Conversation[],
         total: count ?? 0,
       }
     },
@@ -122,8 +122,8 @@ export function useConversation(id: string) {
       if (msgError) throw new Error(msgError.message)
 
       return {
-        conversation: conversation as unknown as Conversation & { language: string },
-        messages: (messages ?? []) as unknown as Message[],
+        conversation: conversation as Conversation & { language: string },
+        messages: (messages ?? []) as Message[],
       }
     },
     staleTime: 5 * 1000,
@@ -195,7 +195,7 @@ export function useSendMessage() {
         .single()
 
       if (error) throw new Error(error.message)
-      return data as unknown as Message
+      return data as Message
     },
     onMutate: async ({ conversationId, content }) => {
       // Cancel outgoing refetches so they don't overwrite our optimistic update

@@ -59,7 +59,7 @@ export function useReservations(status?: string) {
       const { data, error } = await query
       if (error) throw new Error(error.message)
 
-      return { reservations: (data ?? []) as unknown as Reservation[] }
+      return { reservations: (data ?? []) as Reservation[] }
     },
     staleTime: 10 * 1000,
   })
@@ -81,7 +81,7 @@ export function useReservation(id: string) {
         .single()
 
       if (error) throw new Error(error.message)
-      return { reservation: data as unknown as Reservation }
+      return { reservation: data as Reservation }
     },
     staleTime: 5 * 1000,
   })
