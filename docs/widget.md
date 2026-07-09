@@ -1,109 +1,76 @@
-# Web Widget Entegrasyon Kılavuzu
+# Site İçi Sohbet Widgeti
 
-Web sitenize 3 adımda sohbet widget'ı ekleyin.
+Web sitenize ekleyebileceğiniz, misafirlerin size doğrudan mesaj göndermesini sağlayan sohbet widgeti.
 
-## 1. Embed Kodunu Kopyalayın
+---
 
-Panele gidin: **Ayarlar → Web Widget Ayarları** → Embed Kodu bölümünden kodu kopyalayın.
+## 1. Embed Kodu
 
-Standart kod:
-
-```html
-<script src="https://panel.merman.sbs/widget.js" data-business-name="İşletmeniz" data-whatsapp-number="905427450654" defer></script>
-```
-
-## 2. Web Sitenize Ekleyin
-
-Kodu web sitenizin `<head>` veya `</body>` kapanış etiketinden önce ekleyin.
-
-### WordPress
-
-1. **Görünüm → Tema Düzenleyici** veya **Görünüm → Widget'lar**
-2. head bölümüne `<script>` etiketini yapıştırın
-3. Alternatif: **Eklentiler → Yeni Ekle** → "Header Footer Code" benzeri bir eklenti kurun
-
-### Wix
-
-1. **Ayarlar → Özel Kod** (Custom Code)
-2. **Kod Ekle** → `<script>` etiketini yapıştırın
-3. **Tüm Sayfalarda Yükle** seçeneğini işaretleyin
-
-### Squarespace
-
-1. **Ayarlar → Gelişmiş → Kod Enjeksiyonu**
-2. **Header** kısmına `<script>` etiketini yapıştırın
-
-### Doğrudan HTML
+Widget'ı web sitenize eklemek için aşağıdaki `<script>` etiketini sayfanızın `</body>` etiketinden hemen önce yapıştırın:
 
 ```html
-<!DOCTYPE html>
-<html>
-<head>
-  <!-- Diğer head etiketleri... -->
-  <script src="https://panel.merman.sbs/widget.js" data-business-name="Merman Bungalov" data-whatsapp-number="905427450654" defer></script>
-</head>
-<body>
-  <!-- Sayfa içeriğiniz -->
-</body>
-</html>
+<script
+  src="https://panel.merman.sbs/widget-embed.js"
+  data-tenant="TENANT_UUID"
+  data-color="0f766e"
+  data-position="right"
+  data-greeting="Merhaba! Size nasıl yardımcı olabilirim?"
+  data-name="Bungalov Adı"
+  data-logo=""
+  defer
+></script>
 ```
 
-## 3. Özelleştirme
+Bu kodu ayarlar sayfasından (Ayarlar > Site İçi Sohbet Widgeti) otomatik oluşturabilirsiniz.
 
-Widget'ı `data-*` attribute'ları ile özelleştirebilirsiniz:
+---
 
-| Attribute | Açıklama | Varsayılan |
-|-----------|----------|------------|
-| `data-business-name` | İşletme adı (widget başlığında görünür) | "İşletme" |
-| `data-whatsapp-number` | WhatsApp numarası (başında `+` olmadan) | "905427450654" |
-| `data-primary` | Ana renk (hex) | `#0f766e` |
-| `data-position` | Pozisyon: `right` veya `left` | `right` |
-| `data-greeting` | Karşılama mesajı | "Merhaba! Size nasıl yardımcı olabilirim?" |
-| `data-placeholder` | Mesaj girdisi placeholder | "Mesajınızı yazın..." |
-| `data-theme` | Tema: `light`, `dark` veya `auto` | `auto` |
-| `data-logo` | Logo URL'si (yuvarlak kırpılır) | (yok) |
-| `data-whatsapp-message` | Ön tanımlı WhatsApp mesajı | "Merhaba, rezervasyon hakkında bilgi almak istiyorum." |
+## 2. Yapılandırma Parametreleri
 
-### Örnek (tüm özelleştirmelerle)
+| Parametre | Zorunlu | Varsayılan | Açıklama |
+|-----------|---------|------------|----------|
+| `data-tenant` | **Evet** | — | Tenant UUID (panelinizden alabilirsiniz) |
+| `data-color` | Hayır | `0f766e` | Ana renk (hex, `#` işareti olmadan) |
+| `data-position` | Hayır | `right` | Widget konumu (`right` veya `left`) |
+| `data-greeting` | Hayır | `"Merhaba! Size nasıl yardımcı olabilirim?"` | Karşılama mesajı |
+| `data-name` | Hayır | `"Bungalov"` | Sohbette görünecek işletme adı |
+| `data-logo` | Hayır | — | Sohbet başlığında gösterilecek logo URL'si |
+
+---
+
+## 3. Nasıl Çalışır?
+
+1. **Ziyaretçi**, web sitenizde sağ alt köşedeki sohbet butonuna tıklar.
+2. **Form** açılır: ziyaretçi adını, telefon numarasını ve isteğe bağlı mesajını girer.
+3. **Gönder** butonuna basınca, sistemde yeni bir `conversation` oluşturulur ve ilk mesaj kaydedilir.
+4. **Siz veya AI asistanınız**, paneldeki Aktif Sohbetler sayfasından bu konuşmayı görebilir ve yanıtlayabilirsiniz.
+5. **Ziyaretçiye**, mesajının alındığına dair bir onay gösterilir.
+
+---
+
+## Gelişmiş: Doğrudan iframe Kullanımı
+
+Widget'ı doğrudan iframe olarak da kullanabilirsiniz:
 
 ```html
-<script src="https://panel.merman.sbs/widget.js"
-  data-business-name="Merman Bungalov"
-  data-whatsapp-number="905427450654"
-  data-primary="#059669"
-  data-position="left"
-  data-greeting="Merhaba! Rezervasyon için buradayız."
-  data-theme="light"
-  data-logo="https://siteniz.com/logo.png"
-  defer></script>
+<iframe
+  src="https://panel.merman.sbs/widget/embed?tenant=TENANT_UUID&color=0f766e&position=right"
+  width="0"
+  height="0"
+  frameborder="0"
+  style="position:fixed;bottom:0;right:0;z-index:999999;border:none;overflow:hidden;"
+  title="Bungalov Sohbet"
+></iframe>
 ```
 
-### Programatik Kullanım
+**Not:** Statik export modunda iframe yöntemi önerilir. API tabanlı script yöntemi yalnızca standalone (Node.js) deployment'da çalışır.
 
-Sayfa yüklendikten sonra JavaScript ile başlatmak için:
+---
 
-```html
-<script src="https://panel.merman.sbs/widget.js" defer></script>
-<script>
-  // DOM hazır olduğunda widget'ı başlat
-  document.addEventListener('DOMContentLoaded', function() {
-    BungalowWidget.init({
-      businessName: 'Merman Bungalov',
-      whatsappNumber: '905427450654',
-      primary: '#0f766e',
-      greeting: 'Merhaba! Size nasıl yardımcı olabilirim?',
-      theme: 'auto',
-    });
-  });
-</script>
-```
+## Teknik Detaylar
 
-> **Not:** `BungalowWidget.init()` çağrıldığında, `data-*` attribute'ları ile yapılan otomatik başlatma devre dışı kalır.
-
-## Nasıl Çalışır
-
-Widget bir **iframe** içinde çalışır, yani web sitenizin CSS veya JavaScript'i ile etkileşime girmez. Tamamen izole bir ortamda çalışarak sitenizin performansını veya güvenliğini etkilemez.
-
-- Kullanıcı mesaj yazdığında **WhatsApp** üzerinden işletmenize yönlendirilir
-- Widget ayarlarını panel üzerinden istediğiniz zaman değiştirebilirsiniz
-- Mobil uyumludur, tüm ekran boyutlarında çalışır
+- Widget, ziyaretçinin tarayıcısından doğrudan Supabase'e bağlanır (anon key ile).
+- Conversation ve message oluşturma yetkisi, Supabase RLS politikalarıyla korunur.
+- Güvenlik için tenant_id her kayıtta otomatik eklenir.
+- Mesaj iletildikten sonra AI asistanı otomatik olarak yanıt verebilir.
+- iframe boyutlandırması `postMessage` API'si ile yönetilir.

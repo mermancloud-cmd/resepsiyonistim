@@ -1,19 +1,18 @@
 /**
- * Bungalow Resepsiyonist — Web Widget Embed Script
- * 
+ * Bungalow Resepsiyonist — Web Widget Embed Script (API-backed)
+ *
  * Usage:
  *   <script src="https://panel.merman.sbs/widget.js"
  *     data-primary="#0f766e"
  *     data-business-name="Merman Bungalov"
- *     data-whatsapp-number="905427450654"
- *     data-greeting="Merhaba! Size nasıl yardımcı olabilirim?"
+ *     data-tenant="merman-bungalov"
  *     defer></script>
- * 
+ *
  * Or programmatically:
  *   BungalowWidget.init({
  *     primary: '#0f766e',
  *     businessName: 'Merman Bungalov',
- *     whatsappNumber: '905427450654',
+ *     tenant: 'merman-bungalov',
  *   });
  */
 (function () {
@@ -31,8 +30,7 @@
     theme: 'auto',
     logo: '',
     businessName: 'İşletme',
-    whatsappNumber: '905427450654',
-    whatsappMessage: 'Merhaba, rezervasyon hakkında bilgi almak istiyorum.',
+    tenant: 'merman-bungalov',
   };
 
   // ─── Parse data attributes ─────────────────────────────────────────────────
@@ -49,8 +47,7 @@
       cfg.theme = attrs.theme;
     if (attrs.logo) cfg.logo = attrs.logo;
     if (attrs.businessName) cfg.businessName = attrs.businessName;
-    if (attrs.whatsappNumber) cfg.whatsappNumber = attrs.whatsappNumber;
-    if (attrs.whatsappMessage) cfg.whatsappMessage = attrs.whatsappMessage;
+    if (attrs.tenant) cfg.tenant = attrs.tenant;
 
     return cfg;
   }
@@ -66,8 +63,8 @@
     if (config.theme && config.theme !== DEFAULTS.theme) params.set('theme', config.theme);
     if (config.logo) params.set('logo', config.logo);
     if (config.businessName && config.businessName !== DEFAULTS.businessName) params.set('businessName', config.businessName);
-    if (config.whatsappNumber && config.whatsappNumber !== DEFAULTS.whatsappNumber) params.set('whatsappNumber', config.whatsappNumber);
-    if (config.whatsappMessage && config.whatsappMessage !== DEFAULTS.whatsappMessage) params.set('whatsappMessage', config.whatsappMessage);
+    // Always pass tenant slug (required for API)
+    if (config.tenant) params.set('tenant', config.tenant);
 
     var qs = params.toString();
     return baseUrl + (qs ? '?' + qs : '');
@@ -79,12 +76,11 @@
     // Prevent double injection
     if (document.getElementById('bungalow-widget-iframe')) return;
 
-    // Resolve base URL: try data-base attribute, then script src origin
+    // Resolve base URL
     var scriptEl = document.querySelector('script[data-widget-src]');
     var baseUrl = config.baseUrl || (scriptEl ? scriptEl.getAttribute('data-base') : '');
 
     if (!baseUrl) {
-      // Derive from current script's src (handles both relative and absolute)
       var scripts = document.getElementsByTagName('script');
       for (var i = 0; i < scripts.length; i++) {
         var src = scripts[i].src || '';
@@ -95,7 +91,7 @@
       }
     }
 
-    // Fallback: use the page origin
+    // Fallback
     if (!baseUrl) {
       baseUrl = window.location.origin + '/widget';
     }
@@ -144,17 +140,13 @@
 
   // ─── Auto-init on script load ──────────────────────────────────────────────
 
-  // For <script defer> or <script> at bottom of body
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
-      // Only auto-init if there's no explicit BungalowWidget.init() call
-      // We check a flag so double init doesn't happen
       if (!window.__bungalowWidgetInitCalled) {
         init();
       }
     });
   } else {
-    // Script loaded after DOM is ready (e.g., async)
     if (!window.__bungalowWidgetInitCalled) {
       init();
     }

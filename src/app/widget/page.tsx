@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useWidgetMessaging } from "@/hooks/use-widget-messaging";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -8,24 +9,14 @@ type WidgetTheme = "light" | "dark" | "auto";
 type WidgetPosition = "right" | "left";
 
 interface WidgetConfig {
-  /** Business brand colour (hex, default #0f766e) */
   primary?: string;
-  /** Widget position */
   position?: WidgetPosition;
-  /** Greeting text shown in the bubble header */
   greeting?: string;
-  /** Placeholder text in the message input */
   placeholder?: string;
-  /** Light / Dark / Auto */
   theme?: WidgetTheme;
-  /** Business logo URL (optional circle crop) */
   logo?: string;
-  /** Business name shown in header */
   businessName?: string;
-  /** WhatsApp number (E.164 without +) the widget sends to */
-  whatsappNumber?: string;
-  /** Pre-filled message when clicking the WhatsApp link */
-  whatsappMessage?: string;
+  tenantSlug?: string;
 }
 
 // ─── Defaults ─────────────────────────────────────────────────────────────────
@@ -37,8 +28,7 @@ const DEFAULTS: WidgetConfig = {
   placeholder: "Mesajınızı yazın...",
   theme: "auto",
   businessName: "İşletme",
-  whatsappNumber: "905427450654",
-  whatsappMessage: "Merhaba, rezervasyon hakkında bilgi almak istiyorum.",
+  tenantSlug: "merman-bungalov",
 };
 
 // ─── Theme resolver ────────────────────────────────────────────────────────────
@@ -59,15 +49,15 @@ function parseConfig(): WidgetConfig {
 
   const str = (key: string) => params.get(key);
   if (str("primary")) cfg.primary = str("primary")!;
-  if (str("position") === "left" || str("position") === "right") cfg.position = str("position")!;
+  const position = str("position");
+  if (position === "left" || position === "right") cfg.position = position;
   if (str("greeting")) cfg.greeting = str("greeting")!;
   if (str("placeholder")) cfg.placeholder = str("placeholder")!;
   if (str("theme") === "light" || str("theme") === "dark" || str("theme") === "auto")
     cfg.theme = str("theme")! as WidgetTheme;
   if (str("logo")) cfg.logo = str("logo")!;
   if (str("businessName")) cfg.businessName = str("businessName")!;
-  if (str("whatsappNumber")) cfg.whatsappNumber = str("whatsappNumber")!;
-  if (str("whatsappMessage")) cfg.whatsappMessage = str("whatsappMessage")!;
+  if (str("tenant")) cfg.tenantSlug = str("tenant")!;
 
   return cfg;
 }
@@ -78,12 +68,24 @@ export default function WidgetPage() {
   const [config, setConfig] = useState<WidgetConfig>(DEFAULTS);
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [messages, setMessages] = useState<{ role: "bot" | "user"; text: string }[]>([]);
   const [input, setInput] = useState("");
+  const [showNameInput, setShowNameInput] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const {
+    messages,
+    isLoading,
+    isSending,
+    initConversation,
+    sendMessage,
+    guestName,
+    setGuestName,
+    settings,
+  } = useWidgetMessaging(config.tenantSlug ?? null);
+
   useEffect(() => {
-    setConfig(parseConfig());
+    const cfg = parseConfig();
+    setConfig(cfg);
     setMounted(true);
   }, []);
 
@@ -92,39 +94,43 @@ export default function WidgetPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const resolved = resolveTheme(config.theme!);
+  // Start conversation when bubble opens
+  useEffect(() => {
+    if (open && mounted && config.tenantSlug) {
+      initConversation();
+    }
+  }, [open, mounted, config.tenantSlug, initConversation]);
 
+  const resolved = resolveTheme(config.theme!);
   const primary = config.primary!;
   const isRight = config.position === "right";
+
+  const greeting = settings?.welcome_message || config.greeting!;
+  const businessName = settings?.property_name || config.businessName!;
 
   const handleSend = useCallback(() => {
     const text = input.trim();
     if (!text) return;
-    setMessages((prev) => [...prev, { role: "user", text }]);
+    if (!guestName.trim()) {
+      setShowNameInput(true);
+      return;
+    }
+    sendMessage(text);
     setInput("");
+  }, [input, guestName, sendMessage]);
 
-    // Open WhatsApp with the message
-    const phone = config.whatsappNumber!.replace(/[^0-9]/g, "");
-    const msg = encodeURIComponent(
-      `${config.whatsappMessage}\n\n---\n${text}`
-    );
-    window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
-  }, [input, config]);
-
-  const handleQuickAction = useCallback(
-    (msg: string) => {
-      setMessages((prev) => [...prev, { role: "user", text: msg }]);
-      const phone = config.whatsappNumber!.replace(/[^0-9]/g, "");
-      const full = encodeURIComponent(`${config.whatsappMessage}\n\n---\n${msg}`);
-      window.open(`https://wa.me/${phone}?text=${full}`, "_blank");
-    },
-    [config]
-  );
+  const handleNameSubmit = useCallback(() => {
+    if (guestName.trim()) {
+      setShowNameInput(false);
+    }
+  }, [guestName]);
 
   // ── Styles ────────────────────────────────────────────────────────────────
 
+  const s = (props: Record<string, string | number>): React.CSSProperties => props;
+
   const styles: Record<string, React.CSSProperties> = {
-    fab: {
+    fab: s({
       position: "fixed",
       bottom: 24,
       [isRight ? "right" : "left"]: 24,
@@ -141,8 +147,8 @@ export default function WidgetPage() {
       boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
       zIndex: 2147483647,
       transition: "transform 0.2s, box-shadow 0.2s",
-    },
-    bubble: {
+    }),
+    bubble: s({
       position: "fixed",
       bottom: 92,
       [isRight ? "right" : "left"]: 24,
@@ -161,9 +167,8 @@ export default function WidgetPage() {
       fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
       fontSize: 14,
       lineHeight: 1.5,
-      animation: "slideUp 0.25s ease-out",
-    },
-    header: {
+    }),
+    header: s({
       padding: "14px 16px",
       backgroundColor: primary,
       color: "#fff",
@@ -171,23 +176,17 @@ export default function WidgetPage() {
       alignItems: "center",
       gap: 10,
       flexShrink: 0,
-    },
-    headerAvatar: {
+    }),
+    headerAvatar: s({
       width: 36,
       height: 36,
       borderRadius: "50%",
       objectFit: "cover",
       backgroundColor: "rgba(255,255,255,0.2)",
-    },
-    headerTitle: {
-      fontSize: 15,
-      fontWeight: 600,
-    },
-    headerSub: {
-      fontSize: 11,
-      opacity: 0.8,
-    },
-    closeBtn: {
+    }),
+    headerTitle: s({ fontSize: 15, fontWeight: 600 }),
+    headerSub: s({ fontSize: 11, opacity: 0.8 }),
+    closeBtn: s({
       marginLeft: "auto",
       background: "none",
       border: "none",
@@ -196,16 +195,16 @@ export default function WidgetPage() {
       fontSize: 18,
       padding: 4,
       lineHeight: 1,
-    },
-    body: {
+    }),
+    body: s({
       flex: 1,
       overflowY: "auto",
       padding: "12px 16px",
       display: "flex",
       flexDirection: "column",
       gap: 8,
-    },
-    botBubble: {
+    }),
+    botBubble: s({
       alignSelf: "flex-start",
       backgroundColor: resolved === "dark" ? "#2a2a3e" : "#f1f5f9",
       color: resolved === "dark" ? "#e4e4e7" : "#1a1a2e",
@@ -213,8 +212,8 @@ export default function WidgetPage() {
       padding: "10px 14px",
       maxWidth: "85%",
       fontSize: 13,
-    },
-    userBubble: {
+    }),
+    userBubble: s({
       alignSelf: "flex-end",
       backgroundColor: primary,
       color: "#fff",
@@ -222,14 +221,14 @@ export default function WidgetPage() {
       padding: "10px 14px",
       maxWidth: "85%",
       fontSize: 13,
-    },
-    quickActions: {
+    }),
+    quickActions: s({
       display: "flex",
       flexWrap: "wrap",
       gap: 6,
       padding: "4px 16px 0",
-    },
-    quickBtn: {
+    }),
+    quickBtn: s({
       fontSize: 12,
       padding: "6px 12px",
       borderRadius: 20,
@@ -238,16 +237,16 @@ export default function WidgetPage() {
       color: primary,
       cursor: "pointer",
       transition: "background 0.15s",
-    },
-    footer: {
+    }),
+    footer: s({
       padding: "10px 12px",
       borderTop: `1px solid ${resolved === "dark" ? "#333" : "#e5e7eb"}`,
       display: "flex",
       gap: 8,
       alignItems: "center",
       flexShrink: 0,
-    },
-    input: {
+    }),
+    input: s({
       flex: 1,
       border: `1px solid ${resolved === "dark" ? "#444" : "#d1d5db"}`,
       borderRadius: 24,
@@ -256,8 +255,8 @@ export default function WidgetPage() {
       outline: "none",
       backgroundColor: resolved === "dark" ? "#2a2a3e" : "#fff",
       color: resolved === "dark" ? "#e4e4e7" : "#1a1a2e",
-    },
-    sendBtn: {
+    }),
+    sendBtn: s({
       width: 36,
       height: 36,
       borderRadius: "50%",
@@ -269,7 +268,55 @@ export default function WidgetPage() {
       alignItems: "center",
       justifyContent: "center",
       flexShrink: 0,
-    },
+    }),
+    nameOverlay: s({
+      position: "absolute",
+      inset: 0,
+      backgroundColor: "rgba(0,0,0,0.4)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 10,
+      borderRadius: 16,
+    }),
+    nameCard: s({
+      backgroundColor: resolved === "dark" ? "#2a2a3e" : "#fff",
+      borderRadius: 12,
+      padding: 24,
+      margin: 16,
+      width: "100%",
+      maxWidth: 280,
+      display: "flex",
+      flexDirection: "column",
+      gap: 12,
+    }),
+    nameInput: s({
+      border: `1px solid ${resolved === "dark" ? "#555" : "#d1d5db"}`,
+      borderRadius: 8,
+      padding: "10px 12px",
+      fontSize: 14,
+      outline: "none",
+      backgroundColor: "transparent",
+      color: resolved === "dark" ? "#e4e4e7" : "#1a1a2e",
+    }),
+    nameSubmit: s({
+      backgroundColor: primary,
+      color: "#fff",
+      border: "none",
+      borderRadius: 8,
+      padding: "10px 16px",
+      fontSize: 14,
+      fontWeight: 600,
+      cursor: "pointer",
+    }),
+    typing: s({
+      alignSelf: "flex-start",
+      backgroundColor: resolved === "dark" ? "#2a2a3e" : "#f1f5f9",
+      borderRadius: "4px 16px 16px 16px",
+      padding: "12px 16px",
+      maxWidth: "85%",
+      fontSize: 13,
+    }),
   };
 
   const QUICK_ACTIONS = [
@@ -283,11 +330,14 @@ export default function WidgetPage() {
 
   return (
     <>
-      {/* Inject keyframes */}
       <style>{`
         @keyframes wiggleFadeIn {
           0% { opacity: 0; transform: scale(0.8); }
           100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes pulse-dot {
+          0%, 80%, 100% { opacity: 0; }
+          40% { opacity: 1; }
         }
       `}</style>
 
@@ -299,12 +349,10 @@ export default function WidgetPage() {
         title="Sohbet"
       >
         {open ? (
-          /* X icon */
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         ) : (
-          /* Chat bubble icon */
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
@@ -322,8 +370,8 @@ export default function WidgetPage() {
               <div style={styles.headerAvatar} />
             )}
             <div>
-              <div style={styles.headerTitle}>{config.businessName}</div>
-              <div style={styles.headerSub}>{config.greeting}</div>
+              <div style={styles.headerTitle}>{businessName}</div>
+              <div style={styles.headerSub}>Çevrimiçi</div>
             </div>
             <button
               onClick={() => setOpen(false)}
@@ -335,30 +383,77 @@ export default function WidgetPage() {
           </div>
 
           {/* Messages */}
-          <div style={styles.body}>
-            <div style={styles.botBubble}>
-              {config.greeting}
-            </div>
-            {messages.map((m, i) => (
-              <div key={i} style={m.role === "user" ? styles.userBubble : styles.botBubble}>
-                {m.text}
+          <div style={{ ...styles.body, position: "relative" }}>
+            {showNameInput && (
+              <div style={styles.nameOverlay}>
+                <div style={styles.nameCard}>
+                  <p style={{ fontSize: 14, fontWeight: 600, textAlign: "center" }}>
+                    Adınız nedir?
+                  </p>
+                  <input
+                    style={styles.nameInput}
+                    placeholder="Adınızı yazın..."
+                    value={guestName}
+                    onChange={(e) => setGuestName(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleNameSubmit();
+                    }}
+                    autoFocus
+                  />
+                  <button style={styles.nameSubmit} onClick={handleNameSubmit}>
+                    Başla
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Welcome message */}
+            <div style={styles.botBubble}>{greeting}</div>
+
+            {/* Messages */}
+            {messages.map((m) => (
+              <div
+                key={m.id}
+                style={m.role === "user" ? styles.userBubble : styles.botBubble}
+              >
+                {m.content}
               </div>
             ))}
+
+            {/* Loading indicator */}
+            {isLoading && (
+              <div style={styles.typing}>
+                <span style={{ display: "inline-flex", gap: 4 }}>
+                  <span style={{ animation: "pulse-dot 1.4s infinite", animationDelay: "0s" }}>●</span>
+                  <span style={{ animation: "pulse-dot 1.4s infinite", animationDelay: "0.2s" }}>●</span>
+                  <span style={{ animation: "pulse-dot 1.4s infinite", animationDelay: "0.4s" }}>●</span>
+                </span>
+              </div>
+            )}
+
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick actions */}
-          <div style={styles.quickActions}>
-            {QUICK_ACTIONS.map((q) => (
-              <button
-                key={q}
-                style={styles.quickBtn}
-                onClick={() => handleQuickAction(q)}
-              >
-                {q}
-              </button>
-            ))}
-          </div>
+          {/* Quick actions (only before first message) */}
+          {messages.length === 0 && !isLoading && (
+            <div style={styles.quickActions}>
+              {QUICK_ACTIONS.map((q) => (
+                <button
+                  key={q}
+                  style={styles.quickBtn}
+                  onClick={() => {
+                    if (!guestName.trim()) {
+                      setShowNameInput(true);
+                      return;
+                    }
+                    sendMessage(q);
+                  }}
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
 
           {/* Input */}
           <div style={styles.footer}>
@@ -370,8 +465,14 @@ export default function WidgetPage() {
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleSend();
               }}
+              disabled={isLoading}
             />
-            <button style={styles.sendBtn} onClick={handleSend} aria-label="Gönder">
+            <button
+              style={styles.sendBtn}
+              onClick={handleSend}
+              aria-label="Gönder"
+              disabled={isLoading || !input.trim()}
+            >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
               </svg>
