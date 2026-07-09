@@ -13,7 +13,7 @@ export function useSessionTimeout(
 ) {
   const { signOut, isAuthenticated } = useAuth();
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const lastActivityRef = useRef<number>(Date.now());
+  const lastActivityRef = useRef<number>(0);
 
   const handleLogout = useCallback(async () => {
     // Redirect with session_expired reason

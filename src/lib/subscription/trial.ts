@@ -6,7 +6,7 @@
  * This prevents abuse and allows controlled onboarding.
  */
 
-import type { SubscriptionPlanId, TrialInvite } from "@/lib/iyzico/types";
+import type { TrialInvite } from "@/lib/iyzico/types";
 import { createBrowserClient } from "@supabase/ssr";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────

@@ -6,14 +6,6 @@
 // Timing-Safe String Comparison (equivalent to hmac.compare_digest)
 export function timingSafeEqual(a: string, b: string): boolean {
   if (a.length !== b.length) {
-    // Still iterate to maintain constant-time behavior
-    let result = 0;
-    const maxLen = Math.max(a.length, b.length);
-    for (let i = 0; i < maxLen; i++) {
-      const aCode = i < a.length ? a.charCodeAt(i) : 0;
-      const bCode = i < b.length ? b.charCodeAt(i) : 0;
-      result |= aCode ^ bCode;
-    }
     return false;
   }
   let result = 0;

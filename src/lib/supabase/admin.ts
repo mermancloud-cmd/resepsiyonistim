@@ -43,7 +43,7 @@ export async function getTenantIdFromSession(): Promise<string> {
           getAll() {
             return cookieStore.getAll();
           },
-          setAll(cookiesToSet) {
+          setAll: () => {
             // No-op in API routes
           },
         },
