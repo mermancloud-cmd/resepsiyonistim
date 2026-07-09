@@ -829,6 +829,32 @@ export default function ReportsPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* ── Scheduled Report Placeholder ─────────────────────────────────────── */}
+        <Card className="bg-violet-50/50 dark:bg-violet-900/10 border-violet-200 dark:border-violet-800">
+          <CardContent className="p-4">
+            <div className="flex items-start gap-3">
+              <div className="rounded-lg bg-violet-100 dark:bg-violet-900/30 p-2 shrink-0">
+                <Calendar className="size-4 text-violet-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-violet-800 dark:text-violet-200">
+                  Planlı Rapor Gönderimi
+                </p>
+                <p className="text-[11px] text-violet-600 dark:text-violet-400 mt-1">
+                  Haftalık/aylık doluluk ve gelir raporlarını e-posta veya
+                  Telegram ile otomatik gönderme özelliği yakında gelecek.
+                </p>
+                <div className="flex items-center gap-2 mt-3">
+                  <div className="flex items-center gap-1 text-[10px] text-violet-500 bg-violet-100 dark:bg-violet-900/30 px-2 py-1 rounded-full">
+                    <span className="size-1.5 rounded-full bg-violet-400 animate-pulse" />
+                    Cron entegrasyonu — J fazı
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </MobileShell>
   );
