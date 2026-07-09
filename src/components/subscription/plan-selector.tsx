@@ -68,7 +68,7 @@ export function PlanSelector({ selectedPlan, onSelect, disabled }: PlanSelectorP
                   {plan.limits.aiMessagesPerMonth === -1
                     ? "Sınırsız"
                     : plan.limits.aiMessagesPerMonth.toLocaleString("tr-TR")}{" "}
-                  AI mesajı
+                  dijital mesaj
                 </Badge>
                 <Badge variant="secondary" className="text-[10px]">
                   {plan.limits.properties === -1

@@ -52,7 +52,7 @@ function ConversationRow({ conversation, onToggleHandler }: ConversationRowProps
                 : "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300"
             )}
           >
-            {isAI ? "AI Yanıtlıyor" : "Siz Yanıtlıyorsunuz"}
+            {isAI ? "Dijital Yanıtlıyor" : "Siz Yanıtlıyorsunuz"}
           </Badge>
         </div>
         <p className="text-xs text-muted-foreground truncate mt-0.5">
@@ -78,7 +78,7 @@ function ConversationRow({ conversation, onToggleHandler }: ConversationRowProps
           }
         />
         <span className="text-[10px] text-muted-foreground">
-          {isAI ? "AI" : "Elle"}
+          {isAI ? "Dijital" : "Elle"}
         </span>
       </div>
     </div>
@@ -119,7 +119,7 @@ export function ConversationToggles() {
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
             <span className="size-2 rounded-full bg-violet-500" />
-            AI: {aiCount}
+            Dijital: {aiCount}
           </span>
           <span className="flex items-center gap-1">
             <span className="size-2 rounded-full bg-orange-500" />

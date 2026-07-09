@@ -79,7 +79,7 @@ export default function SubscriptionPage() {
             <h3 className="text-lg font-semibold">Başlangıç</h3>
             <p className="text-3xl font-bold">₺499<span className="text-sm font-normal text-muted-foreground">/ay</span></p>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>✓ Aylık 500 AI mesajı</li>
+              <li>✓ Aylık 500 dijital mesaj</li>
               <li>✓ 1 tesis</li>
               <li>✓ 1 WhatsApp numarası</li>
             </ul>
@@ -90,7 +90,7 @@ export default function SubscriptionPage() {
             <h3 className="text-lg font-semibold">Profesyonel</h3>
             <p className="text-3xl font-bold">₺999<span className="text-sm font-normal text-muted-foreground">/ay</span></p>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>✓ Aylık 5.000 AI mesajı</li>
+              <li>✓ Aylık 5.000 dijital mesaj</li>
               <li>✓ 5 tesis</li>
               <li>✓ 3 WhatsApp numarası</li>
               <li>✓ Gelişmiş analitik</li>

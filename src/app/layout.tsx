@@ -19,7 +19,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: "İşletme Yönetim Paneli",
   description:
-    "İşletmeniz için yapay zeka destekli rezervasyon yönetim paneli.",
+    "İşletmeniz için dijital resepsiyonist destekli rezervasyon yönetim paneli.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,

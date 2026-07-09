@@ -69,7 +69,7 @@ export function PerformanceStats() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
           <BarChart3 className="size-5 text-primary" />
-          AI Performansı
+          Dijital Asistan Performansı
         </CardTitle>
         <p className="text-xs text-muted-foreground">Bugünkü istatistikler</p>
       </CardHeader>

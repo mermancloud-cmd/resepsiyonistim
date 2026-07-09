@@ -56,7 +56,7 @@ function validateForm(data: FormData): Record<string, string> {
   if (!data.checkInTime) errors.checkInTime = "Giriş saati zorunludur";
   if (!data.checkOutTime) errors.checkOutTime = "Çıkış saati zorunludur";
   if (data.minimumStay < 1) errors.minimumStay = "En az 1 gece olmalıdır";
-  if (!data.aiName.trim()) errors.aiName = "AI asistan adı zorunludur";
+  if (!data.aiName.trim()) errors.aiName = "Dijital asistan adı zorunludur";
   return errors;
 }
 
@@ -223,7 +223,7 @@ export default function SettingsPage() {
           <div>
             <h2 className="text-lg font-semibold tracking-tight">Ayarlar</h2>
             <p className="text-xs text-muted-foreground">
-              İşletme, AI ve uygulama ayarları
+              İşletme, asistan ve uygulama ayarları
             </p>
           </div>
         </div>
@@ -233,7 +233,7 @@ export default function SettingsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-base">
               <Bot className="size-5 text-violet-600 dark:text-violet-400" />
-              AI Asistan Yapılandırması
+              Dijital Asistan Yapılandırması
             </CardTitle>
           </CardHeader>
           <CardContent>

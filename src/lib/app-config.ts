@@ -4,8 +4,8 @@ export const APP_NAME: string =
     ? (process.env as Record<string, string | undefined>).NEXT_PUBLIC_APP_NAME
     : undefined) || "Panel";
 
-export const APP_TAGLINE = "İşletme Yönetim Paneli";
-export const APP_DESCRIPTION = "İşletmeniz için rezervasyon yönetim paneli.";
+export const APP_TAGLINE = "İşletmeniz İçin Dijital Resepsiyonist";
+export const APP_DESCRIPTION = "Dijital resepsiyonist ile 7/24 WhatsApp tabanlı rezervasyon yönetimi.";
 export const LOGO_LETTER = APP_NAME.charAt(0).toUpperCase();
 export const UNIT_TYPE_LABEL = "Oda / Birim";
 

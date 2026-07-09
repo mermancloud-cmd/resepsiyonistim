@@ -31,7 +31,7 @@ export function PersonaSettings() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-base">
           <Bot className="size-5 text-primary" />
-          AI Persona Ayarları
+          Dijital Resepsiyonist Ayarları
         </CardTitle>
         <CardAction>
           <Button variant="outline" size="sm" disabled className="opacity-60">
@@ -48,7 +48,7 @@ export function PersonaSettings() {
             <div className="rounded-lg bg-muted/50 p-3">
               <div className="flex items-center gap-2 mb-1">
                 <Bot className="size-3.5 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">AI Adı</span>
+                <span className="text-xs text-muted-foreground">Asistan Adı</span>
               </div>
               <p className="text-sm font-semibold">{persona.name}</p>
             </div>

@@ -108,7 +108,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
       "Sınırsız dijital mesaj",
       "Sınırsız tesis",
       "10 WhatsApp numarası",
-      "Özel AI eğitimi (işletmeye özel)",
+      "Özel dijital asistan eğitimi (işletmeye özel)",
       "Beyaz etiket seçeneği",
       "Özel entegrasyonlar",
       "SLA garantisi (%99.9 uptime)",

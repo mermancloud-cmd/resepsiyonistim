@@ -22,7 +22,7 @@ export function AIToggleCard() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Bot className="size-5 text-primary" />
-          AI Asistan Kontrolü
+          Dijital Resepsiyonist Kontrolü
         </CardTitle>
       </CardHeader>
       <CardContent>
