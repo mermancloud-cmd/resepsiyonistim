@@ -26,6 +26,7 @@
  */
 
 import { createClient } from "@/lib/supabase/client";
+import { useAuth } from "@/lib/auth-context";
 
 // ─── Tables that are tenant-scoped ────────────────────────────────────────────
 
@@ -131,9 +132,6 @@ export function createScopedClient(tenantId: string) {
  * ```
  */
 export function useTenantClient() {
-  // This is imported lazily to avoid circular dependency
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { useAuth } = require("@/lib/auth-context") as typeof import("@/lib/auth-context");
   const { tenant, isLoading } = useAuth();
 
   if (isLoading) {
