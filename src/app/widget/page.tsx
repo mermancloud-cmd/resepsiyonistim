@@ -59,7 +59,7 @@ function parseConfig(): WidgetConfig {
 
   const str = (key: string) => params.get(key);
   if (str("primary")) cfg.primary = str("primary")!;
-  if (str("position") === "left" || str("position") === "right") cfg.position = str("position")!;
+  if (str("position") === "left" || str("position") === "right") cfg.position = str("position") as WidgetPosition;
   if (str("greeting")) cfg.greeting = str("greeting")!;
   if (str("placeholder")) cfg.placeholder = str("placeholder")!;
   if (str("theme") === "light" || str("theme") === "dark" || str("theme") === "auto")

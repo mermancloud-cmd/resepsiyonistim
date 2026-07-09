@@ -631,6 +631,55 @@ export const HUMANIZATION_CATEGORY_LABELS: Record<HumanizationCategory, string> 
   complaint: 'Şikayet',
 };
 
+// ─── Müşteri Feedback Types ──────────────────────────────────────────────────
+
+export type FeedbackRating = 1 | 2 | 3 | 4 | 5;
+
+export const FEEDBACK_CATEGORIES = [
+  'general', 'greeting', 'accuracy', 'helpfulness',
+  'speed', 'understanding', 'human_like', 'other',
+] as const;
+
+export type FeedbackCategory = (typeof FEEDBACK_CATEGORIES)[number];
+
+export const FEEDBACK_CATEGORY_LABELS: Record<FeedbackCategory, string> = {
+  general: 'Genel',
+  greeting: 'Karşılama',
+  accuracy: 'Doğruluk',
+  helpfulness: 'Yardımseverlik',
+  speed: 'Hız',
+  understanding: 'Anlayış',
+  human_like: 'İnsanlık',
+  other: 'Diğer',
+};
+
+export interface MusteriFeedback {
+  id: string;
+  tenant_id: string;
+  conversation_id: string | null;
+  rating: FeedbackRating;
+  category: FeedbackCategory;
+  comment_text: string | null;
+  metadata: Record<string, unknown>;
+  submitted_at: string;
+  created_at: string;
+}
+
+export interface MusteriFeedbackSummary {
+  total_feedback: number;
+  avg_rating: number;
+  positive_count: number;
+  negative_count: number;
+  neutral_count: number;
+  category_breakdown: Record<string, number>;
+}
+
+export interface MusteriFeedbackTrend {
+  date: string;
+  avg_rating: number;
+  count: number;
+}
+
 export const HUMANIZATION_SCORE_LABELS: Record<string, string> = {
   score_naturalness: 'Doğallık',
   score_empathy: 'Empati',
