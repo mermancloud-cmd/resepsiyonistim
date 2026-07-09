@@ -5,7 +5,7 @@ import bundleAnalyzer from "@next/bundle-analyzer";
 const withSerwist = withSerwistInit({
   swSrc: "src/app/sw.ts",
   swDest: "public/sw.js",
-  disable: true, // SW built separately via scripts/build-sw.mjs postbuild (Turbopack incompatible)
+  disable: true, // SW built separately via scripts/build-sw.mjs postbuild
 });
 
 const withBundleAnalyzer = bundleAnalyzer({
@@ -14,26 +14,20 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 const nextConfig: NextConfig = {
   // ─── Deployment Mode ─────────────────────────────────────────────────────
-  // "export" = Static HTML/JS/CSS, served by nginx (current production)
-  output: "export",
+  // "standalone" = Node.js server — required for API routes (/api/widget/*)
+  output: "standalone",
   poweredByHeader: false,
   turbopack: {},
 
   // ─── Image Optimization ──────────────────────────────────────────────────
-  // Since we use static export, next/image doesn't run on-demand.
-  // We use unoptimized images (SVG/sprites) and nginx for caching.
   images: {
     unoptimized: true,
   },
 
-  // ─── Bundle Size Monitoring ──────────────────────────────────────────────
-  // Logs warnings when chunks exceed configured size thresholds.
-  // Helps catch regressions before they reach production.
+  // ─── Bundle Size ─────────────────────────────────────────────────────────
   productionBrowserSourceMaps: false,
 
-  // ─── Experimental: Optimize package imports ──────────────────────────────
-  // Prevents importing the entire recharts/lucide bundle on every page.
-  // Only imports used components are included in the tree-shake.
+  // ─── Experimental: Tree-shake heavy packages ─────────────────────────────
   experimental: {
     optimizePackageImports: [
       "lucide-react",
@@ -44,7 +38,7 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // ─── Headers (only used in standalone mode, but kept for reference) ──────
+  // ─── Security Headers (standalone mode) ──────────────────────────────────
   async headers() {
     return [
       {
@@ -60,7 +54,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-// Bundle analyzer wrapper (activated via ANALYZE=true env var)
 const config = withBundleAnalyzer(nextConfig);
 
 export default withSerwist(config);
