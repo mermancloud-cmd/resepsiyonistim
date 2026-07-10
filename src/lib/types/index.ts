@@ -606,6 +606,7 @@ export interface ABTestWinnerHistoryRow {
   metric_improvement: number | null;
   confidence_score: number | null;
   sample_size: number;
+  status: string;
   triggered_by: 'cron' | 'manual';
   applied_at: string;
   created_at: string;

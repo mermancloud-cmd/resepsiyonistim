@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/lib/auth-context'
-import type { ABTest, ABTestResult, ABTestSummary } from '@/lib/types'
+import type { ABTest, ABTestResult, ABTestSummary, ABTestWinnerHistoryRow } from '@/lib/types'
 
 // ─── Mock Data ──────────────────────────────────────────────────────────────
 
@@ -471,6 +471,7 @@ export function useABTestWinnerHistory() {
           metric_improvement: null,
           confidence_score: r.confidence_score,
           sample_size: r.sample_size,
+          status: r.status ?? "completed",
           triggered_by: r.triggered_by,
           applied_at: r.applied_at,
           created_at: r.created_at,

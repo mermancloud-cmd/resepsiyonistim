@@ -97,6 +97,7 @@ SELECT
   NULL::NUMERIC AS metric_improvement,
   o.confidence_score,
   o.sample_size,
+  o.status,
   o.triggered_by,
   o.applied_at,
   o.created_at
