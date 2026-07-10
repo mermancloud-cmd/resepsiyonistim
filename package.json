@@ -7,11 +7,8 @@
     "build": "next build && node scripts/build-sw.mjs",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run",
-    "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:debug": "playwright test --debug"
+    "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -48,21 +45,15 @@
     "@playwright/test": "^1.61.1",
     "@serwist/build": "^9.5.11",
     "@tailwindcss/postcss": "^4",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/web-push": "^3.6.4",
-    "@vitejs/plugin-react": "^6.0.3",
     "esbuild": "^0.28.1",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
-    "jsdom": "^29.1.1",
     "shadcn": "^4.11.0",
     "tailwindcss": "^4",
-    "typescript": "^5",
-    "vitest": "^4.1.10",
-    "wait-on": "^9.0.10"
+    "typescript": "^5"
   }
 }
