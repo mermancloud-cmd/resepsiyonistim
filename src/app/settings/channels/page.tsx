@@ -348,7 +348,7 @@ function WeeklyBarChart({
               border: "1px solid var(--border)",
               background: "var(--popover)",
             }}
-            formatter={(value: number) => [`${value} mesaj`, "Günlük"] as unknown as ReactNode}
+            formatter={(value) => [`${value ?? 0} mesaj`, "Günlük"] as unknown as React.ReactNode}
           />
           <Bar dataKey="mesaj" radius={[4, 4, 0, 0]} fill="var(--primary)" maxBarSize={24} />
         </BarChart>

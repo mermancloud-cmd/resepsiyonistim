@@ -22,7 +22,7 @@ export const channelKeys = {
     ["channels", "detail", channelType] as const,
   metrics: (channelType: ChannelType) =>
     ["channels", "metrics", channelType] as const,
-  messages: (filters?: { channelType?: ChannelType; search?: string }) =>
+  messages: (filters?: { channelType?: ChannelType | "all"; search?: string }) =>
     ["channels", "messages", filters] as const,
 };
 
@@ -292,9 +292,7 @@ export function useUnifiedMessages(filters?: {
         .limit(100);
 
       if (filters?.channelType && filters.channelType !== "all") {
-        // Cast to unknown to avoid TS type issue with .eq on joined field
-        query = (query as unknown as ReturnType<typeof query>)
-          .eq("conversations.channel_type", filters.channelType);
+        query = query.eq("conversations.channel_type", filters.channelType) as typeof query;
       }
 
       const { data, error } = await query;
