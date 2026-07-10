@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/lib/auth-context'
-import type { ABTest, ABTestResult, ABTestSummary, ABTestWinnerHistoryRow } from '@/lib/types'
+import type { ABTest, ABTestResult, ABTestSummary, ABTestWinnerHistoryRow, ABTestOptimizationJoinRow } from '@/lib/types'
 
 // ─── Mock Data ──────────────────────────────────────────────────────────────
 
@@ -463,11 +463,11 @@ export function useABTestWinnerHistory() {
 
         if (fallbackError) throw new Error(fallbackError.message)
 
-        return (fallback ?? []).map((r: Record<string, unknown>) => ({
+        return (fallback ?? []).map((r: ABTestOptimizationJoinRow) => ({
           id: r.id,
           test_id: r.test_id,
-          test_name: (r as any).ab_tests?.name ?? "—",
-          winning_metric: (r as any).ab_tests?.target_metric ?? "—",
+          test_name: r.ab_tests?.[0]?.name ?? "—",
+          winning_metric: r.ab_tests?.[0]?.target_metric ?? "—",
           metric_improvement: null,
           confidence_score: r.confidence_score,
           sample_size: r.sample_size,

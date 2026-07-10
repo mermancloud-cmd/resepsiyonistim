@@ -614,6 +614,19 @@ export interface ABTestWinnerHistoryRow {
 
 // ─── Composite / Join Types ──────────────────────────────────────────────────
 
+/** Join from ab_test_optimizations → ab_tests (Supabase join returns array). */
+export interface ABTestOptimizationJoinRow {
+  id: string;
+  test_id: string;
+  status: string;
+  confidence_score: number | null;
+  sample_size: number;
+  triggered_by: string;
+  applied_at: string | null;
+  created_at: string;
+  ab_tests: Pick<ABTest, "name" | "target_metric">[];
+}
+
 export interface ConversationRowWithMessages extends ConversationRow {
   messages: MessageRow[];
 }
