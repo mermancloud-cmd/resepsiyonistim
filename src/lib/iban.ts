@@ -202,9 +202,14 @@ export function validateIBAN(iban: string): IBANValidationResult {
     return { valid: false, error: "INVALID_COUNTRY", errorMessage: errorMessages.INVALID_COUNTRY };
   }
 
-  // Check country-specific length (if known)
+  // Country must exist in ISO IBAN registry
+  if (!(country in IBAN_COUNTRY_LENGTHS)) {
+    return { valid: false, error: "INVALID_COUNTRY", errorMessage: `"${country}" geçerli bir IBAN ülke kodu değil.` };
+  }
+
+  // Check country-specific length
   const expectedLength = IBAN_COUNTRY_LENGTHS[country];
-  if (expectedLength && clean.length !== expectedLength) {
+  if (clean.length !== expectedLength) {
     return {
       valid: false,
       error: "INVALID_LENGTH",
