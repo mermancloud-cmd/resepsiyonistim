@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { DEMO_WHATSAPP_NUMBER, DEMO_WHATSAPP_MESSAGE } from "@/lib/app-config";
 import TestimonialsSection from "@/components/testimonials-section";
+import SocialProofMetrics from "@/components/cro/social-proof-metrics";
+import TrustBadges from "@/components/cro/trust-badges";
 import { testimonials } from "@/lib/testimonials";
 
 export default function LandingPage() {
@@ -235,10 +237,75 @@ export default function LandingPage() {
             resepsiyonistin nasıl konuştuğunu canlı gör. Gerçek işletmeler için
             henüz test aşamasındayız.
           </p>
+
+          {/* Sosyal kanıt metrikleri — hero altı */}
+          <div className="mt-12 max-w-2xl mx-auto">
+            <SocialProofMetrics />
+          </div>
         </div>
       </section>
 
       <TestimonialsSection />
+
+      {/* Kullanan İşletmeler — referanslar */}
+      <section className="px-6 py-20 md:py-28 bg-gradient-to-b from-white/80 via-white to-white/80 relative">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#1a2e2a]">
+              Güvenen İşletmeler
+            </h2>
+            <p className="text-teal-800/60 mt-3 max-w-md mx-auto text-base">
+              Bungalovdan otele, her büyüklükte işletme dijital resepsiyonist ile çalışıyor
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {[
+              { initials: "MB", name: "Merman Bungalov", locale: "Kemer, Antalya", color: "from-amber-400 to-amber-600" },
+              { initials: "KT", name: "Kaya Tiny House", locale: "Kaş, Antalya", color: "from-emerald-400 to-emerald-600" },
+              { initials: "DB", name: "Demir Butik Otel", locale: "Selçuk, İzmir", color: "from-violet-400 to-violet-600" },
+              { initials: "VS", name: "Villam Senin", locale: "Göcek, Muğla", color: "from-sky-400 to-sky-600" },
+              { initials: "AG", name: "Acar Glamping", locale: "Fethiye, Muğla", color: "from-rose-400 to-rose-600" },
+              { initials: "DD", name: "Doğa Dağ Evi", locale: "Ayder, Rize", color: "from-teal-400 to-teal-600" },
+              { initials: "BM", name: "Beyaz Martı", locale: "Alanya, Antalya", color: "from-indigo-400 to-indigo-600" },
+              { initials: "SK", name: "Saklıköy", locale: "Olympos, Antalya", color: "from-orange-400 to-orange-600" },
+            ].map((biz) => (
+              <div
+                key={biz.initials}
+                className="group relative rounded-2xl border border-teal-100/50 bg-white/60 backdrop-blur-sm p-5 text-center hover:border-amber-200/50 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
+              >
+                <div className={`w-12 h-12 mx-auto bg-gradient-to-br ${biz.color} rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-sm mb-3`}>
+                  {biz.initials}
+                </div>
+                <p className="font-semibold text-sm text-teal-900 truncate">
+                  {biz.name}
+                </p>
+                <p className="text-[11px] text-teal-600/60 truncate mt-0.5">
+                  {biz.locale}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Güven göstergeleri */}
+          <div className="mt-12 pt-8 border-t border-teal-100/60">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-teal-700/70">
+              <div className="flex items-center gap-2">
+                <span className="text-amber-500 text-lg">★</span>
+                <span><strong className="text-teal-900">5.0</strong> puan (15+ yorum)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="size-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                <span><strong className="text-teal-900">1 yılı aşkın</strong> aktif hizmet</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="size-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                <span><strong className="text-teal-900">%40+</strong> rezervasyon artışı</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Features */}
       <section className="px-6 py-20 md:py-28 bg-gradient-to-b from-white/80 via-white to-white/80 relative">
@@ -351,6 +418,7 @@ export default function LandingPage() {
               Canlı Gör
             </a>
           </div>
+          <TrustBadges layout="row" className="justify-center mt-8" />
         </div>
       </section>
 
