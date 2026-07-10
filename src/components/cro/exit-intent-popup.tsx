@@ -91,9 +91,11 @@ export default function ExitIntentPopup() {
           </p>
 
           {/* CTA */}
-          <Link
+          <a
             href="/signup"
             onClick={handleDismiss}
+            data-event="Exit Popup Conversion"
+            data-event-props='{"cta":"ücretsiz-dene"}'
             className="inline-flex items-center gap-2 bg-teal-800 text-white px-7 py-3.5 rounded-xl font-semibold text-sm hover:bg-teal-900 transition-all shadow-md w-full justify-center hover:-translate-y-0.5"
           >
             <svg
@@ -110,7 +112,7 @@ export default function ExitIntentPopup() {
               />
             </svg>
             Ücretsiz Dene
-          </Link>
+          </a>
 
           <p className="text-xs text-teal-400/60">2 dakikada kurulum</p>
         </div>

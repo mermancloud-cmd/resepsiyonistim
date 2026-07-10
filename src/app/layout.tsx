@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "@/components/providers";
+import { AnalyticsInit } from "@/components/analytics-init";
 import "./globals.css";
 
 const inter = Inter({
@@ -65,10 +66,17 @@ export default function RootLayout({
           content="black-translucent"
         />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        {/* Analytics: Plausible (privacy-first) */}
+        <script
+          defer
+          data-domain="panel.merman.sbs"
+          src="https://plausible.io/js/script.js"
+        />
       </head>
       <body className="min-h-full flex flex-col bg-background font-sans">
         <Providers>
           {children}
+          <AnalyticsInit />
         </Providers>
         <Toaster position="top-center" richColors closeButton />
       </body>

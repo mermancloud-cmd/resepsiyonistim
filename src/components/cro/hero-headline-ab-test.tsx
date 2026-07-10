@@ -159,6 +159,8 @@ export default function HeroHeadlineABTest({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="/signup"
+            data-event="Hero CTA Click"
+            data-event-props={JSON.stringify({ cta: "ücretsiz-dene", location: "hero", variant: headline.id })}
             className="inline-flex items-center gap-2 bg-teal-800 text-white px-7 py-3.5 rounded-xl font-semibold hover:bg-teal-900 transition-all shadow-md text-base hover:-translate-y-0.5 hover:shadow-lg"
           >
             <svg
@@ -181,6 +183,8 @@ export default function HeroHeadlineABTest({
             href={`https://wa.me/905427450654?text=Merhaba`}
             target="_blank"
             rel="noopener noreferrer"
+            data-event="WhatsApp Demo Click"
+            data-event-props={JSON.stringify({ cta: "canli-gor", location: "hero", variant: headline.id })}
             className="group relative inline-flex items-center gap-3 bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 text-white px-9 py-4 rounded-2xl font-bold text-base shadow-lg shadow-emerald-300/40 hover:shadow-xl hover:shadow-emerald-300/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/15 to-white/0 -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out" />

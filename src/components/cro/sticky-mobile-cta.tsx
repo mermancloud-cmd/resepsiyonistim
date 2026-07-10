@@ -36,8 +36,10 @@ export default function StickyMobileCTA() {
       }`}
     >
       <div className="bg-white/95 backdrop-blur-md border-t border-teal-100/60 px-4 py-3 shadow-xl shadow-black/5 flex items-center gap-3">
-        <Link
+        <a
           href="/signup"
+          data-event="Sticky CTA Click"
+          data-event-props='{"cta":"ücretsiz-dene"}'
           className="flex-1 inline-flex items-center justify-center gap-2 bg-teal-800 text-white px-5 py-3 rounded-xl font-semibold text-sm hover:bg-teal-900 transition-all shadow-md active:scale-[0.97]"
         >
           <svg
@@ -54,7 +56,7 @@ export default function StickyMobileCTA() {
             />
           </svg>
           Ücretsiz Dene
-        </Link>
+        </a>
         <a
           href={`https://wa.me/905427450654?text=Merhaba`}
           target="_blank"

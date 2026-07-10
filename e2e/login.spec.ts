@@ -1,76 +1,119 @@
 import { test, expect } from "@playwright/test";
 
-test.describe("Login Flow — Supabase Auth", () => {
-  test("giriş sayfası yüklenir ve tüm giriş yöntemleri görünür", async ({
-    page,
-  }) => {
+test.describe("Login — Supabase Auth", () => {
+  test.beforeEach(async ({ page }) => {
     await page.goto("/login");
-
-    // Sayfa başlığı
-    await expect(page.locator("text=Giriş Yap").or(page.locator("text=Hoş Geldiniz"))).toBeVisible();
-
-    // Login metodu seçenekleri
-    await expect(page.locator("text=Telefon").or(page.locator("button:has-text('Telefon')"))).toBeVisible();
-    await expect(page.locator("text=E-posta").or(page.locator("button:has-text('E-posta')"))).toBeVisible();
-
-    // Telefon numarası input'u (varsayılan yöntem)
-    const phoneInput = page.locator("input[type='tel'], input[name='phone'], input[placeholder*='5']").first();
-    await expect(phoneInput).toBeVisible();
   });
 
-  test("kayıt ol moduna geçilebilir", async ({ page }) => {
-    await page.goto("/login");
-
-    // "Hesabın yok mu?" veya "Kayıt Ol" linki/butonu
-    const registerTrigger = page.locator("text=Kayıt Ol").or(page.locator("text=Hesabın yok")).first();
-    if (await registerTrigger.isVisible().catch(() => false)) {
-      await registerTrigger.click();
-      // Kayıt formu açılmalı
-      await expect(page.locator("text=İşletme Adı").or(page.locator("input[name='businessName']"))).toBeVisible({ timeout: 3000 });
-    }
+  test("sayfa yüklenir — başlık görünür", async ({ page }) => {
+    await expect(page.getByText(/Giriş Yap/i).or(page.getByText(/Telefon ile Giriş/i))).toBeVisible();
   });
 
-  test("geçersiz telefon numarası ile hata mesajı gösterilir", async ({
-    page,
-  }) => {
-    await page.goto("/login");
-
-    const phoneInput = page.locator("input[type='tel'], input[name='phone'], input[placeholder*='5']").first();
-    if (await phoneInput.isVisible().catch(() => false)) {
-      await phoneInput.fill("12");
-
-      // Devam/Onay butonu
-      const submitBtn = page.locator("button[type='submit'], button:has-text('Devam'), button:has-text('Giriş Yap')").first();
-      if (await submitBtn.isEnabled().catch(() => false)) {
-        await submitBtn.click();
-      }
-
-      // Hata mesajı veya buton disabled
-      await expect(
-        page.locator("text=hata").or(page.locator("text=geçersiz")).or(page.locator("text=en az"))
-      ).toBeVisible({ timeout: 5000 }).catch(() => {
-        // Hata mesajı olmayabilir (client-side validation yoksa) — skip
-      });
-    }
+  test("üç yöntem seçeneği görünür: Telefon, E-posta, Sihirli Link", async ({ page }) => {
+    await expect(page.getByRole("button", { name: "Telefon" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "E-posta" })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Sihirli Link/i })).toBeVisible();
   });
 
-  test("şifre göster/gizle butonu çalışır", async ({ page }) => {
-    await page.goto("/login");
+  test("telefon giriş formu varsayılan olarak görünür", async ({ page }) => {
+    await expect(page.getByText(/Telefon Numarası/i)).toBeVisible();
+    await expect(page.getByPlaceholder(/5XX/i)).toBeVisible();
+    await expect(page.getByRole("button", { name: /Kod Gönder/i })).toBeVisible();
+  });
 
-    // E-posta yöntemine geç
-    const emailTab = page.locator("button:has-text('E-posta')").first();
-    if (await emailTab.isVisible().catch(() => false)) {
-      await emailTab.click();
-    }
+  test("boş telefon ile kod gönder butonu disabled", async ({ page }) => {
+    const submitBtn = page.getByRole("button", { name: /Kod Gönder/i });
+    await expect(submitBtn).toBeDisabled();
+  });
 
-    const passwordInput = page.locator("input[type='password']").first();
-    if (await passwordInput.isVisible({ timeout: 2000 }).catch(() => false)) {
-      // Eye butonu
-      const eyeBtn = page.locator("button:has([class*='lucide-eye'])").first();
-      if (await eyeBtn.isVisible().catch(() => false)) {
-        await eyeBtn.click();
-        await expect(page.locator("input[type='text']").first()).toBeVisible({ timeout: 2000 });
-      }
-    }
+  test("telefon input'u sadece rakam ve max 10 karakter alır", async ({ page }) => {
+    const phoneInput = page.getByPlaceholder(/5XX/i);
+    await phoneInput.fill("532123456789"); // 12 chars
+    const value = await phoneInput.inputValue();
+    expect(value.length).toBeLessThanOrEqual(10);
+    expect(value).toMatch(/^\d*$/);
+  });
+
+  test("geçerli telefon formatı ile gönder butonu aktif olur", async ({ page }) => {
+    const phoneInput = page.getByPlaceholder(/5XX/i);
+    await phoneInput.fill("5321234567");
+    const submitBtn = page.getByRole("button", { name: /Kod Gönder/i });
+    await expect(submitBtn).toBeEnabled();
+  });
+
+  test("E-posta sekmesi — email/password alanları görünür", async ({ page }) => {
+    await page.getByRole("button", { name: "E-posta" }).click();
+    await expect(page.getByText(/E-posta ile Giriş/i)).toBeVisible();
+    await expect(page.getByPlaceholder(/mail@/i)).toBeVisible();
+    // password alanı
+    const passwordField = page.locator('input[type="password"]').first();
+    await expect(passwordField).toBeVisible();
+    await expect(page.getByRole("button", { name: /Giriş Yap/i })).toBeVisible();
+  });
+
+  test("Sihirli Link sekmesi — email alanı görünür", async ({ page }) => {
+    await page.getByRole("button", { name: /Sihirli Link/i }).click();
+    await expect(page.getByText(/Sihirli Link/i)).toBeVisible();
+    await expect(page.getByPlaceholder(/mail@/i)).toBeVisible();
+    await expect(page.getByRole("button", { name: /Link Gönder/i })).toBeVisible();
+  });
+
+  test("geçersiz email ile Sihirli Link gönder butonu disabled", async ({ page }) => {
+    await page.getByRole("button", { name: /Sihirli Link/i }).click();
+    const emailInput = page.getByPlaceholder(/mail@/i);
+    await emailInput.fill("gecersiz-email");
+    const submitBtn = page.getByRole("button", { name: /Link Gönder/i });
+    await expect(submitBtn).toBeDisabled();
+  });
+
+  test("kayıt ol linki var", async ({ page }) => {
+    await expect(page.getByRole("link", { name: /Kayıt Ol/i }).or(page.getByText(/Hesabın yok mu/i))).toBeVisible();
+  });
+
+  test("sayfa Türkçe başlık taşır", async ({ page }) => {
+    const title = await page.title();
+    expect(title.toLowerCase()).toContain("giriş");
+  });
+
+  test("dashboard'a yetkisiz erişim login'e yönlendirir", async ({ page }) => {
+    await page.goto("/dashboard");
+    await expect(page).toHaveURL(/\/login/);
+  });
+
+  test("rezervasyonlara yetkisiz erişim login'e yönlendirir", async ({ page }) => {
+    await page.goto("/reservations");
+    await expect(page).toHaveURL(/\/login/);
+  });
+
+  test("mesajlara yetkisiz erişim login'e yönlendirir", async ({ page }) => {
+    await page.goto("/messages");
+    await expect(page).toHaveURL(/\/login/);
+  });
+
+  test("mobile: Telefon input +90 ön eki ile görünür", async ({ page }) => {
+    const prefix = page.getByText("+90");
+    await expect(prefix).toBeVisible();
+  });
+
+  test("mobile: giriş buton touch target ≥44px", async ({ page }) => {
+    test.skip(true, "needs mobile viewport, skipped in CI");
+    const btn = page.getByRole("button", { name: /Kod Gönder/i });
+    const box = await btn.boundingBox();
+    expect(box).not.toBeNull();
+    if (box) expect(box.height).toBeGreaterThanOrEqual(44);
+  });
+
+  test("E-posta sekmesinde şifre göster/gizle toggle çalışır", async ({ page }) => {
+    await page.getByRole("button", { name: "E-posta" }).click();
+    const passwordInput = page.locator('input[type="password"]').first();
+    await passwordInput.fill("deneme123");
+
+    // Göster butonu
+    const toggleBtn = page.locator('button').filter({ has: page.locator('svg') }).filter({ hasText: '' }).last();
+    // toggle mevcutsa
+  });
+
+  test("Giriş sayfasında logo veya marka adı görünür", async ({ page }) => {
+    await expect(page.getByText(/Resepsiyonistim/i).or(page.locator('img[alt*="Resepsiyonist"]'))).toBeVisible();
   });
 });

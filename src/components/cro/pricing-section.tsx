@@ -131,8 +131,10 @@ export default function PricingSection() {
                   ))}
                 </ul>
 
-                <Link
+                <a
                   href={tier.href}
+                  data-event="Pricing Tier Click"
+                  data-event-props={JSON.stringify({ tier: tier.name, price: tier.price })}
                   className={`inline-flex items-center justify-center w-full px-5 py-3 rounded-xl font-semibold text-sm transition-all ${
                     tier.popular
                       ? "bg-teal-800 text-white hover:bg-teal-900 shadow-md"
@@ -140,7 +142,7 @@ export default function PricingSection() {
                   }`}
                 >
                   {tier.cta}
-                </Link>
+                </a>
               </div>
             </div>
           ))}

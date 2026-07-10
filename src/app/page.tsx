@@ -174,6 +174,8 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/signup"
+              data-event="Hero CTA Click"
+              data-event-props='{"cta":"ücretsiz-dene","location":"hero"}'
               className="inline-flex items-center gap-2 bg-teal-800 text-white px-7 py-3.5 rounded-xl font-semibold hover:bg-teal-900 transition-all shadow-md text-base hover:-translate-y-0.5 hover:shadow-lg"
             >
               <svg
@@ -197,6 +199,8 @@ export default function LandingPage() {
               href={`https://wa.me/${DEMO_WHATSAPP_NUMBER}?text=${encodeURIComponent(DEMO_WHATSAPP_MESSAGE)}`}
               target="_blank"
               rel="noopener noreferrer"
+              data-event="WhatsApp Demo Click"
+              data-event-props='{"cta":"canli-gor","location":"hero"}'
               className="group relative inline-flex items-center gap-3 bg-gradient-to-br from-emerald-500 via-emerald-600 to-emerald-700 text-white px-9 py-4 rounded-2xl font-bold text-base shadow-lg shadow-emerald-300/40 hover:shadow-xl hover:shadow-emerald-300/50 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
             >
               {/* Animasyonlu ışıma katmanı */}
@@ -308,6 +312,8 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               href="/signup"
+              data-event="Hero CTA Click"
+              data-event-props='{"cta":"ücretsiz-dene","location":"bottom-cta"}'
               className="inline-flex items-center gap-2 bg-amber-500 text-amber-950 px-7 py-3.5 rounded-xl font-bold hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/20 text-base hover:-translate-y-0.5"
             >
               Ücretsiz Dene
@@ -331,6 +337,8 @@ export default function LandingPage() {
               href={`https://wa.me/${DEMO_WHATSAPP_NUMBER}?text=${encodeURIComponent(DEMO_WHATSAPP_MESSAGE)}`}
               target="_blank"
               rel="noopener noreferrer"
+              data-event="WhatsApp Demo Click"
+              data-event-props='{"cta":"canli-gor","location":"bottom-cta"}'
               className="inline-flex items-center gap-2.5 bg-white/10 text-white border border-white/20 px-6 py-3.5 rounded-xl font-semibold hover:bg-white/20 transition-all hover:-translate-y-0.5"
             >
               <svg

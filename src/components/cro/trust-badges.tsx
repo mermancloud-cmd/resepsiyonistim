@@ -41,6 +41,8 @@ export default function TrustBadges({
       {BADGES.map((badge) => (
         <div
           key={badge.label}
+          data-event="Trust Badge Seen"
+          data-event-props={JSON.stringify({ badge: badge.label })}
           className="flex items-center gap-2 text-teal-700/50 text-xs"
         >
           <badge.icon className="size-4 text-teal-500/60 shrink-0" />

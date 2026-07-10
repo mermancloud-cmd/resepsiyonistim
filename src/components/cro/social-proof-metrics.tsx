@@ -64,6 +64,8 @@ export default function SocialProofMetrics() {
         {STATS.map((stat) => (
           <div
             key={stat.label}
+            data-event="Social Proof Seen"
+            data-event-props={JSON.stringify({ metric: stat.label, value: stat.value })}
             className="flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm px-3 py-5 md:py-6 text-center"
           >
             <AnimatedCounter target={stat.value} suffix={stat.suffix} />
