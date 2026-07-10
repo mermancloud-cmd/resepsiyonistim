@@ -48,6 +48,8 @@ export const TENANT_SCOPED_TABLES = [
   "analytics_events",
   "guest_satisfaction_surveys",
   "referrals",
+  "channels",
+  "channel_metrics",
   "referral_codes",
   "ab_tests",
   "ab_test_results",

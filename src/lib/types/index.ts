@@ -681,6 +681,114 @@ export const HUMANIZATION_CATEGORY_LABELS: Record<HumanizationCategory, string> 
   complaint: 'Şikayet',
 };
 
+// ─── Channel Types (P1 v4) ──────────────────────────────────────────────────
+
+export type ChannelType = 'whatsapp' | 'telegram' | 'facebook_messenger' | 'web_widget';
+
+export type ChannelStatus = 'connected' | 'disconnected' | 'error' | 'configuring';
+
+export interface ChannelInfo {
+  id: string;
+  tenant_id: string;
+  channel_type: ChannelType;
+  name: string;
+  is_active: boolean;
+  settings: ChannelConfig;
+  connected: boolean;
+  last_error: string | null;
+  last_error_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ChannelConfig {
+  /** Karşılama mesajı */
+  greeting_message: string;
+  /** Otomatik yanıt açık/kapalı */
+  auto_reply_enabled: boolean;
+  /** Bildirim tercihleri */
+  notification_enabled: boolean;
+  /** Çalışma saatleri (opsiyonel) */
+  working_hours?: {
+    enabled: boolean;
+    start: string; // HH:MM
+    end: string;   // HH:MM
+    timezone: string;
+  };
+  /** Handoff tetikleyici kelimeler */
+  handoff_keywords: string[];
+  /** Hoş geldin mesajı aktif */
+  welcome_message_enabled: boolean;
+  /** Bağlantı detayları */
+  connection_details?: Record<string, string>;
+}
+
+export interface ChannelMetrics {
+  channel_type: ChannelType;
+  messages_today: number;
+  messages_week: number;
+  avg_response_time_seconds: number;
+  active_conversations: number;
+  handoff_rate_percent: number;
+  /** Günlük mesaj sayıları (son 7 gün) */
+  daily_messages: { date: string; count: number }[];
+}
+
+export type UnifiedMessageDirection = 'inbound' | 'outbound';
+
+export interface UnifiedMessage {
+  id: string;
+  channel_type: ChannelType;
+  direction: UnifiedMessageDirection;
+  content: string;
+  sender_name: string;
+  sender_avatar?: string;
+  timestamp: string;
+  is_handoff: boolean;
+  is_ai: boolean;
+  status: 'sent' | 'delivered' | 'read' | 'failed';
+}
+
+export const CHANNEL_TYPE_LABELS: Record<ChannelType, string> = {
+  whatsapp: 'WhatsApp',
+  telegram: 'Telegram',
+  facebook_messenger: 'Facebook Messenger',
+  web_widget: 'Web Widget',
+};
+
+export const CHANNEL_DEFAULT_CONFIG: Record<ChannelType, ChannelConfig> = {
+  whatsapp: {
+    greeting_message: 'Merhaba! Size nasıl yardımcı olabiliriz?',
+    auto_reply_enabled: true,
+    notification_enabled: true,
+    working_hours: { enabled: false, start: '09:00', end: '22:00', timezone: 'Europe/Istanbul' },
+    handoff_keywords: ['müdür', 'şikayet', 'iptal', 'yetkili'],
+    welcome_message_enabled: true,
+  },
+  telegram: {
+    greeting_message: 'Merhaba! Telegram üzerinden bize ulaştığınız için teşekkürler.',
+    auto_reply_enabled: true,
+    notification_enabled: true,
+    handoff_keywords: ['müdür', 'şikayet', 'iptal', 'yetkili'],
+    welcome_message_enabled: true,
+  },
+  facebook_messenger: {
+    greeting_message: 'Merhaba! Messenger üzerinden size nasıl yardımcı olabiliriz?',
+    auto_reply_enabled: true,
+    notification_enabled: true,
+    handoff_keywords: ['müdür', 'şikayet', 'iptal', 'yetkili'],
+    welcome_message_enabled: true,
+  },
+  web_widget: {
+    greeting_message: 'Merhaba! Sitemize hoş geldiniz. Size nasıl yardımcı olabilirim?',
+    auto_reply_enabled: true,
+    notification_enabled: true,
+    working_hours: { enabled: true, start: '09:00', end: '23:00', timezone: 'Europe/Istanbul' },
+    handoff_keywords: ['müdür', 'şikayet', 'yetkili', 'konuşmak'],
+    welcome_message_enabled: true,
+  },
+};
+
 // ─── Müşteri Feedback Types ──────────────────────────────────────────────────
 
 export type FeedbackRating = 1 | 2 | 3 | 4 | 5;

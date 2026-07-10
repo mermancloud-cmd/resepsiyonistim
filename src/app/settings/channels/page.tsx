@@ -1,222 +1,822 @@
 "use client";
+
 import * as React from "react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { MobileShell } from "@/components/layout/mobile-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { useForm } from "react-hook-form";
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import {
   MessageCircle,
   Send,
   Bot,
-  CheckCircle2,
-  XCircle,
-  Loader2,
-  Link2,
-  Link2Off,
-  RefreshCw,
-  ArrowLeft,
-  ChevronRight,
   Globe,
   Smartphone,
+  Monitor,
+  CheckCircle2,
+  XCircle,
+  AlertTriangle,
+  Loader2,
+  Settings2,
+  ArrowLeft,
+  ChevronRight,
+  Clock,
+  Bell,
+  MessageSquare,
+  BarChart3,
+  History,
+  Search,
+  Filter,
+  Phone,
+  User,
+  RefreshCw,
+  Zap,
+  Hash,
+  Wifi,
+  WifiOff,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { format, formatDistanceToNow } from "date-fns";
+import { tr } from "date-fns/locale";
+import {
+  useChannels,
+  useChannel,
+  useChannelMetrics,
+  useUnifiedMessages,
+  useToggleChannel,
+  useUpsertChannel,
+  getChannelStatusVariant,
+  getChannelStatusLabel,
+} from "@/hooks/use-channels";
+import {
+  CHANNEL_TYPE_LABELS,
+  CHANNEL_DEFAULT_CONFIG,
+  type ChannelInfo,
+  type ChannelType,
+  type UnifiedMessage,
+} from "@/lib/types";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+// ─── Channel icons ────────────────────────────────────────────────────────────
 
-interface ChannelForm {
-  // Telegram
-  telegram_token: string;
-  telegram_chat_id: string;
-  telegram_enabled: boolean;
+const CHANNEL_ICONS: Record<string, typeof Smartphone> = {
+  whatsapp: Smartphone,
+  telegram: Send,
+  facebook_messenger: MessageCircle,
+  web_widget: Monitor,
+};
 
-  // Facebook Messenger
-  fb_page_id: string;
-  fb_verify_token: string;
-  fb_app_secret: string;
-  fb_enabled: boolean;
+const CHANNEL_COLORS: Record<string, string> = {
+  whatsapp:
+    "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+  telegram:
+    "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400",
+  facebook_messenger:
+    "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+  web_widget:
+    "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
+};
 
-  // Common
-  greeting_message: string;
-}
-
-// ─── Mock data for UI development (replace with API fetch) ──────────────────
-
-const MOCK_CHANNELS = [
-  {
-    id: "ch-wa-001",
-    channel_type: "whatsapp" as const,
-    name: "WhatsApp",
-    is_active: true,
-    connected: true,
-    details: "+90 542 745 06 54",
-    icon: Smartphone,
-  },
-];
+const CHANNEL_ANIMATION = {
+  whatsapp: "animate-in fade-in slide-in-from-left-2 duration-300",
+  telegram: "animate-in fade-in slide-in-from-left-2 duration-300 delay-75",
+  facebook_messenger:
+    "animate-in fade-in slide-in-from-left-2 duration-300 delay-150",
+  web_widget:
+    "animate-in fade-in slide-in-from-left-2 duration-300 delay-225",
+};
 
 // ─── Status Badge ─────────────────────────────────────────────────────────────
 
 function ChannelStatusBadge({
-  connected,
-  active,
+  channel,
 }: {
-  connected: boolean;
-  active: boolean;
+  channel: ChannelInfo;
 }) {
-  if (!active) {
-    return (
-      <Badge variant="outline" className="bg-gray-50 text-gray-500 border-gray-200 gap-1">
-        <XCircle className="size-3" />
-        Pasif
-      </Badge>
-    );
-  }
-  if (connected) {
-    return (
-      <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200 gap-1">
-        <CheckCircle2 className="size-3" />
-        Bağlı
-      </Badge>
-    );
-  }
+  const variant = getChannelStatusVariant(
+    channel.connected,
+    channel.is_active,
+    channel.last_error
+  );
+  const label = getChannelStatusLabel(
+    channel.connected,
+    channel.is_active,
+    channel.last_error
+  );
+
   return (
-    <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 gap-1">
-      <Link2Off className="size-3" />
-      Bağlı Değil
+    <Badge
+      variant={variant === "destructive" ? "destructive" : "outline"}
+      className={cn(
+        "gap-1 capitalize",
+        variant === "success" &&
+          "bg-green-50 text-green-700 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800",
+        variant === "warning" &&
+          "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800",
+        variant === "destructive" &&
+          "bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800",
+        variant === "secondary" &&
+          "bg-gray-50 text-gray-500 border-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700"
+      )}
+    >
+      {variant === "success" && <CheckCircle2 className="size-3" />}
+      {variant === "warning" && <AlertTriangle className="size-3" />}
+      {variant === "destructive" && <XCircle className="size-3" />}
+      {variant === "secondary" && <WifiOff className="size-3" />}
+      {label}
     </Badge>
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// ─── Mini Metrics Row ─────────────────────────────────────────────────────────
 
-export default function ChannelsSettingsPage() {
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => { setIsMounted(true); }, []);
-  if (!isMounted) return null;
+function MetricsRow({
+  messagesToday,
+  responseTime,
+  activeChats,
+}: {
+  messagesToday: number;
+  responseTime: number;
+  activeChats: number;
+}) {
+  return (
+    <div className="flex items-center gap-4 text-xs text-muted-foreground">
+      <span className="flex items-center gap-1">
+        <MessageSquare className="size-3" />
+        <strong className="text-foreground">{messagesToday}</strong> bugün
+      </span>
+      <span className="flex items-center gap-1">
+        <Clock className="size-3" />
+        <strong className="text-foreground">{responseTime}s</strong> yanıt
+      </span>
+      <span className="flex items-center gap-1">
+        <User className="size-3" />
+        <strong className="text-foreground">{activeChats}</strong> aktif
+      </span>
+    </div>
+  );
+}
 
-  const [saving, setSaving] = useState(false);
-  const [saveSuccess, setSaveSuccess] = useState(false);
-  const [testingTelegram, setTestingTelegram] = useState(false);
-  const [testResult, setTestResult] = useState<{ ok: boolean; msg: string } | null>(null);
+// ─── Channel Card ─────────────────────────────────────────────────────────────
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm<ChannelForm>({
-    defaultValues: {
-      telegram_token: "",
-      telegram_chat_id: "",
-      telegram_enabled: false,
-      fb_page_id: "",
-      fb_verify_token: "",
-      fb_app_secret: "",
-      fb_enabled: false,
-      greeting_message: "Merhaba! 👋 Size nasıl yardımcı olabilirim?",
+function ChannelCard({
+  channel,
+  onOpen,
+}: {
+  channel: ChannelInfo;
+  onOpen: () => void;
+}) {
+  const Icon = CHANNEL_ICONS[channel.channel_type] ?? Smartphone;
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        "flex w-full items-center justify-between rounded-xl border border-border/60 bg-card p-4 text-left transition-all active:scale-[0.98] hover:border-border hover:shadow-sm",
+        CHANNEL_ANIMATION[channel.channel_type]
+      )}
+    >
+      <div className="flex items-center gap-3 min-w-0">
+        <div
+          className={cn(
+            "size-11 shrink-0 rounded-xl flex items-center justify-center",
+            CHANNEL_COLORS[channel.channel_type]
+          )}
+        >
+          <Icon className="size-5" />
+        </div>
+        <div className="min-w-0">
+          <p className="text-sm font-medium">
+            {CHANNEL_TYPE_LABELS[channel.channel_type]}
+          </p>
+          <p className="text-xs text-muted-foreground truncate mt-0.5">
+            {channel.is_active
+              ? channel.connected
+                ? "Bağlı ve aktif"
+                : "Bağlantı kontrol ediliyor"
+              : "Kanal pasif"}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 shrink-0">
+        {channel.is_active && channel.connected && (
+          <Wifi className="size-3.5 text-green-500" />
+        )}
+        {channel.is_active && !channel.connected && (
+          <WifiOff className="size-3.5 text-amber-500" />
+        )}
+        <ChevronRight className="size-4 text-muted-foreground" />
+      </div>
+    </button>
+  );
+}
+
+// ─── Message Bubble ────────────────────────────────────────────────────────────
+
+function MessageBubble({ message }: { message: UnifiedMessage }) {
+  const isOutbound = message.direction === "outbound";
+
+  return (
+    <div
+      className={cn(
+        "flex gap-2.5 py-2",
+        isOutbound ? "flex-row-reverse" : "flex-row"
+      )}
+    >
+      <div
+        className={cn(
+          "size-7 rounded-full flex items-center justify-center shrink-0 mt-0.5",
+          isOutbound
+            ? "bg-primary/10 text-primary"
+            : "bg-muted text-muted-foreground"
+        )}
+      >
+        {isOutbound ? (
+          <Bot className="size-3.5" />
+        ) : (
+          <User className="size-3.5" />
+        )}
+      </div>
+
+      <div
+        className={cn(
+          "max-w-[80%] rounded-2xl px-3.5 py-2 text-sm",
+          isOutbound
+            ? "bg-primary text-primary-foreground rounded-tr-md"
+            : "bg-muted text-foreground rounded-tl-md"
+        )}
+      >
+        <div className="flex items-center gap-1.5 mb-1">
+          <span className="text-[10px] opacity-70 font-medium">
+            {isOutbound ? "AI Asistan" : message.sender_name}
+          </span>
+          <span className="text-[10px] opacity-50 flex items-center gap-1">
+            <MessageSquare className="size-2.5" />
+          </span>
+        </div>
+        <p className="whitespace-pre-wrap break-words leading-relaxed">
+          {message.content}
+        </p>
+        <div
+          className={cn(
+            "flex items-center justify-end gap-1 mt-1",
+            isOutbound ? "text-primary-foreground/60" : "text-muted-foreground/60"
+          )}
+        >
+          <span className="text-[10px]">
+            {format(new Date(message.timestamp), "HH:mm")}
+          </span>
+          {message.is_handoff && (
+            <Badge variant="outline" className="h-4 text-[9px] px-1.5">
+              Handoff
+            </Badge>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Weekly Bar Chart ─────────────────────────────────────────────────────────
+
+function WeeklyBarChart({
+  data,
+}: {
+  data: { date: string; count: number }[];
+}) {
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-32 text-xs text-muted-foreground">
+        Henüz veri yok
+      </div>
+    );
+  }
+
+  const chartData = data.map((d) => ({
+    name: format(new Date(d.date), "EEE", { locale: tr }),
+    mesaj: d.count,
+  }));
+
+  return (
+    <div className="h-32">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={chartData} margin={{ top: 4, right: 4, bottom: 0, left: -16 }}>
+          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
+          <XAxis
+            dataKey="name"
+            tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
+            axisLine={false}
+            tickLine={false}
+          />
+          <YAxis
+            allowDecimals={false}
+            tick={{ fontSize: 10, fill: "var(--muted-foreground)" }}
+            axisLine={false}
+            tickLine={false}
+            width={24}
+          />
+          <Tooltip
+            contentStyle={{
+              fontSize: 12,
+              borderRadius: 8,
+              border: "1px solid var(--border)",
+              background: "var(--popover)",
+            }}
+            formatter={(value: number) => [`${value} mesaj`, "Günlük"] as unknown as ReactNode}
+          />
+          <Bar dataKey="mesaj" radius={[4, 4, 0, 0]} fill="var(--primary)" maxBarSize={24} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+// ─── Channel Detail Sheet ──────────────────────────────────────────────────────
+
+function ChannelDetailSheet({
+  channel,
+  open,
+  onOpenChange,
+}: {
+  channel: ChannelInfo | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const toggleMutation = useToggleChannel();
+  const upsertMutation = useUpsertChannel();
+  const { data: metrics, isLoading: metricsLoading } = useChannelMetrics(
+    channel?.channel_type ?? null
+  );
+
+  const handleToggleActive = useCallback(() => {
+    if (!channel) return;
+    toggleMutation.mutate({ id: channel.id, is_active: !channel.is_active });
+  }, [channel, toggleMutation]);
+
+  const handleUpdateSetting = useCallback(
+    (key: string, value: unknown) => {
+      if (!channel) return;
+      upsertMutation.mutate({
+        channel_type: channel.channel_type,
+        settings: { ...channel.settings, [key]: value } as Record<string, unknown>,
+      });
     },
+    [channel, upsertMutation]
+  );
+
+  if (!channel) return null;
+
+  const Icon = CHANNEL_ICONS[channel.channel_type] ?? Smartphone;
+  const isToggling = toggleMutation.isPending;
+
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent side="bottom" className="h-[90dvh] rounded-t-2xl p-0">
+        <SheetHeader className="border-b border-border/50 p-4">
+          <div className="flex items-center gap-3">
+            <div
+              className={cn(
+                "size-10 shrink-0 rounded-xl flex items-center justify-center",
+                CHANNEL_COLORS[channel.channel_type]
+              )}
+            >
+              <Icon className="size-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <SheetTitle className="text-base">
+                {CHANNEL_TYPE_LABELS[channel.channel_type]}
+              </SheetTitle>
+              <SheetDescription className="text-xs mt-0.5">
+                <ChannelStatusBadge channel={channel} />
+              </SheetDescription>
+            </div>
+          </div>
+        </SheetHeader>
+
+        <div className="flex-1 overflow-y-auto p-4 pb-24">
+          <Tabs defaultValue="settings">
+            <TabsList className="w-full mb-4">
+              <TabsTrigger value="settings" className="flex-1">
+                <Settings2 className="size-3.5" />
+                Ayarlar
+              </TabsTrigger>
+              <TabsTrigger value="metrics" className="flex-1">
+                <BarChart3 className="size-3.5" />
+                Metrikler
+              </TabsTrigger>
+            </TabsList>
+
+            {/* ─── Settings Tab ─────────────────────────────────────────── */}
+            <TabsContent value="settings" className="flex flex-col gap-4">
+              {/* Active/Passive Toggle */}
+              <Card size="sm">
+                <CardContent className="flex items-center justify-between p-3">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Kanal Aktif</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {channel.is_active
+                        ? "Kanal açık, mesajlar alınıyor"
+                        : "Kanal kapalı, mesajlar alınmıyor"}
+                    </p>
+                  </div>
+                  <Switch
+                    checked={channel.is_active}
+                    onCheckedChange={handleToggleActive}
+                    disabled={isToggling}
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Auto Reply */}
+              <Card size="sm">
+                <CardContent className="flex items-center justify-between p-3">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Otomatik Yanıt</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      AI asistan mesajları otomatik yanıtlasın
+                    </p>
+                  </div>
+                  <Switch
+                    checked={channel.settings.auto_reply_enabled}
+                    onCheckedChange={(checked) =>
+                      handleUpdateSetting("auto_reply_enabled", checked)
+                    }
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Welcome Message */}
+              <Card size="sm">
+                <CardContent className="flex items-center justify-between p-3">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Hoş Geldin Mesajı</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Yeni sohbetlerde karşılama mesajı gönder
+                    </p>
+                  </div>
+                  <Switch
+                    checked={channel.settings.welcome_message_enabled}
+                    onCheckedChange={(checked) =>
+                      handleUpdateSetting("welcome_message_enabled", checked)
+                    }
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Greeting Message */}
+              <div className="flex flex-col gap-1.5">
+                <Label className="text-sm font-medium">Karşılama Mesajı</Label>
+                <Textarea
+                  defaultValue={channel.settings.greeting_message}
+                  onBlur={(e) =>
+                    handleUpdateSetting("greeting_message", e.target.value)
+                  }
+                  rows={3}
+                  className="resize-none text-sm"
+                />
+                <p className="text-xs text-muted-foreground">
+                  Yeni sohbet başladığında gönderilecek ilk mesaj
+                </p>
+              </div>
+
+              {/* Notifications */}
+              <Card size="sm">
+                <CardContent className="flex items-center justify-between p-3">
+                  <div className="flex items-center gap-2.5">
+                    <Bell className="size-4 text-muted-foreground" />
+                    <div>
+                      <p className="text-sm font-medium">Bildirimler</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Bu kanaldan gelen mesajlar için bildirim gönder
+                      </p>
+                    </div>
+                  </div>
+                  <Switch
+                    checked={channel.settings.notification_enabled}
+                    onCheckedChange={(checked) =>
+                      handleUpdateSetting("notification_enabled", checked)
+                    }
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Working Hours */}
+              <Card size="sm">
+                <CardContent>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2.5">
+                      <Clock className="size-4 text-muted-foreground" />
+                      <div>
+                        <p className="text-sm font-medium">Çalışma Saatleri</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          Otomatik yanıtın aktif olduğu saatler
+                        </p>
+                      </div>
+                    </div>
+                    <Switch
+                      checked={channel.settings.working_hours?.enabled ?? false}
+                      onCheckedChange={(checked) =>
+                        handleUpdateSetting("working_hours", {
+                          ...channel.settings.working_hours,
+                          enabled: checked,
+                        })
+                      }
+                    />
+                  </div>
+
+                  {channel.settings.working_hours?.enabled && (
+                    <div className="flex gap-2">
+                      <div className="flex-1">
+                        <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                          Başlangıç
+                        </Label>
+                        <Input
+                          type="time"
+                          defaultValue={channel.settings.working_hours.start}
+                          className="mt-1 h-8 text-xs"
+                          onBlur={(e) =>
+                            handleUpdateSetting("working_hours", {
+                              ...channel.settings.working_hours,
+                              start: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <Label className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                          Bitiş
+                        </Label>
+                        <Input
+                          type="time"
+                          defaultValue={channel.settings.working_hours.end}
+                          className="mt-1 h-8 text-xs"
+                          onBlur={(e) =>
+                            handleUpdateSetting("working_hours", {
+                              ...channel.settings.working_hours,
+                              end: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Handoff Keywords */}
+              <div className="flex flex-col gap-2">
+                <Label className="text-sm font-medium">Handoff Anahtar Kelimeleri</Label>
+                <div className="flex flex-wrap gap-1.5">
+                  {channel.settings.handoff_keywords.map((kw) => (
+                    <Badge key={kw} variant="secondary" className="text-xs gap-1">
+                      <Hash className="size-2.5" />
+                      {kw}
+                    </Badge>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Bu kelimeler geçtiğinde sohbet insan operatöre devredilir
+                </p>
+              </div>
+
+              {/* Connection Status */}
+              {channel.connected && channel.last_error && (
+                <Card size="sm" className="border-destructive/30">
+                  <CardContent className="p-3">
+                    <div className="flex items-center gap-2 text-destructive text-xs">
+                      <AlertTriangle className="size-3.5 shrink-0" />
+                      <span>{channel.last_error}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </TabsContent>
+
+            {/* ─── Metrics Tab ──────────────────────────────────────────── */}
+            <TabsContent value="metrics" className="flex flex-col gap-4">
+              {/* Summary cards */}
+              <div className="grid grid-cols-2 gap-3">
+                <Card size="sm">
+                  <CardContent className="p-3 text-center">
+                    <p className="text-2xl font-bold">
+                      {metricsLoading ? "..." : metrics?.messages_today ?? 0}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Bugün Gelen
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card size="sm">
+                  <CardContent className="p-3 text-center">
+                    <p className="text-2xl font-bold">
+                      {metricsLoading ? "..." : metrics?.messages_week ?? 0}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Bu Hafta
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card size="sm">
+                  <CardContent className="p-3 text-center">
+                    <p className="text-2xl font-bold">
+                      {metricsLoading ? "..." : metrics?.avg_response_time_seconds ?? 0}
+                      <span className="text-sm font-normal text-muted-foreground">s</span>
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Ort. Yanıt Süresi
+                    </p>
+                  </CardContent>
+                </Card>
+                <Card size="sm">
+                  <CardContent className="p-3 text-center">
+                    <p className="text-2xl font-bold">
+                      {metricsLoading ? "..." : metrics?.handoff_rate_percent ?? 0}
+                      <span className="text-sm font-normal text-muted-foreground">%</span>
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Handoff Oranı
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Weekly Chart */}
+              <Card size="sm">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                    Haftalık Mesaj Trafiği
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {metricsLoading ? (
+                    <div className="flex items-center justify-center h-32">
+                      <Loader2 className="size-5 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : (
+                    <WeeklyBarChart data={metrics?.daily_messages ?? []} />
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Active conversations */}
+              <Card size="sm">
+                <CardContent className="p-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <User className="size-4 text-muted-foreground" />
+                      <div>
+                        <p className="text-sm font-medium">Aktif Sohbetler</p>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          Şu anda devam eden görüşmeler
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-xl font-bold">
+                      {metricsLoading ? "..." : metrics?.active_conversations ?? 0}
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+// ─── Message Log Timeline ──────────────────────────────────────────────────────
+
+function MessageTimeline() {
+  const [channelFilter, setChannelFilter] = useState<ChannelType | "all">("all");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const { data: messages, isLoading } = useUnifiedMessages({
+    channelType: channelFilter === "all" ? undefined : channelFilter,
+    search: searchQuery || undefined,
   });
 
-  const telegramEnabled = watch("telegram_enabled");
-  const fbEnabled = watch("fb_enabled");
+  const CHANNEL_FILTERS: { value: ChannelType | "all"; label: string }[] = [
+    { value: "all", label: "Tümü" },
+    { value: "whatsapp", label: "WhatsApp" },
+    { value: "telegram", label: "Telegram" },
+    { value: "facebook_messenger", label: "Messenger" },
+    { value: "web_widget", label: "Web" },
+  ];
 
-  const channels = MOCK_CHANNELS;
+  return (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-sm flex items-center gap-2">
+          <History className="size-4" />
+          Mesaj Geçmişi
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-3">
+        {/* Search & Filter */}
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground" />
+            <Input
+              placeholder="Mesaj veya misafir ara..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-8 h-8 text-xs"
+            />
+          </div>
+        </div>
 
-  const onSubmit = async (data: ChannelForm) => {
-    setSaving(true);
-    setTestResult(null);
+        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+          {CHANNEL_FILTERS.map((f) => (
+            <button
+              key={f.value}
+              type="button"
+              onClick={() => setChannelFilter(f.value)}
+              className={cn(
+                "shrink-0 rounded-lg px-2.5 py-1 text-xs font-medium transition-colors",
+                channelFilter === f.value
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80"
+              )}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
 
-    // Simulate save
-    await new Promise((r) => setTimeout(r, 800));
-    setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 3000);
-    setSaving(false);
-  };
+        {/* Messages */}
+        <div className="flex flex-col max-h-80 overflow-y-auto">
+          {isLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="size-5 animate-spin text-muted-foreground" />
+            </div>
+          ) : !messages || messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <MessageSquare className="size-8 text-muted-foreground/40 mb-2" />
+              <p className="text-xs text-muted-foreground">Henüz mesaj yok</p>
+            </div>
+          ) : (
+            messages.slice(0, 50).map((msg) => (
+              <MessageBubble key={msg.id} message={msg} />
+            ))
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
 
-  const testTelegram = async () => {
-    const token = watch("telegram_token");
-    const chatId = watch("telegram_chat_id");
-    if (!token || !chatId) {
-      setTestResult({ ok: false, msg: "Token ve Chat ID gerekli" });
-      return;
-    }
+// ─── Main Page ─────────────────────────────────────────────────────────────────
 
-    setTestingTelegram(true);
-    setTestResult(null);
+export default function ChannelsSettingsPage() {
+  const [selectedChannel, setSelectedChannel] = useState<ChannelInfo | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
-    try {
-      const res = await fetch(
-        `https://api.telegram.org/bot${token}/sendMessage`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: "✅ *Resepsiyonistim* bağlantı testi başarılı! 🎉\n\nBundan sonra bildirimleriniz buraya gelecek.",
-            parse_mode: "Markdown",
-          }),
-        }
-      );
-      const data = await res.json();
+  const { data: channels, isLoading, error } = useChannels();
+  const toggleMutation = useToggleChannel();
 
-      if (data.ok) {
-        setTestResult({ ok: true, msg: "Test mesajı gönderildi! Telegram\'ı kontrol edin." });
-      } else {
-        setTestResult({
-          ok: false,
-          msg: `Hata: ${data.description || "Bilinmeyen hata"}`,
-        });
-      }
-    } catch (err) {
-      setTestResult({
-        ok: false,
-        msg: "Telegram API\'ye bağlanılamadı. Token\'ı kontrol edin.",
-      });
-    }
+  const handleOpenChannel = useCallback(
+    (ch: ChannelInfo) => {
+      setSelectedChannel(ch);
+      setSheetOpen(true);
+    },
+    []
+  );
 
-    setTestingTelegram(false);
-  };
-
-  const setTelegramWebhook = async () => {
-    const token = watch("telegram_token");
-    if (!token) {
-      setTestResult({ ok: false, msg: "Önce bot token\'ı girin" });
-      return;
-    }
-
-    setTestingTelegram(true);
-    setTestResult(null);
-
-    try {
-      const origin = window.location.origin;
-      const res = await fetch(
-        `/api/channels/telegram?token=${encodeURIComponent(token)}&webhook=${encodeURIComponent(origin)}`
-      );
-      const data = await res.json();
-
-      if (data.ok) {
-        setTestResult({ ok: true, msg: `Webhook başarıyla kuruldu ✅` });
-      } else {
-        setTestResult({ ok: false, msg: data.error || "Webhook kurulamadı" });
-      }
-    } catch (err) {
-      setTestResult({ ok: false, msg: "Webhook kurulurken hata oluştu" });
-    }
-
-    setTestingTelegram(false);
-  };
+  // Compute metrics summary for header
+  const totalActive = channels?.filter((c) => c.is_active).length ?? 0;
+  const totalConnected = channels?.filter((c) => c.is_active && c.connected).length ?? 0;
 
   return (
     <MobileShell>
       <div className="flex flex-col gap-5 pb-4">
-        {/* Header with back button */}
+        {/* Header */}
         <div className="flex items-center gap-2">
           <Link
             href="/settings"
@@ -229,400 +829,98 @@ export default function ChannelsSettingsPage() {
               İletişim Kanalları
             </h2>
             <p className="text-xs text-muted-foreground">
-              WhatsApp, Telegram ve Facebook Messenger bağlantıları
+              WhatsApp, Telegram, Messenger ve Web Widget
             </p>
           </div>
         </div>
 
-        {/* ─── Connected Channels Overview ──────────────────────────── */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Globe className="size-4" />
-              Bağlı Kanallar
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-2">
-              {channels.map((ch) => (
-                <div
-                  key={ch.id}
-                  className="flex items-center justify-between rounded-lg border border-border/50 p-3"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <ch.icon className="size-5 text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">{ch.name}</p>
-                      {ch.details && (
-                        <p className="text-xs text-muted-foreground">
-                          {ch.details}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <ChannelStatusBadge
-                      connected={ch.connected}
-                      active={ch.is_active}
-                    />
-                    <ChevronRight className="size-4 text-muted-foreground" />
-                  </div>
-                </div>
-              ))}
-
-              {/* Telegram Status Card */}
-              <div className="flex items-center justify-between rounded-lg border border-border/50 p-3">
-                <div className="flex items-center gap-3">
-                  <div className="size-9 rounded-lg bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center">
-                    <Send className="size-5 text-sky-600 dark:text-sky-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">Telegram</p>
-                    <p className="text-xs text-muted-foreground">
-                      {telegramEnabled ? "Yapılandırıldı" : "Henüz ayarlanmadı"}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ChannelStatusBadge
-                    connected={telegramEnabled}
-                    active={telegramEnabled}
-                  />
-                </div>
+        {/* Summary Cards */}
+        <div className="grid grid-cols-2 gap-3">
+          <Card size="sm">
+            <CardContent className="p-3 text-center">
+              <div className="flex items-center justify-center gap-1.5 text-2xl font-bold">
+                <Globe className="size-4 text-primary" />
+                {isLoading ? "..." : totalActive}
+                <span className="text-xs font-normal text-muted-foreground">
+                  / {isLoading ? "..." : channels?.length ?? 0}
+                </span>
               </div>
-
-              {/* Facebook Messenger Status Card */}
-              <div className="flex items-center justify-between rounded-lg border border-border/50 p-3">
-                <div className="flex items-center gap-3">
-                  <div className="size-9 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                    <MessageCircle className="size-5 text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">Facebook Messenger</p>
-                    <p className="text-xs text-muted-foreground">
-                      {fbEnabled ? "Yapılandırıldı" : "Henüz ayarlanmadı"}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ChannelStatusBadge
-                    connected={fbEnabled}
-                    active={fbEnabled}
-                  />
-                </div>
+              <p className="text-xs text-muted-foreground mt-1">Aktif Kanal</p>
+            </CardContent>
+          </Card>
+          <Card size="sm">
+            <CardContent className="p-3 text-center">
+              <div className="flex items-center justify-center gap-1.5 text-2xl font-bold">
+                <Wifi className="size-4 text-green-500" />
+                {isLoading ? "..." : totalConnected}
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* ─── Telegram Bot Setup ───────────────────────────────────── */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <Send className="size-5 text-sky-600 dark:text-sky-400" />
-              Telegram Bot
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-4">
-              {/* Enable toggle */}
-              <div className="flex items-center justify-between rounded-lg border border-border/50 p-3">
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Telegram Bot Aktif</p>
-                  <p className="text-xs text-muted-foreground">
-                    Misafirler Telegram üzerinden sizinle iletişime geçebilir
-                  </p>
-                </div>
-                <Switch
-                  checked={telegramEnabled}
-                  onCheckedChange={(checked) =>
-                    setValue("telegram_enabled", checked ?? false)
-                  }
-                />
-              </div>
-
-              {telegramEnabled && (
-                <>
-                  {/* Setup guide */}
-                  <div className="rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-3 text-xs text-amber-800 dark:text-amber-300 space-y-1">
-                    <p className="font-medium">🔧 Kurulum Adımları</p>
-                    <ol className="list-decimal list-inside space-y-0.5 opacity-80">
-                      <li>
-                        Telegram&apos;da <strong>@BotFather</strong>&apos;a gidin
-                      </li>
-                      <li>
-                        <code>/newbot</code> yazın ve talimatları izleyin
-                      </li>
-                      <li>Size verilen token&apos;ı aşağıya yapıştırın</li>
-                      <li>
-                        Botunuza mesaj atın, ardından{" "}
-                        <strong>Test Et</strong>&apos;e tıklayın
-                      </li>
-                      <li>
-                        Chat ID otomatik algılanır veya <code>@userinfobot</code>{" "}
-                        ile öğrenebilirsiniz
-                      </li>
-                    </ol>
-                  </div>
-
-                  {/* Bot Token */}
-                  <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="telegram_token">
-                      Bot Token <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="telegram_token"
-                      {...register("telegram_token", {
-                        required: "Bot token zorunludur",
-                      })}
-                      placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz"
-                      className={cn(
-                        "font-mono text-xs",
-                        errors.telegram_token && "border-destructive"
-                      )}
-                    />
-                    {errors.telegram_token && (
-                      <p className="text-xs text-destructive">
-                        {errors.telegram_token.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Chat ID */}
-                  <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="telegram_chat_id">
-                      Bildirim Chat ID
-                    </Label>
-                    <Input
-                      id="telegram_chat_id"
-                      {...register("telegram_chat_id")}
-                      placeholder="123456789" 
-                      className="font-mono text-xs"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Bildirimlerin gönderileceği sohbetin ID&apos;si. İşletme sahibi olarak sizinle
-                      iletişim için kullanılır.
-                    </p>
-                  </div>
-
-                  {/* Test & Webhook Buttons */}
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={testTelegram}
-                      disabled={testingTelegram}
-                    >
-                      {testingTelegram ? (
-                        <Loader2 className="size-3 animate-spin mr-1" />
-                      ) : (
-                        <Send className="size-3 mr-1" />
-                      )}
-                      Test Et
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1"
-                      onClick={setTelegramWebhook}
-                      disabled={testingTelegram}
-                    >
-                      {testingTelegram ? (
-                        <Loader2 className="size-3 animate-spin mr-1" />
-                      ) : (
-                        <Link2 className="size-3 mr-1" />
-                      )}
-                      Webhook Kur
-                    </Button>
-                  </div>
-
-                  {/* Test result */}
-                  {testResult && (
-                    <div
-                      className={cn(
-                        "rounded-lg p-3 text-sm border",
-                        testResult.ok
-                          ? "bg-green-50 text-green-700 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800"
-                          : "bg-red-50 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800"
-                      )}
-                    >
-                      {testResult.ok ? "✅ " : "❌ "}
-                      {testResult.msg}
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* ─── Facebook Messenger Setup ─────────────────────────────── */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <MessageCircle className="size-5 text-blue-600 dark:text-blue-400" />
-              Facebook Messenger
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-4">
-              {/* Enable toggle */}
-              <div className="flex items-center justify-between rounded-lg border border-border/50 p-3">
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Messenger Bot Aktif</p>
-                  <p className="text-xs text-muted-foreground">
-                    Facebook Sayfanız üzerinden mesajları yanıtlayın
-                  </p>
-                </div>
-                <Switch
-                  checked={fbEnabled}
-                  onCheckedChange={(checked) =>
-                    setValue("fb_enabled", checked ?? false)
-                  }
-                />
-              </div>
-
-              {fbEnabled && (
-                <>
-                  {/* Setup guide */}
-                  <div className="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-3 text-xs text-blue-800 dark:text-blue-300 space-y-1">
-                    <p className="font-medium">🔧 Kurulum Adımları</p>
-                    <ol className="list-decimal list-inside space-y-0.5 opacity-80">
-                      <li>
-                        <a
-                          href="https://developers.facebook.com/apps"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="underline"
-                        >
-                          Facebook Developers
-                        </a>{" "}
-                        &rarr; Uygulama Oluşturun
-                      </li>
-                      <li>Messenger ürününü ekleyin</li>
-                      <li>Sayfanızı bağlayın ve Page Access Token alın</li>
-                      <li>
-                        Webhook URL: <code>{typeof window !== "undefined" ? window.location.origin : ""}/api/channels/messenger</code>
-                      </li>
-                      <li>
-                        Verify Token: aşağıda belirlediğiniz token
-                      </li>
-                    </ol>
-                  </div>
-
-                  {/* Page ID */}
-                  <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="fb_page_id">Sayfa ID</Label>
-                    <Input
-                      id="fb_page_id"
-                      {...register("fb_page_id")}
-                      placeholder="123456789012345"
-                      className="font-mono text-xs"
-                    />
-                    <p className="text-xs text-muted-foreground">
-                      Facebook Sayfanızın ID&apos;si (Sayfa &rarr; Hakkında &rarr; Sayfa ID)
-                    </p>
-                  </div>
-
-                  {/* Verify Token */}
-                  <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="fb_verify_token">
-                      Webhook Doğrulama Token&apos;ı{" "}
-                      <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      id="fb_verify_token"
-                      {...register("fb_verify_token", {
-                        required: "Doğrulama token'ı zorunludur",
-                      })}
-                      placeholder="benzersiz-bir-token-belirleyin"
-                      className={cn(
-                        "font-mono text-xs",
-                        errors.fb_verify_token && "border-destructive"
-                      )}
-                    />
-                    {errors.fb_verify_token && (
-                      <p className="text-xs text-destructive">
-                        {errors.fb_verify_token.message}
-                      </p>
-                    )}
-                    <p className="text-xs text-muted-foreground">
-                      Facebook webhook ayarlarında gireceğiniz doğrulama token&apos;ı. 
-                      Kendiniz belirleyin (ör: merman-fb-verify-2026).
-                    </p>
-                  </div>
-
-                  {/* App Secret */}
-                  <div className="flex flex-col gap-1.5">
-                    <Label htmlFor="fb_app_secret">
-                      App Secret
-                    </Label>
-                    <Input
-                      id="fb_app_secret"
-                      {...register("fb_app_secret")}
-                      type="password"
-                      placeholder="Facebook uygulama secret'ı"
-                      className="font-mono text-xs"
-                    />
-                  </div>
-                </>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* ─── Greeting Message ───────────────────────────────────────── */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <Bot className="size-5 text-primary" />
-              Karşılama Mesajı
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-1.5">
-              <Label htmlFor="greeting_message">Varsayılan Karşılama</Label>
-              <textarea
-                id="greeting_message"
-                {...register("greeting_message")}
-                rows={3}
-                className="flex w-full rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
-                placeholder="Merhaba! Size nasıl yardımcı olabilirim?"
-              />
-              <p className="text-xs text-muted-foreground">
-                Yeni bir sohbet başladığında misafire gönderilecek ilk mesaj.
-                Telegram ve Messenger için geçerlidir.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Separator />
-
-        {/* ─── Save Button ─────────────────────────────────────────────── */}
-        <div className="fixed bottom-16 inset-x-0 max-w-lg mx-auto px-4 z-20">
-          <Button
-            type="button"
-            size="lg"
-            className={cn(
-              "w-full shadow-lg transition-all",
-              saveSuccess && "bg-emerald-600 hover:bg-emerald-700"
-            )}
-            onClick={handleSubmit(onSubmit)}
-            disabled={saving}
-          >
-            {saving ? (
-              <Loader2 className="size-4 animate-spin mr-2" />
-            ) : (
-              <RefreshCw className="size-4 mr-2" />
-            )}
-            {saveSuccess ? "Kaydedildi ✓" : "Ayarları Kaydet"}
-          </Button>
+              <p className="text-xs text-muted-foreground mt-1">Bağlı Kanal</p>
+            </CardContent>
+          </Card>
         </div>
+
+        {/* Channel List */}
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-medium text-muted-foreground">
+              Kanallar
+            </h3>
+            {toggleMutation.isPending && (
+              <Loader2 className="size-3.5 animate-spin text-muted-foreground" />
+            )}
+          </div>
+
+          {isLoading ? (
+            <div className="flex flex-col gap-2">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="h-16 animate-pulse rounded-xl bg-muted"
+                  style={{ animationDelay: `${i * 75}ms` }}
+                />
+              ))}
+            </div>
+          ) : error ? (
+            <Card size="sm" className="border-destructive/30">
+              <CardContent className="p-3 flex items-center gap-2 text-destructive text-sm">
+                <AlertTriangle className="size-4 shrink-0" />
+                Kanallar yüklenirken hata oluştu
+              </CardContent>
+            </Card>
+          ) : channels && channels.length > 0 ? (
+            channels.map((ch) => (
+              <ChannelCard
+                key={ch.id}
+                channel={ch}
+                onOpen={() => handleOpenChannel(ch)}
+              />
+            ))
+          ) : (
+            <Card size="sm">
+              <CardContent className="p-6 text-center">
+                <Globe className="size-8 mx-auto text-muted-foreground/40 mb-2" />
+                <p className="text-sm font-medium">Henüz kanal eklenmemiş</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Yeni bir iletişim kanalı eklemek için yukarıdaki butonu kullanın
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+
+        {/* Message Timeline */}
+        <MessageTimeline />
       </div>
+
+      {/* Channel Detail Sheet */}
+      <ChannelDetailSheet
+        channel={selectedChannel}
+        open={sheetOpen}
+        onOpenChange={(open) => {
+          setSheetOpen(open);
+          if (!open) setSelectedChannel(null);
+        }}
+      />
     </MobileShell>
   );
 }
