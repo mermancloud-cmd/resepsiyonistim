@@ -224,8 +224,7 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const updates: Record<string, unknown> = { ...parsed.data };
-    delete (updates as any).id;
+    const updates: Record<string, unknown> = parsed.data;
 
     // Normalize IBAN if updating
     if (updates.iban) {
