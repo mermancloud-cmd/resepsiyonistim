@@ -1,15 +1,10 @@
 import type { NextConfig } from "next";
 import withSerwistInit from "@serwist/next";
-import bundleAnalyzer from "@next/bundle-analyzer";
 
 const withSerwist = withSerwistInit({
   swSrc: "src/app/sw.ts",
   swDest: "public/sw.js",
   disable: true, // SW built separately via scripts/build-sw.mjs postbuild (Turbopack incompatible)
-});
-
-const withBundleAnalyzer = bundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
 });
 
 const nextConfig: NextConfig = {
@@ -60,7 +55,18 @@ const nextConfig: NextConfig = {
   },
 };
 
-// Bundle analyzer wrapper (activated via ANALYZE=true env var)
+// Bundle analyzer wrapper (activated via ANALYZE=true env var, optional dep)
+function getBundleAnalyzer(): (config: NextConfig) => NextConfig {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const mod = require("@next/bundle-analyzer");
+    return mod({ enabled: process.env.ANALYZE === "true" });
+  } catch {
+    return (c: NextConfig) => c;
+  }
+}
+const withBundleAnalyzer = getBundleAnalyzer();
+
 const config = withBundleAnalyzer(nextConfig);
 
 export default withSerwist(config);
