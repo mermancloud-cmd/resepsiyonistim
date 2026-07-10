@@ -31,6 +31,7 @@ import {
   MessageCircle,
   Send,
   ChevronRight,
+  Banknote,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mockBusinessSettings, mockAIPersona } from "@/lib/mock-data";
@@ -920,6 +921,38 @@ export default function SettingsPage() {
             >
               <Building2 className="size-4" />
               Tesisleri Yönet
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Separator />
+
+        {/* ─── Banka Hesapları ────────────────────────────────────── */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base flex items-center gap-2">
+              <Banknote className="size-5 text-emerald-600 dark:text-emerald-400" />
+              Banka Hesapları
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-3">
+              IBAN hesaplarınızı ekleyin, misafirleriniz havale/EFT ile ödeme yapabilsin.
+            </p>
+            <Button
+              variant="outline"
+              className="w-full gap-2"
+              size="lg"
+              type="button"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.location.href = "/settings/billing/bank-accounts";
+                }
+              }}
+            >
+              <Banknote className="size-4" />
+              Banka Hesaplarını Yönet
+              <ChevronRight className="size-4 ml-auto" />
             </Button>
           </CardContent>
         </Card>

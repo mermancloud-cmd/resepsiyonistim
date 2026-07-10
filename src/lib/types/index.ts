@@ -307,17 +307,34 @@ export interface DashboardStats {
 
 // ─── IBAN Management Types ─────────────────────────────────────────────────
 
-export interface BusinessIBAN {
+export interface BankAccount {
   id: string;
   tenant_id: string;
+  facility_id: string | null;
   bank_name: string;
+  branch_name: string | null;
   account_holder: string;
   iban: string;
   currency: string;
   is_default: boolean;
   is_active: boolean;
+  swift_code: string | null;
+  description: string | null;
+  sort_order: number;
   created_at: string;
   updated_at: string;
+}
+
+export interface BankAccountInput {
+  bank_name: string;
+  branch_name?: string;
+  account_holder: string;
+  iban: string;
+  currency: string;
+  facility_id?: string | null;
+  is_default?: boolean;
+  swift_code?: string;
+  description?: string;
 }
 
 export interface IBANPaymentTracking {
