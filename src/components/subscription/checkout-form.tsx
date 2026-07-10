@@ -100,11 +100,11 @@ export function CheckoutForm({
             </div>
           </div>
 
-          {/* IYZICO checkout form renders here */}
+          {/* Ödeme içeriği render edilir */}
           <div
-            id="iyzico-checkout-form"
+            id="payment-form"
             dangerouslySetInnerHTML={{ __html: checkoutFormContent }}
-            className="iyzico-checkout-container"
+            className="payment-checkout-container"
           />
         </CardContent>
       </Card>
@@ -133,7 +133,7 @@ export function CheckoutForm({
           Fatura Bilgileri
         </CardTitle>
         <p className="text-xs text-muted-foreground">
-          İYZİCO güvenli ödeme için fatura bilgilerinizi girin.
+          Güvenli ödeme için fatura bilgilerinizi girin.
         </p>
       </CardHeader>
       <CardContent>
@@ -273,7 +273,7 @@ export function CheckoutForm({
             ) : (
               <>
                 <ShieldCheck className="size-4" />
-                İYZİCO ile Güvenli Ödeme
+                Güvenli Ödemeye Geç
               </>
             )}
           </Button>
@@ -282,7 +282,7 @@ export function CheckoutForm({
         {/* Security badge */}
         <div className="mt-4 flex items-center justify-center gap-2 text-[10px] text-muted-foreground">
           <ShieldCheck className="size-3" />
-          <span>256-bit SSL ile korunur · İYZİCO güvencesiyle</span>
+          <span>256-bit SSL ile korunur · Güvenli ödeme</span>
         </div>
       </CardContent>
     </Card>

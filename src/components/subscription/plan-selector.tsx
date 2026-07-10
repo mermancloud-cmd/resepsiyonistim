@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { formatPlanPrice, SUBSCRIPTION_PLANS } from "@/lib/subscription/plans";
 import { Check, Star, Zap } from "lucide-react";
-import type { SubscriptionPlanId } from "@/lib/iyzico/types";
+import type { SubscriptionPlanId } from "@/lib/subscription/types";
 
 interface PlanSelectorProps {
   selectedPlan: SubscriptionPlanId | null;

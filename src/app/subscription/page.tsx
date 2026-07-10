@@ -11,6 +11,7 @@ import {
 } from "@/lib/subscription/plans";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PaymentNotificationForm } from "@/components/subscription/payment-notification-form";
 import {
   Check,
   Star,
@@ -20,7 +21,7 @@ import {
   HelpCircle,
   ChevronRight,
 } from "lucide-react";
-import type { SubscriptionPlanId } from "@/lib/iyzico/types";
+import type { SubscriptionPlanId } from "@/lib/subscription/types";
 
 export default function SubscriptionPage() {
   const router = useRouter();
@@ -341,6 +342,20 @@ export default function SubscriptionPage() {
                 Vazgeç
               </Button>
             </div>
+          </div>
+        )}
+
+        {/* Payment Notification Form */}
+        {showIbanInfo && selectedPlan && tenant?.id && (
+          <div className="rounded-xl border border-border bg-card p-6">
+            <PaymentNotificationForm
+              tenantId={tenant.id}
+              planId={selectedPlan}
+              amount={
+                SUBSCRIPTION_PLANS.find((p) => p.id === selectedPlan)?.price ??
+                0
+              }
+            />
           </div>
         )}
 

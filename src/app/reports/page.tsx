@@ -814,7 +814,7 @@ export default function ReportsPage() {
                     tablosundan dinamik okuma J fazında eklenecek
                   </li>
                   <li>
-                    Gelir verisi rezervasyon toplamından hesaplanır — Iyzico ödeme
+                    Gelir verisi rezervasyon toplamından hesaplanır — ödeme
                     onayı J fazında eklenecek
                   </li>
                   <li>

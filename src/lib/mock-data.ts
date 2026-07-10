@@ -341,9 +341,9 @@ export const mockIBANPayments: IBANPayment[] = [
   },
 ]
 
-// ─── IYZICO Subscription ───────────────────────────────────────────────────────
+// ─── Subscription Mock ──────────────────────────────────────────────────────────
 
-export interface IyzicoSubscription {
+export interface MockSubscription {
   id: string
   plan_name: string
   status: 'active' | 'past_due' | 'cancelled' | 'trial'
@@ -355,8 +355,7 @@ export interface IyzicoSubscription {
   next_billing_date: string
   auto_renew: boolean
 }
-
-export const mockIyzicoSubscription: IyzicoSubscription = {
+export const mockSubscription: MockSubscription = {
   id: 'sub-001',
   plan_name: 'Profesyonel Plan',
   status: 'active',

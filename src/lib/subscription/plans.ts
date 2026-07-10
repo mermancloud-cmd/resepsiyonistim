@@ -4,7 +4,7 @@
  * Guest reservation payments use IBAN/havale (see /payments).
  */
 
-import type { SubscriptionPlan, SubscriptionPlanId } from "@/lib/iyzico/types";
+import type { SubscriptionPlan, SubscriptionPlanId } from "@/lib/subscription/types";
 
 /**
  * Pazar araştırması ve rakip analizine dayalı fiyatlandırma (Temmuz 2026):
