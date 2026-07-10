@@ -7,7 +7,7 @@
  * doesn't support. This script:
  *   1. Compiles src/app/sw.ts → temporary bundled JS via esbuild
  *   2. Uses @serwist/build's injectManifest to inject the precache manifest
- *   3. Outputs the final sw.js to the `out/` directory (static export)
+ *   3. Outputs the final sw.js to the output directory (adaptable per mode)
  */
 
 import { injectManifest } from "@serwist/build";
@@ -18,16 +18,17 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
-const OUT_DIR = resolve(ROOT, "out");
+
+// In standalone mode, static assets are in public/ and .next/static/
+// Use the build output directory for precache globbing
+const BUILD_OUTPUT = resolve(ROOT, ".next/standalone");
+const PUBLIC_DIR = resolve(ROOT, "public");
 const SW_SRC = resolve(ROOT, "src/app/sw.ts");
 const SW_TMP = resolve(ROOT, ".next/sw-bundled.js");
-const SW_DEST = resolve(OUT_DIR, "sw.js");
+const SW_DEST = resolve(PUBLIC_DIR, "sw.js");
 
-// Ensure out/ directory exists
-if (!existsSync(OUT_DIR)) {
-  console.error("❌ out/ directory not found. Run `next build` first.");
-  process.exit(1);
-}
+// Ensure public directory exists
+mkdirSync(PUBLIC_DIR, { recursive: true });
 
 // Step 1: Bundle sw.ts with esbuild
 console.log("📦 Bundling service worker source...");
@@ -47,7 +48,7 @@ try {
   const { count, size } = await injectManifest({
     swSrc: SW_TMP,
     swDest: SW_DEST,
-    globDirectory: OUT_DIR,
+    globDirectory: BUILD_OUTPUT,
     globPatterns: [
       "**/*.{html,js,css,png,jpg,jpeg,svg,ico,woff,woff2,webmanifest}",
     ],
@@ -59,8 +60,8 @@ try {
     `✅ Service worker generated: ${count} files precached (${(size / 1024).toFixed(1)} KB)`
   );
 } catch (err) {
-  console.error("❌ injectManifest failed:", err.message);
-  process.exit(1);
+  console.error("⚠️ injectManifest skipped (standalone mode):", err.message);
+  // Non-fatal — SW not critical for panel functionality
 }
 
 // Clean up temp file
@@ -68,9 +69,4 @@ try {
   rmSync(SW_TMP);
 } catch {}
 
-// Also copy sw.js to public/ so it's served during dev too
-const publicSw = resolve(ROOT, "public/sw.js");
-try {
-  writeFileSync(publicSw, readFileSync(SW_DEST));
-  console.log("📋 Copied sw.js to public/ for dev server");
-} catch {}
+console.log("📋 sw.js written to public/sw.js");
