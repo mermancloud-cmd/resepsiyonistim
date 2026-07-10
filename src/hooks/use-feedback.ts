@@ -75,10 +75,11 @@ export function useFeedbackSummary(days: number = 30) {
     queryKey: ["feedback-summary", tenant?.id, days],
     enabled: isAuthenticated && !!tenant,
     queryFn: async () => {
-      const { data, error } = await supabase.rpc("get_feedback_summary", {
-        p_tenant_id: tenant!.id,
-        p_days: days,
-      });
+      const { data, error } = await supabase
+        .rpc("get_feedback_summary", {
+          p_tenant_id: tenant!.id,
+          p_days: days,
+        });
 
       if (error) {
         // Fallback: manual aggregation
@@ -94,7 +95,7 @@ export function useFeedbackSummary(days: number = 30) {
         return aggregateFeedback(fallback);
       }
 
-      return data as unknown as FeedbackSummary;
+      return data as FeedbackSummary;
     },
     staleTime: 30 * 1000,
   });
@@ -110,17 +111,18 @@ export function useFeedbackTrend(days: number = 30) {
     queryKey: ["feedback-trend", tenant?.id, days],
     enabled: isAuthenticated && !!tenant,
     queryFn: async () => {
-      const { data, error } = await supabase.rpc("get_feedback_trend", {
-        p_tenant_id: tenant!.id,
-        p_days: days,
-      });
+      const { data, error } = await supabase
+        .rpc("get_feedback_trend", {
+          p_tenant_id: tenant!.id,
+          p_days: days,
+        });
 
       if (error) {
         // Fallback: daily aggregation from raw data
         return fetchDailyTrend(tenant!.id, days);
       }
 
-      return data as unknown as FeedbackTrendPoint[];
+      return data;
     },
     staleTime: 30 * 1000,
   });
