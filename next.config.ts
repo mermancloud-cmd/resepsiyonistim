@@ -9,8 +9,8 @@ const withSerwist = withSerwistInit({
 
 const nextConfig: NextConfig = {
   // ─── Deployment Mode ─────────────────────────────────────────────────────
-  // "export" = Static HTML/JS/CSS, served by nginx (current production)
-  output: "export",
+  // "standalone" = Node.js server — required for API routes (/api/*)
+  output: "standalone",
   poweredByHeader: false,
   turbopack: {},
 
@@ -56,16 +56,13 @@ const nextConfig: NextConfig = {
 };
 
 // Bundle analyzer wrapper (activated via ANALYZE=true env var, optional dep)
-function getBundleAnalyzer(): (config: NextConfig) => NextConfig {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const mod = require("@next/bundle-analyzer");
-    return mod({ enabled: process.env.ANALYZE === "true" });
-  } catch {
-    return (c: NextConfig) => c;
-  }
+let withBundleAnalyzer = (c: NextConfig) => c;
+try {
+  const mod = require("@next/bundle-analyzer");
+  withBundleAnalyzer = mod({ enabled: process.env.ANALYZE === "true" });
+} catch {
+  // @next/bundle-analyzer is optional, skip if not installed
 }
-const withBundleAnalyzer = getBundleAnalyzer();
 
 const config = withBundleAnalyzer(nextConfig);
 
