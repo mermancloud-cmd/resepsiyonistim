@@ -98,8 +98,8 @@ export function PlanSelector({ selectedPlan, onSelect, disabled }: PlanSelectorP
 
               {/* Trial badge */}
               <div className="mt-3 pt-2 border-t border-border/50">
-                <p className="text-[10px] text-muted-foreground">
-                  ✨ {plan.trialDays} gün ücretsiz deneme (davet kodu ile)
+                <p className="text-[10px] text-emerald-600 font-medium">
+                  ✨ {plan.trialDays} gün ücretsiz deneme (kart gerekmez)
                 </p>
               </div>
             </CardContent>

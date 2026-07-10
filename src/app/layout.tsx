@@ -17,14 +17,14 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "İşletme Yönetim Paneli",
+  title: "Resepsiyonistim — Dijital Resepsiyonist",
   description:
-    "İşletmeniz için dijital resepsiyonist destekli rezervasyon yönetim paneli.",
+    "Resepsiyoniste ihtiyaç duyan her işletme için 7/24 WhatsApp tabanlı dijital resepsiyonist.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Panel",
+    title: "Resepsiyonistim",
   },
   openGraph: {
     title: "Resepsiyonistim — Dijital Resepsiyonist",

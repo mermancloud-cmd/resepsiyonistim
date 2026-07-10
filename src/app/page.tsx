@@ -161,12 +161,12 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-base md:text-lg text-teal-800/70 max-w-xl mx-auto leading-relaxed">
-            Bungalov, tiny house ve villa işletmeniz için 7/24 WhatsApp tabanlı
-            resepsiyonist. Misafirlerinizle{" "}
+            Resepsiyoniste ihtiyaç duyan her işletme için 7/24 WhatsApp tabanlı
+            dijital resepsiyonist. Müşterilerinizle{" "}
             <strong className="text-teal-900 font-semibold">
               insan gibi konuşur
             </strong>
-            , anında yanıtlar, rezervasyonları otomatik alır. Sen uyurken bile
+            , anında yanıt verir, rezervasyonları otomatik alır. Siz uyurken bile
             çalışır.
           </p>
 
@@ -302,8 +302,8 @@ export default function LandingPage() {
             Denemeye Hazır mısın?
           </h2>
           <p className="text-teal-100/80 text-base md:text-lg max-w-lg mx-auto">
-            Şimdilik biz test aşamasındayız. Ama resepsiyonistinin nasıl
-            konuştuğunu görmek için hemen dene.
+            14 gün ücretsiz deneyin, kart bilgisi gerekmez.
+            İstediğiniz zaman iptal edebilirsiniz.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
