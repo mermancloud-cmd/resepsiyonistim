@@ -32,7 +32,7 @@ export type WildcardPermission = "*::*";
  * }
  */
 export type PermissionMatrix = {
-  [K in PermissionResource]?: Partial<Record<PermissionAction, boolean>>;
+  [K in PermissionResource]?: Partial<Record<PermissionAction, boolean>> & { "*"?: boolean };
 } & {
   "*::*"?: boolean;
 };

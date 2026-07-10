@@ -668,23 +668,6 @@ export const HUMANIZATION_CATEGORY_LABELS: Record<HumanizationCategory, string> 
 
 export type FeedbackRating = 1 | 2 | 3 | 4 | 5;
 
-export const FEEDBACK_CATEGORIES = [
-  'general', 'greeting', 'accuracy', 'helpfulness',
-  'speed', 'understanding', 'human_like', 'other',
-] as const;
-
-export type FeedbackCategory = (typeof FEEDBACK_CATEGORIES)[number];
-
-export const FEEDBACK_CATEGORY_LABELS: Record<FeedbackCategory, string> = {
-  general: 'Genel',
-  greeting: 'Karşılama',
-  accuracy: 'Doğruluk',
-  helpfulness: 'Yardımseverlik',
-  speed: 'Hız',
-  understanding: 'Anlayış',
-  human_like: 'İnsanlık',
-  other: 'Diğer',
-};
 // ─── Müşteri Feedback Types (I3) ─────────────────────────────────────────
 
 export type FeedbackCategory =
@@ -697,13 +680,9 @@ export interface MusteriFeedback {
   conversation_id: string | null;
   rating: FeedbackRating;
   category: FeedbackCategory;
-  comment_text: string | null;
+  comment: string | null;
   metadata: Record<string, unknown>;
   facility_id: string | null;
-  conversation_id: string | null;
-  rating: number;
-  category: FeedbackCategory;
-  comment: string | null;
   submitted_at: string;
   created_at: string;
 }
