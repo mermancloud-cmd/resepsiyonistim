@@ -28,6 +28,9 @@ import {
   Globe,
   Copy,
   Check,
+  MessageCircle,
+  Send,
+  ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { mockBusinessSettings, mockAIPersona } from "@/lib/mock-data";
@@ -854,6 +857,38 @@ export default function SettingsPage() {
                 />
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        <Separator />
+
+        {/* ─── İletişim Kanalları ────────────────────────────────── */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base flex items-center gap-2">
+              <Send className="size-5 text-sky-600 dark:text-sky-400" />
+              İletişim Kanalları
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-3">
+              Telegram Bot ve Facebook Messenger entegrasyonlarını yönetin.
+            </p>
+            <Button
+              variant="outline"
+              className="w-full gap-2"
+              size="lg"
+              type="button"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.location.href = "/settings/channels";
+                }
+              }}
+            >
+              <MessageCircle className="size-4" />
+              Kanalları Yönet
+              <ChevronRight className="size-4 ml-auto" />
+            </Button>
           </CardContent>
         </Card>
 

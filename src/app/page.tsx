@@ -385,18 +385,18 @@ const features = [
     desc: "Oda tipleri, fiyatlar ve konum bilgilerini anında paylaşır, her soruyu cevaplar.",
   },
   {
-    icon: "🔄",
-    title: "Akıllı Yönlendirme",
-    desc: "Karmaşık taleplerde sizi haberdar eder, gerektiğinde konuşmayı size devreder.",
-  },
-  {
     icon: "📊",
     title: "Analitik Dashboard",
     desc: "Tüm konuşmalar, rezervasyonlar ve performans metrikleri tek ekranda seni bekler.",
   },
   {
     icon: "🔗",
-    title: "Çoklu Tesis Desteği",
-    desc: "Birden fazla tesisinizi tek panelden yönetin, her birine ayrı resepsiyonist atayın.",
+    title: "Çoklu Kanal Desteği",
+    desc: "WhatsApp, Telegram Messenger ve Facebook Messenger — tüm kanallardan gelen mesajlar tek panelde.",
+  },
+  {
+    icon: "🤖",
+    title: "Akıllı Yönlendirme",
+    desc: "Karmaşık taleplerde sizi haberdar eder, gerektiğinde konuşmayı size devreder.",
   },
 ];
