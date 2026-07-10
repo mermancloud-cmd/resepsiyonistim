@@ -59,14 +59,13 @@ async function fetchUserRBAC(): Promise<{
       return { role: null, permissions: null };
     }
 
-    const roleData = userRole.roles as {
-      name: string;
-      permissions: PermissionMatrix;
-    } | null;
+    const roles = userRole.roles as { name: string; permissions: PermissionMatrix }[] | null;
 
-    if (!roleData) {
+    if (!roles || roles.length === 0) {
       return { role: null, permissions: null };
     }
+
+    const roleData = roles[0];
 
     return {
       role: roleData.name as UserRole,
