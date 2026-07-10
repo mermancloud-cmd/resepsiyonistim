@@ -670,6 +670,9 @@ export type FeedbackRating = 1 | 2 | 3 | 4 | 5;
 
 // ─── Müşteri Feedback Types (I3) ─────────────────────────────────────────
 
+// Backward-compat alias for CI (Turbopack strict resolution)
+export type FeedbackCategory = MusteriFeedbackCategory;
+
 export type MusteriFeedbackCategory =
   | 'genel' | 'hiz' | 'rezervasyon' | 'oda_bilgisi'
   | 'fiyat' | 'iletisim' | 'insan_kalitesi' | 'diger';
