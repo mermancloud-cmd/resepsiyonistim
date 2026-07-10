@@ -1,5 +1,7 @@
 "use client";
 import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { MobileShell } from "@/components/layout/mobile-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,6 +19,8 @@ import {
   RefreshCw,
   Quote,
   Loader2,
+  MousePointerClick,
+  Banknote,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -337,6 +341,7 @@ export default function AnalyticsPage() {
   const isMounted = useIsMounted();
 
   const { data, isLoading, isFetching, refetch } = useSatisfactionAnalytics();
+  const pathname = usePathname();
 
   if (!isMounted) return null;
 
@@ -373,6 +378,48 @@ export default function AnalyticsPage() {
               />
             )}
           </Button>
+        </div>
+
+        {/* Tab navigation */}
+        <div className="-mx-4 px-4 overflow-x-auto scrollbar-none">
+          <div className="flex gap-1 border-b border-border min-w-fit">
+            <Link
+              href="/analytics"
+              className={cn(
+                "px-3 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
+                pathname === "/analytics"
+                  ? "border-teal-500 text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <BarChart3 className="size-3.5 inline mr-1.5 -mt-0.5" />
+              Genel
+            </Link>
+            <Link
+              href="/analytics/conversion"
+              className={cn(
+                "px-3 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
+                pathname === "/analytics/conversion"
+                  ? "border-teal-500 text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <MousePointerClick className="size-3.5 inline mr-1.5 -mt-0.5" />
+              Dönüşüm
+            </Link>
+            <Link
+              href="/analytics/revenue"
+              className={cn(
+                "px-3 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
+                pathname === "/analytics/revenue"
+                  ? "border-teal-500 text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <Banknote className="size-3.5 inline mr-1.5 -mt-0.5" />
+              Gelir
+            </Link>
+          </div>
         </div>
 
         {/* Top metrics — 2x2 grid */}

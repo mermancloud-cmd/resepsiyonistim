@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   ResponsiveContainer,
   Tooltip,
@@ -33,6 +35,7 @@ import {
   Users,
   Zap,
   AlertTriangle,
+  MousePointerClick,
 } from "lucide-react";
 import { usePricingOptimization, useRevenueForecast, simulateWhatIf } from "@/hooks/use-revenue-analytics";
 import type { PricingScenario, WhatIfScenario, WhatIfResult, TierPricing } from "@/lib/types/revenue";
@@ -491,6 +494,7 @@ function WhatIfTool({
 // ─── Revenue Page ────────────────────────────────────────────────────────────
 
 export default function RevenuePage() {
+  const pathname = usePathname();
   const { data, isLoading, isFetching, refetch } = usePricingOptimization();
   const [forecastScenario, setForecastScenario] = React.useState<"base" | "optimistic" | "conservative">("base");
   const forecastHook = useRevenueForecast(90, forecastScenario);
@@ -518,6 +522,48 @@ export default function RevenuePage() {
               <RefreshCw className="size-3.5 text-muted-foreground" />
             )}
           </Button>
+        </div>
+
+        {/* Tab navigation */}
+        <div className="-mx-4 px-4 overflow-x-auto scrollbar-none">
+          <div className="flex gap-1 border-b border-border min-w-fit">
+            <Link
+              href="/analytics"
+              className={cn(
+                "px-3 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
+                pathname === "/analytics"
+                  ? "border-teal-500 text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <BarChart3 className="size-3.5 inline mr-1.5 -mt-0.5" />
+              Genel
+            </Link>
+            <Link
+              href="/analytics/conversion"
+              className={cn(
+                "px-3 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
+                pathname === "/analytics/conversion"
+                  ? "border-teal-500 text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <MousePointerClick className="size-3.5 inline mr-1.5 -mt-0.5" />
+              Dönüşüm
+            </Link>
+            <Link
+              href="/analytics/revenue"
+              className={cn(
+                "px-3 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap",
+                pathname === "/analytics/revenue"
+                  ? "border-teal-500 text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              )}
+            >
+              <Banknote className="size-3.5 inline mr-1.5 -mt-0.5" />
+              Gelir
+            </Link>
+          </div>
         </div>
 
         {showSkeleton ? (
