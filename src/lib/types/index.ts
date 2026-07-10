@@ -670,7 +670,7 @@ export type FeedbackRating = 1 | 2 | 3 | 4 | 5;
 
 // ─── Müşteri Feedback Types (I3) ─────────────────────────────────────────
 
-export type FeedbackCategory =
+export type MusteriFeedbackCategory =
   | 'genel' | 'hiz' | 'rezervasyon' | 'oda_bilgisi'
   | 'fiyat' | 'iletisim' | 'insan_kalitesi' | 'diger';
 
@@ -679,7 +679,7 @@ export interface MusteriFeedback {
   tenant_id: string;
   conversation_id: string | null;
   rating: FeedbackRating;
-  category: FeedbackCategory;
+  category: MusteriFeedbackCategory;
   comment: string | null;
   metadata: Record<string, unknown>;
   facility_id: string | null;

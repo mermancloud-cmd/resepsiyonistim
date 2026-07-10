@@ -6,7 +6,7 @@ import type {
   FeedbackSummary,
   FeedbackTrendPoint,
   FeedbackWithHumanization,
-  FeedbackCategory,
+  MusteriFeedbackCategory,
 } from "@/lib/types";
 import type { FeedbackSubmitInput } from "@/app/api/feedback/route";
 
@@ -50,7 +50,7 @@ export const mockFeedbackTrend: FeedbackTrendPoint[] = Array.from({ length: 7 },
 
 // ─── Category Labels ──────────────────────────────────────────────────────────
 
-export const FEEDBACK_CATEGORIES: { value: FeedbackCategory; label: string }[] = [
+export const FEEDBACK_CATEGORIES: { value: MusteriFeedbackCategory; label: string }[] = [
   { value: "genel", label: "Genel" },
   { value: "hiz", label: "Hız" },
   { value: "rezervasyon", label: "Rezervasyon" },
@@ -128,7 +128,7 @@ export function useFeedbackTrend(days: number = 30) {
 
 // ─── Hook: All Feedback ──────────────────────────────────────────────────────
 
-export function useFeedbackList(options?: { category?: FeedbackCategory; limit?: number }) {
+export function useFeedbackList(options?: { category?: MusteriFeedbackCategory; limit?: number }) {
   const { tenant, isAuthenticated } = useAuth();
   const supabase = createClient();
 
