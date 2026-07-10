@@ -570,6 +570,47 @@ export interface ABTestSummary {
   conversion_rate: number | null;
 }
 
+export interface ABTestVariantRow {
+  id: string;
+  test_id: string;
+  name: string;
+  label: string;
+  description: string | null;
+  config: Record<string, unknown>;
+  traffic_percentage: number;
+  is_control: boolean;
+  trigger_type: 'auto' | 'manual' | null;
+  winning_variant_id: string | null;
+  created_at: string;
+}
+
+export interface ABTestOptimizationRow {
+  id: string;
+  test_id: string;
+  tenant_id: string;
+  winner_variant_id: string | null;
+  confidence_score: number | null;
+  sample_size: number;
+  status: 'pending' | 'completed' | 'failed';
+  triggered_by: 'cron' | 'manual';
+  applied_at: string | null;
+  created_at: string;
+}
+
+export interface ABTestWinnerHistoryRow {
+  id: string;
+  test_id: string;
+  test_name: string;
+  winner_variant_name: string;
+  winning_metric: string;
+  metric_improvement: number | null;
+  confidence_score: number | null;
+  sample_size: number;
+  triggered_by: 'cron' | 'manual';
+  applied_at: string;
+  created_at: string;
+}
+
 // ─── Composite / Join Types ──────────────────────────────────────────────────
 
 export interface ConversationRowWithMessages extends ConversationRow {

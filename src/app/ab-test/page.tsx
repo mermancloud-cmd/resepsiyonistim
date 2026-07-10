@@ -20,6 +20,7 @@ import {
   ThumbsUp,
   Clock,
   Users,
+  Trophy,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -33,6 +34,7 @@ import {
   mockABTestResults,
 } from "@/hooks/use-ab-tests";
 import type { ABTest, ABTestSummary, ABTestResult, ABTestTargetMetric } from "@/lib/types";
+import { ABTestWinnerHistory } from "@/components/ab-test/ab-test-winner-history";
 import { toast } from "sonner";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -540,6 +542,15 @@ function ABTestPageContent() {
             )}
           </div>
         )}
+
+        {/* Winner history section — visible always */}
+        <div className="mt-2">
+          <ABTestWinnerHistory
+            showOptimize={!!selectedTest}
+            testId={selectedTest?.id ?? undefined}
+            limit={10}
+          />
+        </div>
       </div>
     </MobileShell>
   );

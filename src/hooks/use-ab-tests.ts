@@ -324,3 +324,161 @@ export function useAssignVariant(conversationId?: string) {
     staleTime: Infinity, // Don't re-fetch — variant is sticky per conversation
   })
 }
+
+// ─── I5(v4) Optimization Pipeline Hooks ──────────────────────────────────────
+
+/**
+ * useABTestOptimization — run auto-optimization for a specific test.
+ * Calls GET /api/ab-test/auto-optimize?test_id=...
+ */
+export function useABTestOptimization() {
+  return useMutation({
+    mutationFn: async ({
+      testId,
+    }: {
+      testId: string;
+    }) => {
+      const res = await fetch(
+        `/api/ab-test/auto-optimize?test_id=${testId}`,
+        {
+          headers: {
+            authorization: `Bearer ${process.env.NEXT_PUBLIC_CRON_SECRET || ""}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: "Optimizasyon hatası" }));
+        throw new Error(err.error || "Optimizasyon başarısız");
+      }
+
+      return res.json();
+    },
+  })
+}
+
+/**
+ * useApplyABTestWinner — manually apply a winner variant to a test.
+ * Uses the auto-optimize endpoint with a specific test_id.
+ */
+export function useApplyABTestWinner() {
+  const queryClient = useQueryClient()
+  const { tenant } = useAuth()
+
+  return useMutation({
+    mutationFn: async ({
+      testId,
+      winnerVariantId,
+    }: {
+      testId: string;
+      winnerVariantId: string;
+    }) => {
+      const supabase = createClient()
+
+      // Update the variant's winning_variant_id and trigger_type
+      const { error: variantError } = await supabase
+        .from("ab_test_variants")
+        .update({
+          winning_variant_id: winnerVariantId,
+          trigger_type: "manual",
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", winnerVariantId)
+        .eq("test_id", testId)
+
+      if (variantError) throw new Error(variantError.message)
+
+      // Deactivate the test
+      const { error: testError } = await supabase
+        .from("ab_tests")
+        .update({
+          is_active: false,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", testId)
+        .eq("tenant_id", tenant!.id)
+
+      if (testError) throw new Error(testError.message)
+
+      // Record the optimization
+      const { data: optData, error: optError } = await supabase
+        .from("ab_test_optimizations")
+        .insert({
+          test_id: testId,
+          tenant_id: tenant!.id,
+          winner_variant_id: winnerVariantId,
+          sample_size: 0,
+          status: "completed",
+          triggered_by: "manual",
+          applied_at: new Date().toISOString(),
+        })
+        .select()
+        .single()
+
+      if (optError) throw new Error(optError.message)
+
+      return optData
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["ab-tests"] })
+      queryClient.invalidateQueries({ queryKey: ["ab-test-winner-history"] })
+    },
+  })
+}
+
+/**
+ * useABTestWinnerHistory — fetch past optimization history.
+ */
+export function useABTestWinnerHistory() {
+  const { tenant, isAuthenticated } = useAuth()
+  const supabase = createClient()
+
+  return useQuery({
+    queryKey: ["ab-test-winner-history", tenant?.id],
+    enabled: isAuthenticated && !!tenant,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("ab_test_winner_history")
+        .select("*")
+        .limit(50)
+
+      if (error) {
+        // Fallback: query optimizations table directly
+        const { data: fallback, error: fallbackError } = await supabase
+          .from("ab_test_optimizations")
+          .select(`
+            id,
+            test_id,
+            status,
+            confidence_score,
+            sample_size,
+            triggered_by,
+            applied_at,
+            created_at,
+            ab_tests!inner(name, target_metric)
+          `)
+          .eq("test_id.tenant_id", tenant!.id)
+          .order("created_at", { ascending: false })
+          .limit(50)
+
+        if (fallbackError) throw new Error(fallbackError.message)
+
+        return (fallback ?? []).map((r: Record<string, unknown>) => ({
+          id: r.id,
+          test_id: r.test_id,
+          test_name: (r as any).ab_tests?.name ?? "—",
+          winning_metric: (r as any).ab_tests?.target_metric ?? "—",
+          metric_improvement: null,
+          confidence_score: r.confidence_score,
+          sample_size: r.sample_size,
+          triggered_by: r.triggered_by,
+          applied_at: r.applied_at,
+          created_at: r.created_at,
+        }))
+      }
+
+      return (data ?? []) as ABTestWinnerHistoryRow[]
+    },
+    staleTime: 30 * 1000,
+  })
+}
