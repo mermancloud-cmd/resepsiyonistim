@@ -30,8 +30,6 @@ import {
   ExternalLink,
   MousePointerClick,
   RefreshCw,
-  ArrowUpRight,
-  ArrowDownRight,
   Target,
   Activity,
   Banknote,
@@ -83,7 +81,7 @@ function ConversionFunnelChart({
           Henüz dönüşüm verisi yok
         </p>
         <p className="text-xs text-muted-foreground/60 mt-1">
-          Ziyaretçiler landing page'inizi ziyaret ettikçe veriler görünecek
+          Ziyaretçiler landing page&apos;inizi ziyaret ettikçe veriler görünecek
         </p>
       </div>
     );
@@ -538,7 +536,7 @@ export default function ConversionAnalyticsPage() {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground py-4 text-center">
-              Henüz yeterli veri yok. Landing page'inize trafik almaya
+              Henüz yeterli veri yok. Landing page&apos;inize trafik almaya
               başladıkça kaynak bazlı dönüşüm verileri görünecek.
             </p>
           </CardContent>

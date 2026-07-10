@@ -1,58 +1,114 @@
 import type { NextRequest } from "next/server";
-import { authorizeRequest, unauthorizedResponse, forbiddenResponse } from "@/lib/server-rbac";
-import type { UserRole } from "@/lib/server-rbac";
+import { createAdminClient } from "@/lib/supabase/admin";
 
-export interface ApiGuardSuccess {
-  allowed: true;
-  user: { tenantId: string };
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+export type UserRole = "admin" | "staff" | "owner";
+
+export interface RBACUser {
+  id: string;
+  email?: string;
+  role: UserRole | null;
+  tenant_id: string | null;
 }
 
-export interface ApiGuardFailure {
-  allowed: false;
-  response: Response;
+export interface ApiGuardResult {
+  allowed: boolean;
+  response?: Response;
+  user: { tenantId: string; id: string; role: string | null };
 }
-
-export type ApiGuardResult = ApiGuardSuccess | ApiGuardFailure;
 
 /**
- * RBAC guard for Next.js API routes.
- * Uses Supabase session cookie for auth + user_roles for authorization.
- *
- * Returns { allowed, response, user } shape for convenient route-level usage.
+ * API Guard — Authenticate & authorize a request for a set of roles.
+ * Returns { allowed, response, user } for consistent handling in API routes.
  */
 export async function apiGuard(
   request: NextRequest,
-  roles?: UserRole[],
+  allowedRoles?: UserRole[]
 ): Promise<ApiGuardResult> {
-  const auth = await authorizeRequest(request);
+  try {
+    const token =
+      request.cookies.get("sb-access-token")?.value ||
+      request.headers.get("authorization")?.replace("Bearer ", "") ||
+      "";
 
-  if (!auth.authorized) {
-    if (auth.status === 401) {
-      return { allowed: false, response: unauthorizedResponse(auth.error) };
-    }
-    return { allowed: false, response: forbiddenResponse(auth.error) };
-  }
-
-  // Role check — if roles specified, validate user's role is in the list
-  if (roles && roles.length > 0 && auth.user.role) {
-    if (!roles.includes(auth.user.role)) {
+    if (!token) {
       return {
         allowed: false,
-        response: forbiddenResponse("Bu işlem için yeterli yetkiniz yok"),
+        response: new Response(
+          JSON.stringify({ error: "Kimlik doğrulama gerekli" }),
+          { status: 401, headers: { "Content-Type": "application/json" } }
+        ),
+        user: { tenantId: "", id: "", role: null },
       };
     }
-  }
 
-  // If user has no role at all, deny
-  if (!auth.user.role) {
+    const admin = createAdminClient();
+    const {
+      data: { user },
+      error,
+    } = await admin.auth.getUser(token);
+    if (error || !user) {
+      return {
+        allowed: false,
+        response: new Response(
+          JSON.stringify({ error: "Geçersiz veya süresi dolmuş oturum" }),
+          { status: 401, headers: { "Content-Type": "application/json" } }
+        ),
+        user: { tenantId: "", id: "", role: null },
+      };
+    }
+
+    // Get role from user_roles table
+    const { data: userRole } = await admin
+      .from("user_roles")
+      .select("role_id, tenant_id, roles(name)")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    let roleName: string | null = null;
+    if (userRole?.roles) {
+      const roles: unknown = userRole.roles;
+      if (Array.isArray(roles) && roles.length > 0) {
+        const first = roles[0] as { name?: string } | undefined;
+        roleName = first?.name ?? null;
+      } else if (typeof roles === "object" && roles !== null && !Array.isArray(roles)) {
+        const obj = roles as Record<string, unknown>;
+        roleName = typeof obj.name === "string" ? obj.name : null;
+      }
+    }
+    const tenantId = userRole?.tenant_id ?? "";
+
+    if (allowedRoles && allowedRoles.length > 0) {
+      if (!roleName || !allowedRoles.includes(roleName as UserRole)) {
+        return {
+          allowed: false,
+          response: new Response(
+            JSON.stringify({ error: "Bu işlem için yetkiniz yok" }),
+            { status: 403, headers: { "Content-Type": "application/json" } }
+          ),
+          user: { tenantId: tenantId || "", id: user.id, role: roleName },
+        };
+      }
+    }
+
+    return {
+      allowed: true,
+      user: {
+        tenantId: tenantId || "",
+        id: user.id,
+        role: roleName,
+      },
+    };
+  } catch (err) {
+    console.error("apiGuard error:", err);
     return {
       allowed: false,
-      response: forbiddenResponse("Bu işlem için yetkiniz yok"),
+      response: new Response(
+        JSON.stringify({ error: "Sunucu hatası" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      ),
+      user: { tenantId: "", id: "", role: null },
     };
   }
-
-  return {
-    allowed: true,
-    user: { tenantId: auth.user.tenant_id ?? "" },
-  };
 }
