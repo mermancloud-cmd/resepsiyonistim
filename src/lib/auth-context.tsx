@@ -223,10 +223,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signUp = useCallback(
     async (email: string, password: string, metadata?: Record<string, unknown>) => {
       setError(null);
+      const redirectTo = `${window.location.origin}/login?reason=signed_up`;
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: metadata ? { data: metadata } : undefined,
+        options: {
+          data: metadata,
+          emailRedirectTo: redirectTo,
+        },
       });
       if (error) setError(error.message);
       return { data, error };

@@ -184,7 +184,10 @@ export function useOnboarding(): UseOnboardingReturn {
           });
 
           if (legacyError) {
-            // Both RPCs unavailable — silent fallback
+            // Both RPCs failed — inform user and save locally
+            console.error("Onboarding save failed:", rpcError, legacyError);
+            setError(`Adım ${stepNumber} kaydedilemedi: ${rpcError.message}. Lütfen tekrar deneyin.`);
+            return false;
           }
         }
 

@@ -364,25 +364,24 @@ function OnboardingWizard() {
 
         {/* Validation errors */}
         {validationErrors.length > 0 && (
-          <Card size="sm" className="bg-amber-50 dark:bg-amber-950/20 ring-amber-200 dark:ring-amber-800">
-            <CardContent>
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="size-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  <p className="text-xs font-medium text-amber-800 dark:text-amber-300">
-                    Lütfen aşağıdaki hataları düzeltin:
-                  </p>
-                  <ul className="list-disc list-inside space-y-0.5">
-                    {validationErrors.map((err, i) => (
-                      <li key={i} className="text-[11px] text-amber-700 dark:text-amber-400">
-                        {err}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3">
+            <div className="flex items-start gap-2.5">
+              <AlertTriangle className="size-5 text-red-500 shrink-0 mt-0.5" />
+              <div className="space-y-1.5">
+                <p className="text-sm font-semibold text-red-800">
+                  Lütfen aşağıdaki bilgileri kontrol edin:
+                </p>
+                <ul className="space-y-1">
+                  {validationErrors.map((err, i) => (
+                    <li key={i} className="text-sm text-red-600 flex items-start gap-1.5">
+                      <span className="text-red-400 mt-0.5">•</span>
+                      <span>{err}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         )}
 
         {/* Save success toast */}

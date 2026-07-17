@@ -34,14 +34,17 @@ export const locationSchema = z.object({
 // Step 3: Birim Tipleri (Room Types / Units)
 export const unitSchema = z.object({
   id: z.string(),
-  name: z.string().min(2, "Birim adı en az 2 karakter olmalıdır"),
+  name: z.string().min(2, "Birim adı en az 2 karakter olmalıdır. Lütfen birim adını yazın."),
   description: z.string(),
-  capacity: z.number().min(1, "Kapasite en az 1 olmalıdır").max(20),
-  count: z.number().min(1, "Adet en az 1 olmalıdır").max(50),
-  basePrice: z.number().min(1, "Gece ücreti girilmelidir"),
-  weekendPrice: z.number().min(0),
+  capacity: z.number().min(1, "Kapasite en az 1 kişi olmalıdır").max(20, "Kapasite en fazla 20 olabilir"),
+  count: z.number().min(1, "Birim adedi en az 1 olmalıdır").max(50, "Birim adedi en fazla 50 olabilir"),
+  basePrice: z.number().min(0, "Gece ücreti negatif olamaz"),
+  weekendPrice: z.number().min(0, "Hafta sonu ücreti negatif olamaz"),
   amenities: z.array(z.string()),
-});
+}).refine(
+  (data) => data.basePrice > 0,
+  { message: "Gece ücreti girilmelidir. Lütfen birim için günlük fiyat yazın." }
+);
 
 export const unitsSchema = z.array(unitSchema).min(1, "En az bir birim tipi ekleyin");
 
