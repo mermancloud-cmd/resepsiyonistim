@@ -152,7 +152,7 @@ export default function SignupPage() {
       </div>
 
       {/* Right: Form */}
-      <div className="flex w-1/2 items-center justify-center bg-[#faf9f6] px-6 py-12 lg:w-1/2">
+      <div className="flex w-full items-center justify-center bg-[#faf9f6] px-6 py-12 lg:w-1/2">
         <div className="w-full max-w-sm">
           <div className="mb-8 text-center lg:hidden">
             <Link href="/" className="inline-flex items-center gap-2">
