@@ -48,10 +48,11 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // Redirect unauthenticated users on protected routes
-  const publicPaths = ["/login", "/auth", "/_next", "/favicon", "/manifest", "/api/health"];
-  const isPublicPath = publicPaths.some((p) =>
-    request.nextUrl.pathname.startsWith(p)
-  );
+  const publicPrefixPaths = ["/login", "/auth", "/_next", "/favicon", "/manifest", "/api/health", "/signup", "/blog", "/referral"];
+  const exactPublicPaths = ["/"]; // landing page — exact match only
+  const isPublicPath =
+    publicPrefixPaths.some((p) => request.nextUrl.pathname.startsWith(p)) ||
+    exactPublicPaths.includes(request.nextUrl.pathname);
 
   if (!user && !isPublicPath) {
     const url = request.nextUrl.clone();
