@@ -154,6 +154,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setTenant(null);
       }
 
+      // Handle email verification — user clicked confirmation link
+      if (event === "USER_UPDATED" && newSession?.user?.email_confirmed_at) {
+        router.push("/login?reason=verified");
+      }
+
       // Navigate on sign-in/sign-out
       if (event === "SIGNED_IN" && newSession) {
         router.push("/dashboard");

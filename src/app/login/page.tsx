@@ -47,6 +47,8 @@ export default function LoginPage() {
       toast.info("Oturumunuz sona erdi. Lütfen tekrar giriş yapın.");
     } else if (reason === "signed_up") {
       toast.success("Hesabınız oluşturuldu! E-postanızı doğrulayıp giriş yapın.");
+    } else if (reason === "verified") {
+      toast.success("E-posta adresiniz doğrulandı! Şimdi giriş yapabilirsiniz.");
     }
   });
 
