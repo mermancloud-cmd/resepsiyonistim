@@ -1,19 +1,22 @@
-# Merman Bungalov AI Resepsiyonist — Güncel Proje Durumu
+# Resepsiyonistim — Güncel Proje Durumu
 
 **Güncelleme:** 25 Haziran 2026
-**Proje:** Elif AI — WhatsApp üzerinden küçük konaklama işletmeleri için yapay zeka resepsiyonist
+**Proje:** Dijital Resepsiyonist — WhatsApp üzerinden konaklama işletmeleri için insan gibi konuşan dijital resepsiyonist
 
 ---
 
 ## 1. Proje Özeti
 
-Küçük konaklama işletmeleri (bungalov, tiny house, villa) için geliştirilmiş AI resepsiyonist sistemi. WhatsApp üzerinden misafir sorularını yanıtlar, rezervasyon sürecini yönetir, dil tespiti yapar (tr/en/ar), ve karmaşık durumlarda insan operatöre devreder.
+Küçük ve orta ölçekli konaklama işletmeleri (bungalov, tiny house, villa, butik otel, pansiyon, apart, glamping ve kamp alanları) için geliştirilmiş AI resepsiyonist sistemi. WhatsApp üzerinden misafir sorularını yanıtlar, rezervasyon sürecini yönetir, dil tespiti yapar (tr/en/ar), ve karmaşık durumlarda insan operatöre devreder.
 
 ### Hedef Kitle
 - Bungalov işletmecileri
 - Tiny house tesisleri
 - Villa/konaklama sahipleri
-- **Kocaman otel/resortlar için DEĞİL**
+- Butik oteller ve pansiyonlar
+- Apart ve glamping tesisleri
+- Kamp alanları
+- **Büyük otel/resortlar için DEĞİL** (kurumsal çözümler için farklı plan)
 
 ---
 
@@ -55,7 +58,7 @@ Owner Panel (bungalow-panel):
 | UI Kütüphanesi | shadcn/ui |
 | State | Zustand + TanStack Query |
 | Auth | NextAuth v4 + Supabase Auth |
-| Ödeme | Iyzico (entegrasyon aşamasında) |
+| Ödeme | IBAN (şu anlık) → Iyzico (planlanan) |
 | Bildirimler | Telegram Bot + Web Push |
 | Deploy | Docker, Coolify, Cloudflare Pages |
 | Charts | Recharts |
@@ -85,7 +88,7 @@ Owner Panel (bungalow-panel):
 | WF08 | Veritabanı Bakımı | ✅ Aktif | ✅ Düzeltildi |
 | WF10 | Fiyat Hesaplama | ✅ Aktif | ✅ Düzeltildi |
 | WF14 | Çoklu Dil Desteği | ✅ Aktif | ✅ Düzeltildi |
-| WF16 | Iyzico Ödeme | ✅ Aktif | ⚠️ Stripe bloke |
+| WF16 | Iyzico Ödeme | ✅ Aktif | ⚠️ IBAN çalışıyor, Iyzico planlanan |
 | WF20 | Owner Panel | ✅ Aktif | ⚠️ UX hataları |
 
 ---
@@ -176,7 +179,7 @@ use-analytics-dashboard, use-auth-logout, use-conversations, use-dashboard-stats
 | P0 | WF01/WF02 HMAC geçersiz imza | E2E testler fail | HMAC anahtar eşleşmesini kontrol et |
 | P0 | WF02 Load Conv State credential hatası | State yüklenemiyor | Credential yapılandırmasını düzelt |
 | P0 | WF02 60s timeout (7/7 fail) | Yanıt üretilemiyor | Timeout'u arttır |
-| P1 | Iyzico/Stripe canlı fatura bloke | Gerçek ödeme alınamıyor | Kimlik bilgilerini yapılandır |
+| P1 | IBAN/ödeme — Iyzico canlıya geçiş planlanıyor | Gerçek ödeme alınamıyor (şu an IBAN) | Iyzico kimlik bilgilerini yapılandır |
 | P1 | Owner Panel UX — expired trial | Kullanıcı deneyimi | expired trial → expired, onboarding_state ekle |
 
 ---

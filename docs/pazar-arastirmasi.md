@@ -1,8 +1,8 @@
 # Resepsiyonistim — Pazar Araştırması ve Fiyatlandırma Önerisi
 
 **Hazırlanma Tarihi:** 8 Temmuz 2026  
-**Hedef Pazar:** Türkiye'deki bungalov, tiny house, glamping, butik otel, villa işletmeleri  
-**Ürün:** WhatsApp üzerinden AI rezervasyon & iletişim asistanı (SaaS)
+**Hedef Pazar:** Türkiye'deki konaklama işletmeleri (bungalov, tiny house, glamping, butik otel, villa, pansiyon, apart, kamp alanı ve benzeri)  
+**Ürün:** WhatsApp üzerinden dijital resepsiyonist — rezervasyon & iletişim asistanı (SaaS)
 
 ---
 

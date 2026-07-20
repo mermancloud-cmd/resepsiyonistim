@@ -11,11 +11,11 @@
 |---|---|
 | **Marka Adı** | Resepsiyonistim |
 | **Domain** | resepsiyonistim.com |
-| **Slogan** | İşletmenize AI Resepsiyonist Katılıyor |
-| **Karakter** | Elif — yapay zeka destekli resepsiyonist |
+| **Slogan** | İşletmenize Dijital Resepsiyonist Katılıyor |
+| **Karakter** | İşletme sahibi tarafından belirlenir (personaName) — kişiselleştirilebilir |
 | **Kategori** | SaaS / Turizm Teknolojisi |
-| **Hedef Kitle** | Bungalov, tiny house, villa, butik otel, glamping ve kamp alanı işletmecileri |
-| **Fiyatlandırma** | Başlangıç ₺499/ay · Profesyonel ₺999/ay · 14 gün ücretsiz deneme |
+| **Hedef Kitle** | Bungalov, tiny house, villa, butik otel, pansiyon, apart, glamping ve kamp alanı işletmecileri |
+| **Fiyatlandırma** | Başlangıç ₺999/ay · Profesyonel ₺1.999/ay · 14 gün ücretsiz deneme |
 | **Platform** | WhatsApp tabanlı AI resepsiyonist (web panel üzerinden yönetim) |
 
 ---

@@ -4,7 +4,7 @@
 Türkiye'deki her konaklama işletmesinin, misafirlerine 7/24 hizmet veren kendi dijital resepsiyonistine sahip olduğu bir dünya.
 
 ## Misyon
-Bungalov, tiny house, villa ve butik otel işletmecilerinin misafir iletişimini ve rezervasyon sürecini, insan gibi konuşan bir dijital resepsiyonist ile otomatikleştiriyoruz.
+Konaklama işletmelerinin misafir iletişimini ve rezervasyon sürecini, insan gibi konuşan bir dijital resepsiyonist ile otomatikleştiriyoruz.
 
 ## Değer Önerisi
 **"Tesisinize 7/24 çalışan bir resepsiyonist katılıyor — insan gibi konuşur, sen uyurken bile çalışır."**
@@ -18,7 +18,7 @@ Bungalov, tiny house, villa ve butik otel işletmecilerinin misafir iletişimini
 | tesisinizin dijital resepsiyonisti | AI asistan / sanal asistan |
 
 ## Farklılaşma
-- Sadece konaklama sektörü (bungalov, tiny house, villa odaklı)
+- Tüm konaklama sektörü (bungalov, tiny house, villa, butik otel, pansiyon, apart, glamping, kamp alanı)
 - WhatsApp-native, 10 dk kurulum
 - Fiyat: personel maaşının %7-10'u
 - Karakter adı kullanıcıya bırakılmış

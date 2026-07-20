@@ -2,7 +2,7 @@
 
 **İşletmenize 7/24 çalışan, insan gibi konuşan bir dijital resepsiyonist.**
 
-Bungalov, tiny house ve villa işletmeleri için WhatsApp tabanlı dijital resepsiyonist. Misafirlerle insan gibi konuşur, anında yanıtlar, rezervasyonları otomatik alır.
+Konaklama işletmeleri için WhatsApp tabanlı dijital resepsiyonist. Misafirlerle insan gibi konuşur, anında yanıtlar, rezervasyonları otomatik alır. AI asistanınızın adını siz belirlersiniz — işletmenize özel bir kimlik kazanır.
 
 ## 🏗️ Stack
 
@@ -11,7 +11,7 @@ Bungalov, tiny house ve villa işletmeleri için WhatsApp tabanlı dijital resep
 - **Auth:** Supabase SSR
 - **Database:** Supabase (PostgreSQL)
 - **Messaging:** Evolution API (WhatsApp)
-- **Payments:** Iyzico (sandbox)
+- **Payments:** IBAN (şu anlık) → Iyzico (planlanan)
 - **Orchestration:** n8n (WF02 — State+AI)
 - **Deploy:** Static export → nginx → Coolify
 
