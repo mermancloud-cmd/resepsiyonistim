@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>E-posta Doğrulama — Resepsiyonistim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+:root{--bg:#fff;--surface:#fff;--ink:#1c1c1e;--ink-muted:#8e8e93;--ink-light:#aeaeb2;--border:#e5e5ea;--teal:#0f766e;--green:#16a34a;--error:#ff3b30;--amber:#d97706}
+.dark{--bg:#1c1c1e;--surface:#2c2c2e;--ink:#f5f5f7;--ink-muted:#8e8e93;--ink-light:#636366;--border:#3a3a3c;--teal:#14b8a6;--green:#22c55e;--error:#ff453a;--amber:#f59e0b}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;line-height:1.5;-webkit-font-smoothing:antialiased}
+.container{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px}
+.card{background:var(--surface);border-radius:20px;box-shadow:0 2px 20px rgba(0,0,0,0.06),0 0 0 1px rgba(0,0,0,0.03);padding:40px 28px 36px;max-width:400px;width:100%;text-align:center}
+.dark .card{box-shadow:0 2px 20px rgba(0,0,0,0.3),0 0 0 1px rgba(255,255,255,0.05)}
+.logo{width:56px;height:56px;border-radius:14px;object-fit:cover;margin-bottom:16px}
+.icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-family:'Outfit',sans-serif;font-size:22px;font-weight:600}
+.icon.loading{background:var(--border);color:var(--ink-muted);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.6}50%{opacity:1}}
+.icon.success{background:#dcfce7;color:var(--green)}
+.icon.error{background:#fee2e2;color:var(--error)}
+.icon.info{background:#fef3c7;color:var(--amber)}
+.title{font-family:'Outfit',sans-serif;font-size:19px;font-weight:700;color:var(--ink);margin-bottom:6px;letter-spacing:-0.3px}
+.desc{font-size:13px;color:var(--ink-muted);line-height:1.55;margin-bottom:20px;max-width:300px;margin-left:auto;margin-right:auto}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:13px 28px;border-radius:10px;border:none;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all 0.2s}
+.btn-primary{background:var(--ink);color:var(--bg)}
+.btn-primary:hover{opacity:0.88}
+.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--border)}
+.btn-outline:hover{background:var(--input-bg,#f9f9fb)}
+.dark .btn-outline:hover{background:var(--input-bg,#3a3a3c)}
+.btn-group{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.state{display:none;flex-direction:column;align-items:center;animation:fadeIn 0.3s ease}
+.state.active{display:flex}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-footer{text-align:center;padding:20px;font-size:11px;color:var(--ink-light);letter-spacing:0.3px}
+.page-footer a{color:var(--ink-light);text-decoration:none}
+.page-footer a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="card">
+  <img class="logo" src="logo-1.jpeg" alt="Resepsiyonistim" />
+
+  <!-- State: Loading -->
+  <div class="state active" id="state-loading">
+    <div class="icon loading">✓</div>
+    <div class="title">Doğrulanıyor</div>
+    <div class="desc">E-posta adresiniz doğrulanıyor. Lütfen bekleyin.</div>
+  </div>
+
+  <!-- State: Success -->
+  <div class="state" id="state-success">
+    <div class="icon success">✓</div>
+    <div class="title">E-posta Doğrulandı</div>
+    <div class="desc">E-posta adresiniz başarıyla doğrulandı. Hesabınız hazır. Yönlendiriliyorsunuz.</div>
+  </div>
+
+  <!-- State: Already verified -->
+  <div class="state" id="state-already">
+    <div class="icon success">✓</div>
+    <div class="title">Zaten Doğrulanmış</div>
+    <div class="desc">Bu e-posta adresi daha önce doğrulanmış. Giriş yaparak devam edebilirsiniz.</div>
+    <a class="btn btn-primary" href="/login.html">Giriş Yap</a>
+  </div>
+
+  <!-- State: Error -->
+  <div class="state" id="state-error">
+    <div class="icon error">✕</div>
+    <div class="title">Doğrulama Başarısız</div>
+    <div class="desc" id="error-msg">Doğrulama bağlantısı geçersiz veya süresi dolmuş olabilir.</div>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="/login.html">Giriş Yap</a>
+      <a class="btn btn-outline" href="/iletisim.html">Destek Al</a>
+    </div>
+  </div>
+
+  <!-- State: No token -->
+  <div class="state" id="state-notoken">
+    <div class="icon info">!</div>
+    <div class="title">Doğrulama Bağlantısı Gerekli</div>
+    <div class="desc">Bu sayfaya bir doğrulama bağlantısı olmadan ulaştınız. Kayıt sırasında e-posta adresinize gönderilen bağlantıyı kullanın.</div>
+    <div class="btn-group">
+      <a class="btn btn-primary" href="/login.html">Giriş Yap</a>
+      <a class="btn btn-outline" href="/">Ana Sayfa</a>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="page-footer">© 2026 Resepsiyonistim — <a href="/privacy.html">Gizlilik</a> · <a href="/terms.html">Koşullar</a></div>
+
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const SUPABASE_URL = 'https://xzmakpsongrcbnrpdvsy.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6bWFrcHNvbmdyY2JucnBkdnN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0MTU5MjgsImV4cCI6MjA5NTk5MTkyOH0.kIeLLVfO68wShvgPjEvHxtYG61U6a7_jM_1bDxisyYo';
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function showState(id) {
+  document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('state-' + id);
+  if (el) el.classList.add('active');
+}
+
+async function handleVerification() {
+  const params = new URLSearchParams(window.location.search);
+  const hash = window.location.hash; // PKCE flow sometimes uses hash fragment
+
+  // Check for Supabase tokens in URL hash (automatic PKCE flow)
+  if (hash && hash.includes('access_token')) {
+    // Supabase JS SDK automatically processes hash tokens via getSession()
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (session) {
+      showState('success');
+      setTimeout(() => { window.location.href = '/onboarding.html'; }, 1500);
+      return;
+    }
+  }
+
+  // Check for token_hash parameter (PKCE code verifier flow)
+  const tokenHash = params.get('token_hash');
+  const type = params.get('type'); // 'signup', 'recovery', 'invite', 'email_change'
+
+  if (tokenHash && type) {
+    try {
+      const { data, error } = await supabase.auth.verifyOtp({
+        token_hash: tokenHash,
+        type: type,
+      });
+
+      if (error) {
+        // If already verified, show already state
+        if (error.message?.includes('already') || error.message?.includes('Email already confirmed')) {
+          showState('already');
+          return;
+        }
+        document.getElementById('error-msg').textContent =
+          type === 'signup'
+            ? 'Doğrulama bağlantısı geçersiz veya süresi dolmuş. Lütfen tekrar kayıt olun.'
+            : 'İşlem başarısız oldu. Bağlantı geçersiz olabilir.';
+        showState('error');
+        return;
+      }
+
+      showState('success');
+      setTimeout(() => { window.location.href = '/onboarding.html'; }, 1500);
+      return;
+    } catch (e) {
+      document.getElementById('error-msg').textContent = 'Bir hata oluştu. Lütfen daha sonra tekrar deneyin.';
+      showState('error');
+      return;
+    }
+  }
+
+  // No token found at all — check if already logged in
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    showState('success');
+    setTimeout(() => { window.location.href = '/onboarding.html'; }, 1500);
+    return;
+  }
+
+  showState('notoken');
+}
+
+handleVerification();
+</script>
+</body>
+</html>
