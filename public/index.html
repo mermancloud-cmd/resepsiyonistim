@@ -3,139 +3,138 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Resepsiyonistim — 7/24 Çalışan Dijital Resepsiyonist'iniz</title>
-<meta name="description" content="İşletmenize 7/24 çalışan, insan gibi konuşan bir Dijital Resepsiyonist katılıyor. WhatsApp üzerinden rezervasyon alır, misafirleri karşılar." />
+<title>Resepsiyonistim — 7/24 Çalışan 'Dijital Resepsiyonist'iniz</title>
+<meta name="description" content="İşletmenize 7/24 çalışan, insan gibi konuşan bir 'Dijital Resepsiyonist' katılıyor. WhatsApp üzerinden rezervasyon alır, misafirleri karşılar." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+:root{--bg:#fff;--surface:#fff;--ink:#171717;--muted:#737373;--light:#a3a3a3;--border:#e5e5e5;--fill:#f5f5f5;--teal:#0f766e;--green:#16a34a}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;scroll-behavior:smooth}
-body{font-family:'Sora',sans-serif;background:#fff;color:#1c1c1e;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
 img{max-width:100%}.container{max-width:1120px;margin:0 auto;padding:0 24px}
+a{color:inherit}
 
-.header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid #eee}
+.header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;max-width:1168px;margin:0 auto}
 .header-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
 .header-logo-img{width:28px;height:28px;border-radius:7px;object-fit:cover}
-.header-logo-text{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;color:#1c1c1e}
-.header-nav{display:flex;gap:6px}
-.header-nav a{padding:8px 14px;border-radius:8px;font-weight:500;font-size:13px;text-decoration:none;transition:all 0.2s;color:#6b7280}
-.header-nav a:hover{color:#1c1c1e;background:#f5f5f5}
-.header-nav .cta{padding:8px 16px;background:#1c1c1e;color:#fff;font-weight:600}
-.header-nav .cta:hover{opacity:0.88}
+.header-logo-text{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;color:var(--ink)}
+.header-nav{display:flex;gap:4px}
+.header-nav a{padding:8px 14px;border-radius:8px;font-weight:500;font-size:13px;text-decoration:none;transition:all 0.2s;color:var(--muted)}
+.header-nav a:hover{color:var(--ink);background:var(--fill)}
+.header-nav .cta{padding:8px 16px;background:var(--ink);color:#fff;font-weight:600}
+.header-nav .cta:hover{opacity:0.9;background:var(--ink)}
 
-.anim{opacity:0;transform:translateY(16px);transition:all 0.5s ease}
+/* Animations */
+.anim{opacity:0;transform:translateY(16px);transition:all 0.55s cubic-bezier(0.16,1,0.3,1)}
 .anim.show{opacity:1;transform:translateY(0)}
-.anim-d1{transition-delay:0s}
-.anim-d2{transition-delay:0.1s}
-.anim-d3{transition-delay:0.2s}
-.anim-d4{transition-delay:0.3s}
-.anim-d5{transition-delay:0.4s}
-.anim-d6{transition-delay:0.5s}
+.anim-d1{transition-delay:0s}.anim-d2{transition-delay:0.08s}.anim-d3{transition-delay:0.16s}
+.anim-d4{transition-delay:0.24s}.anim-d5{transition-delay:0.32s}.anim-d6{transition-delay:0.4s}
 
-.hero{text-align:center;padding:56px 24px 44px}
-.hero-badge{display:inline-block;padding:4px 12px;border-radius:20px;background:#f0fdf4;color:#16a34a;font-size:11px;font-weight:600;margin-bottom:14px;letter-spacing:0.3px}
-.hero-title{font-family:'Outfit',sans-serif;font-size:clamp(26px,5vw,42px);font-weight:700;line-height:1.2;letter-spacing:-0.5px;color:#1c1c1e;margin-bottom:10px;max-width:680px;margin-left:auto;margin-right:auto}
-.hero-title em{font-style:normal}
-.hero-desc{font-size:15px;color:#6b7280;max-width:500px;margin:0 auto 18px;line-height:1.6}
+.hero{text-align:center;padding:60px 24px 48px}
+.hero-badge{display:inline-block;padding:5px 14px;border-radius:20px;background:#f0fdf4;color:var(--green);font-size:11px;font-weight:600;margin-bottom:16px;letter-spacing:0.3px}
+.hero-title{font-family:'Outfit',sans-serif;font-size:clamp(26px,5vw,44px);font-weight:700;line-height:1.15;letter-spacing:-0.5px;color:var(--ink);margin-bottom:12px;max-width:680px;margin-left:auto;margin-right:auto}
+.hero-desc{font-size:16px;color:var(--muted);max-width:500px;margin:0 auto 22px;line-height:1.65}
 .hero-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:10px;border:none;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;transition:all 0.2s}
-.btn-primary{background:#1c1c1e;color:#fff}
-.btn-primary:hover{opacity:0.88;transform:translateY(-1px)}
-.btn-outline{background:#fff;color:#1c1c1e;border:1.5px solid #ddd}
-.btn-outline:hover{background:#f5f5f5}
-.btn-free{font-size:12px;color:#999;margin-top:8px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:10px;border:none;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;transition:all 0.2s}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{opacity:0.88;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.btn-outline{background:var(--bg);color:var(--ink);border:1.5px solid var(--border)}
+.btn-outline:hover{background:var(--fill);border-color:var(--light)}
+.btn-free{font-size:12px;color:var(--light);margin-top:8px}
 
-section{padding:48px 24px}
-.section-title{font-family:'Outfit',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;text-align:center;color:#1c1c1e;margin-bottom:6px}
-.section-desc{font-size:14px;color:#6b7280;text-align:center;max-width:480px;margin:0 auto 28px}
+section{padding:52px 24px}
+.section-title{font-family:'Outfit',sans-serif;font-size:clamp(21px,3vw,30px);font-weight:700;text-align:center;color:var(--ink);margin-bottom:6px;letter-spacing:-0.3px}
+.section-desc{font-size:14px;color:var(--muted);text-align:center;max-width:480px;margin:0 auto 28px;line-height:1.6}
 
-.proof-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:560px;margin:28px auto 0}
-.proof-item{text-align:center;padding:12px;border-radius:10px;background:#f9f9fb}
-.proof-val{font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;color:#1c1c1e;line-height:1.2}
-.proof-label{font-size:11px;color:#999;margin-top:2px}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:520px;margin:28px auto 0}
+.proof-item{text-align:center;padding:16px;border-radius:12px;background:var(--fill)}
+.proof-val{font-family:'Outfit',sans-serif;font-size:24px;font-weight:700;color:var(--ink);line-height:1.1}
+.proof-label{font-size:11px;color:var(--light);margin-top:3px;line-height:1.3}
 
 .how-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:720px;margin:0 auto}
-.how-card{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid #eee;transition:border-color 0.2s}
-.how-card:hover{border-color:#ddd}
-.how-num{width:28px;height:28px;border-radius:8px;background:#1c1c1e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
-.how-body h3{font-size:14px;font-weight:600;color:#1c1c1e;margin-bottom:2px}
-.how-body p{font-size:13px;color:#6b7280;line-height:1.5;margin:0}
+.how-card{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid var(--border);transition:border-color 0.2s,box-shadow 0.2s}
+.how-card:hover{border-color:#ccc;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.how-num{width:28px;height:28px;border-radius:8px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.how-body h3{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.how-body p{font-size:13px;color:var(--muted);line-height:1.55;margin:0}
 
-.test{text-align:center;background:#f9f9fb;border-radius:16px;padding:28px 24px;max-width:600px;margin:0 auto}
-.test h2{font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;color:#1c1c1e;margin-bottom:4px}
-.test p{font-size:13px;color:#6b7280;margin-bottom:14px}
-.test-wa{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:30px;border:none;background:#25D366;color:#fff;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none;transition:all 0.2s;box-shadow:0 2px 8px rgba(37,211,102,0.3)}
-.test-wa:hover{background:#20bd5a;transform:translateY(-1px)}
+.test{text-align:center;background:var(--fill);border-radius:16px;padding:32px 28px;max-width:600px;margin:0 auto}
+.test h2{font-size:19px;font-weight:700;font-family:'Outfit',sans-serif;color:var(--ink);margin-bottom:5px}
+.test p{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.55}
+.test-wa{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:30px;border:none;background:#25D366;color:#fff;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none;transition:all 0.2s;box-shadow:0 2px 10px rgba(37,211,102,0.25)}
+.test-wa:hover{background:#20bd5a;transform:translateY(-1px);box-shadow:0 4px 16px rgba(37,211,102,0.35)}
 
-.feat-grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:720px;margin:0 auto}
-.feat-card{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid #eee;transition:all 0.3s}
-.feat-card:hover{border-color:#ddd;transform:translateY(-1px)}
-.feat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:transform 0.3s;background:#f3f4f6}
-.feat-card:hover .feat-icon{transform:scale(1.06)}
-.feat-body h3{font-size:13px;font-weight:600;color:#1c1c1e;margin-bottom:2px}
-.feat-body p{font-size:12px;color:#6b7280;line-height:1.5;margin:0}
+.feat-grid{display:grid;grid-template-columns:1fr;gap:10px;max-width:720px;margin:0 auto}
+.feat-card{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid var(--border);transition:all 0.3s}
+.feat-card:hover{border-color:#ccc;box-shadow:0 2px 8px rgba(0,0,0,0.04);transform:translateY(-1px)}
+.feat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:transform 0.3s;background:var(--fill)}
+.feat-card:hover .feat-icon{transform:scale(1.08)}
+.feat-body h3{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.3}
+.feat-body p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}
 
 .pricing-wrap{max-width:420px;margin:0 auto}
-.pricing-toggle{display:flex;background:#f3f4f6;border-radius:8px;padding:3px;margin-bottom:16px}
-.pricing-toggle button{flex:1;padding:9px;border:none;border-radius:6px;background:none;cursor:pointer;font-weight:600;font-size:13px;color:#6b7280;transition:all 0.2s}
-.pricing-toggle button.active{background:#fff;color:#1c1c1e;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.pricing-toggle .pbadge{display:inline-block;background:#1c1c1e;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:5px;margin-left:4px}
-.pricing-card{border-radius:16px;border:2px solid #eee;overflow:hidden;position:relative}
-.pricing-pop{position:absolute;top:14px;right:14px;background:#dcfce7;color:#16a34a;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:600}
-.pricing-body{padding:24px 24px 20px}
-.pricing-name{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:#1c1c1e;margin-bottom:2px}
-.pricing-desc{font-size:12px;color:#6b7280;margin-bottom:12px}
-.pricing-price{font-family:'Outfit',sans-serif;font-size:34px;font-weight:800;color:#1c1c1e;letter-spacing:-0.5px}
-.pricing-period{font-size:13px;color:#6b7280}
-.pricing-foot{font-size:11px;color:#999;margin-top:2px;margin-bottom:12px}
+.pricing-toggle{display:flex;background:var(--fill);border-radius:8px;padding:3px;margin-bottom:16px}
+.pricing-toggle button{flex:1;padding:9px;border:none;border-radius:6px;background:none;cursor:pointer;font-weight:600;font-size:13px;color:var(--muted);transition:all 0.2s}
+.pricing-toggle button.active{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.pricing-toggle .pbadge{display:inline-block;background:var(--ink);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:5px;margin-left:4px}
+.pricing-card{border-radius:16px;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.04);overflow:hidden;position:relative}
+.pricing-pop{position:absolute;top:14px;right:14px;background:#dcfce7;color:var(--green);padding:2px 10px;border-radius:20px;font-size:10px;font-weight:600}
+.pricing-body{padding:24px}
+.pricing-name{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.pricing-desc{font-size:12px;color:var(--muted);margin-bottom:14px}
+.pricing-price{font-family:'Outfit',sans-serif;font-size:36px;font-weight:800;color:var(--ink);letter-spacing:-0.5px}
+.pricing-period{font-size:14px;color:var(--muted);font-weight:500}
+.pricing-foot{font-size:11px;color:var(--light);margin-top:3px;margin-bottom:14px}
 .pricing-list{list-style:none;margin-bottom:16px}
-.pricing-list li{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f3f4f6;font-size:12px;color:#374151}
+.pricing-list li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f3f3f3;font-size:12px;color:#404040}
 .pricing-list li:last-child{border-bottom:none}
-.pricing-list li span{color:#16a34a;font-weight:700}
-.pricing-cta{display:block;width:100%;padding:14px;border-radius:10px;border:none;background:#1c1c1e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;text-align:center;text-decoration:none;transition:opacity 0.2s}
-.pricing-cta:hover{opacity:0.88}
-.pricing-guarantee{text-align:center;font-size:11px;color:#999;margin-top:8px}
-.pricing-yearly{display:none;margin-top:12px;padding:12px 14px;background:#f9f9fb;border-radius:10px;border:1px solid #eee;text-align:center}
+.pricing-list li span{color:var(--green);font-weight:700}
+.pricing-cta{display:block;width:100%;padding:14px;border-radius:10px;border:none;background:var(--ink);color:#fff;font-weight:700;font-size:14px;cursor:pointer;text-align:center;text-decoration:none;transition:all 0.2s}
+.pricing-cta:hover{opacity:0.9;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.pricing-guarantee{text-align:center;font-size:11px;color:var(--light);margin-top:10px}
+.pricing-yearly{display:none;margin-top:12px;padding:14px;background:var(--fill);border-radius:10px;border:1px solid var(--border);text-align:center}
 .pricing-yearly.show{display:block}
-.pricing-yearly strong{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:#1c1c1e;display:block;margin-bottom:2px}
-.pricing-yearly span{font-size:12px;color:#6b7280}
-.pricing-yearly .soon{font-size:11px;color:#f59e0b;font-weight:600;margin-top:4px}
+.pricing-yearly strong{font-family:'Outfit',sans-serif;font-size:19px;font-weight:800;color:var(--ink);display:block;margin-bottom:2px}
+.pricing-yearly span{font-size:12px;color:var(--muted)}
+.pricing-yearly .soon{font-size:11px;color:#d97706;font-weight:600;margin-top:6px}
 
 .faq{max-width:560px;margin:0 auto}
-.faq-item{padding:12px 0;border-bottom:1px solid #eee;cursor:pointer}
-.faq-q{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:600;color:#1c1c1e}
-.faq-arrow{font-size:11px;color:#999;transition:transform 0.2s;flex-shrink:0}
+.faq-item{padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:600;color:var(--ink);line-height:1.4}
+.faq-arrow{font-size:11px;color:var(--light);transition:transform 0.25s;flex-shrink:0}
 .faq-item.open .faq-arrow{transform:rotate(180deg)}
-.faq-a{font-size:13px;color:#6b7280;line-height:1.6;margin-top:6px;display:none}
-.faq-item.open .faq-a{display:block;animation:fa 0.2s}
+.faq-a{font-size:13px;color:var(--muted);line-height:1.65;margin-top:8px;display:none}
+.faq-item.open .faq-a{display:block;animation:fa 0.25s}
 @keyframes fa{from{opacity:0}to{opacity:1}}
-.faq-a strong{color:#1c1c1e}
 
-.cta{text-align:center;padding:48px 24px;background:#1c1c1e;color:#fff}
-.cta h2{font-family:'Outfit',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;color:#fff;margin-bottom:6px}
-.cta p{font-size:14px;color:#aaa;margin-bottom:18px}
-.cta .btn{background:#fff;color:#1c1c1e;padding:14px 32px}
+.cta{text-align:center;padding:52px 24px;background:var(--ink);color:#fff}
+.cta h2{font-family:'Outfit',sans-serif;font-size:clamp(21px,3vw,30px);font-weight:700;color:#fff;margin-bottom:6px}
+.cta p{font-size:14px;color:#a3a3a3;margin-bottom:20px}
+.cta .btn{background:#fff;color:var(--ink);padding:14px 36px;font-weight:700}
+.cta .btn:hover{box-shadow:0 4px 16px rgba(255,255,255,0.15)}
 
-.footer{padding:32px 24px 20px;background:#f9f9fb;border-top:1px solid #eee}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:20px;max-width:1120px;margin:0 auto}
+.footer{padding:36px 24px 20px;background:var(--fill)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px;max-width:1120px;margin:0 auto}
 .footer-brand .fl{display:flex;align-items:center;gap:6px;margin-bottom:6px;text-decoration:none}
 .footer-brand .fl img{width:24px;height:24px;border-radius:6px;object-fit:cover}
-.footer-brand .fl span{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:#1c1c1e}
-.footer-brand p{font-size:12px;color:#6b7280;line-height:1.5;max-width:240px}
-.footer-col h4{font-size:12px;font-weight:600;color:#1c1c1e;margin-bottom:6px}
-.footer-col a{display:block;font-size:12px;color:#6b7280;text-decoration:none;padding:2px 0}
-.footer-col a:hover{color:#1c1c1e}
-.footer-bot{text-align:center;padding-top:16px;margin-top:16px;border-top:1px solid #eee;font-size:11px;color:#999;max-width:1120px;margin:16px auto 0}
+.footer-brand .fl span{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--ink)}
+.footer-brand p{font-size:12px;color:var(--muted);line-height:1.55;max-width:240px}
+.footer-col h4{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.footer-col a{display:block;font-size:12px;color:var(--muted);text-decoration:none;padding:3px 0;transition:color 0.2s}
+.footer-col a:hover{color:var(--ink)}
+.footer-bot{text-align:center;padding-top:16px;margin-top:20px;border-top:1px solid var(--border);font-size:11px;color:var(--light);max-width:1120px;margin:20px auto 0}
 
 @media(max-width:639px){
   .proof-grid{grid-template-columns:1fr 1fr;gap:8px}
   .how-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:16px}
   .footer-brand{grid-column:span 2}
 }
 @media(min-width:640px){
+  section{padding:60px 24px}
   .feat-grid{grid-template-columns:1fr 1fr}
 }
 @media(min-width:900px){
@@ -174,7 +173,7 @@ section{padding:48px 24px}
   </div>
 </section>
 
-<section style="padding:0 24px 40px">
+<section style="padding:0 24px 44px">
   <div class="container test anim" id="test-sec">
     <h2>WhatsApp'ta Şimdi Test Edin</h2>
     <p>Test hesabımıza mesaj atın. 'Dijital Resepsiyonist'imizi bizzat görün — nasıl konuştuğunu, nasıl rezervasyon aldığını deneyimleyin.</p>
@@ -182,9 +181,9 @@ section{padding:48px 24px}
   </div>
 </section>
 
-<section id="nasil" style="background:#f9f9fb">
+<section id="nasil" style="background:var(--fill)">
   <div class="container">
-    <h2 class="section-title anim" data-anim>10 Dakikada Kurulum, Hemen Yayına Geçin</h2>
+    <h2 class="section-title anim" data-anim>10 Dakikada Kurulum</h2>
     <p class="section-desc anim" data-anim>Hiçbir teknik bilgi gerekmez. Adım adım ilerleyin, her adım kaydedilir.</p>
     <div class="how-grid">
       <div class="how-card anim" data-anim><div class="how-num">1</div><div class="how-body"><h3>Bilgilerinizi Girin</h3><p>İşletmenizin adı, adresi, birimleri, fiyatları. 12 adımlık sihirbaz her an kaydeder, kaldığınız yerden devam edersiniz.</p></div></div>
@@ -197,7 +196,7 @@ section{padding:48px 24px}
 
 <section>
   <div class="container">
-    <h2 class="section-title anim" data-anim>Her Şey Dahil, Ek Ücret Yok</h2>
+    <h2 class="section-title anim" data-anim>Her Şey Dahil</h2>
     <p class="section-desc anim" data-anim>Tek paket, tüm özellikler. İşletmenize özel çözüm.</p>
     <div class="feat-grid" id="feat-grid">
       <div class="feat-card anim" data-anim><div class="feat-icon">💬</div><div class="feat-body"><h3>İnsan Gibi Konuşma</h3><p>Doğal Türkçe, samimi ton. Misafir botla değil insanla konuştuğunu sanır.</p></div></div>
@@ -210,10 +209,10 @@ section{padding:48px 24px}
   </div>
 </section>
 
-<section style="background:#f9f9fb" id="fiyat">
+<section style="background:var(--fill)" id="fiyat">
   <div class="container pricing-wrap">
     <h2 class="section-title anim" data-anim>Basit ve Tek Fiyat</h2>
-    <p class="section-desc anim" data-anim>Karmaşık planlar yok. İhtiyacınız olan her şey dahil.</p>
+    <p class="section-desc anim" data-anim>Karmaşık planlar, gizli ücretler yok.</p>
     <div class="pricing-toggle anim" data-anim id="pt">
       <button class="active" data-plan="monthly">Aylık</button>
       <button data-plan="yearly">Yıllık <span class="pbadge">%25 avantaj</span></button>
@@ -223,11 +222,11 @@ section{padding:48px 24px}
       <div class="pricing-body">
         <div class="pricing-name">Profesyonel Paket</div>
         <div class="pricing-desc">Tek işletme, sınırsız kullanım</div>
-        <div><span class="pricing-price" id="pprice">4.000</span> <span class="pricing-period" id="pperiod">₺/ay</span></div>
+        <div><span class="pricing-price" id="pprice">4.000</span>&nbsp;<span class="pricing-period" id="pperiod">₺/ay</span></div>
         <div class="pricing-foot" id="pfoot">İlk 30 gün ücretsiz — kart bilgisi gerekmez</div>
         <div class="pricing-yearly" id="pyearly">
           <strong>36.000 ₺/yıl</strong>
-          <span>Ayda 3.000 ₺ — yıllık ödeyin, %25 tasarruf edin</span>
+          <span>Ayda 3.000 ₺ — %25 tasarruf edin</span>
           <div class="soon">⏳ Yıllık ödeme seçeneği yakında aktif olacak</div>
         </div>
         <ul class="pricing-list">
@@ -254,7 +253,7 @@ section{padding:48px 24px}
     <div class="faq-item open anim" data-anim><div class="faq-q">Kurulum ne kadar sürer? <span class="faq-arrow">▼</span></div><div class="faq-a">Ortalama 10-15 dakika. İşletme bilgilerinizi girin, WhatsApp'ı bağlayın, yayına geçin. Her adım kaydedilir, kaldığınız yerden devam edersiniz.</div></div>
     <div class="faq-item anim" data-anim><div class="faq-q">Kendi WhatsApp numaramı kullanabilir miyim? <span class="faq-arrow">▼</span></div><div class="faq-a">Evet. Mevcut numaranızı QR kodla saniyeler içinde bağlarsınız. Ekstra hat almanıza gerek yok.</div></div>
     <div class="faq-item anim" data-anim><div class="faq-q">Ya 'Dijital Resepsiyonist' yanlış cevap verirse? <span class="faq-arrow">▼</span></div><div class="faq-a">Panelden tüm konuşmaları izleyebilirsiniz. Bir hata görürseniz tek tıkla devralır, WhatsApp'tan kaldığınız yerden devam edersiniz.</div></div>
-    <div class="faq-item anim" data-anim><div class="faq-q">Birden fazla işletmem var, hepsi için kullanabilir miyim? <span class="faq-arrow">▼</span></div><div class="faq-a"><strong>Hayır,</strong> şu an için her paket tek işletme içindir. Birden fazla işletmeniz varsa her biri için ayrı bir paket satın almanız gerekir.</div></div>
+    <div class="faq-item anim" data-anim><div class="faq-q">Birden fazla işletmem var? <span class="faq-arrow">▼</span></div><div class="faq-a"><strong>Hayır,</strong> her paket tek işletme içindir. Birden fazla işletmeniz varsa her biri için ayrı paket satın almanız gerekir.</div></div>
     <div class="faq-item anim" data-anim><div class="faq-q">İptal edersem verilerim ne olur? <span class="faq-arrow">▼</span></div><div class="faq-a">İstediğiniz an iptal edebilirsiniz. Verileriniz 30 gün boyunca saklanır, dönmek isterseniz kaldığınız yerden devam edersiniz.</div></div>
   </div>
 </section>
@@ -262,7 +261,7 @@ section{padding:48px 24px}
 <section class="cta">
   <div class="container anim" data-anim>
     <h2>30 Gün Ücretsiz Deneyin</h2>
-    <p>Kart bilgisi gerekmez. İstediğiniz an iptal edin. Bugün başlayın, misafirlerinizi kaybetmeyin.</p>
+    <p>Kart bilgisi gerekmez. İstediğiniz an iptal edin.</p>
     <a class="btn" href="https://wa.me/905427450654?text=Merhaba,%2030%20g%C3%BCn%20%C3%BCcretsiz%20denemek%20istiyorum" target="_blank" rel="noopener">Hemen Başlayın</a>
   </div>
 </section>
