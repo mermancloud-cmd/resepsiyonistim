@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Resepsiyonistim — 7/24 Çalışan Dijital Resepsiyonistiniz</title>
-<meta name="description" content="İşletmenize 7/24 çalışan, insan gibi konuşan bir dijital resepsiyonist katılıyor. WhatsApp üzerinden rezervasyon alır, misafirleri karşılar." />
+<title>Resepsiyonistim — 7/24 Çalışan Dijital Resepsiyonist'iniz</title>
+<meta name="description" content="İşletmenize 7/24 çalışan, insan gibi konuşan bir Dijital Resepsiyonist katılıyor. WhatsApp üzerinden rezervasyon alır, misafirleri karşılar." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -25,7 +25,6 @@ img{max-width:100%}.container{max-width:1120px;margin:0 auto;padding:0 24px}
 .header-nav .cta{padding:8px 16px;background:#1c1c1e;color:#fff;font-weight:600}
 .header-nav .cta:hover{opacity:0.88}
 
-/* ANIMATIONS */
 .anim{opacity:0;transform:translateY(16px);transition:all 0.5s ease}
 .anim.show{opacity:1;transform:translateY(0)}
 .anim-d1{transition-delay:0s}
@@ -38,6 +37,7 @@ img{max-width:100%}.container{max-width:1120px;margin:0 auto;padding:0 24px}
 .hero{text-align:center;padding:56px 24px 44px}
 .hero-badge{display:inline-block;padding:4px 12px;border-radius:20px;background:#f0fdf4;color:#16a34a;font-size:11px;font-weight:600;margin-bottom:14px;letter-spacing:0.3px}
 .hero-title{font-family:'Outfit',sans-serif;font-size:clamp(26px,5vw,42px);font-weight:700;line-height:1.2;letter-spacing:-0.5px;color:#1c1c1e;margin-bottom:10px;max-width:680px;margin-left:auto;margin-right:auto}
+.hero-title em{font-style:normal}
 .hero-desc{font-size:15px;color:#6b7280;max-width:500px;margin:0 auto 18px;line-height:1.6}
 .hero-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:10px;border:none;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;transition:all 0.2s}
@@ -111,6 +111,7 @@ section{padding:48px 24px}
 .faq-a{font-size:13px;color:#6b7280;line-height:1.6;margin-top:6px;display:none}
 .faq-item.open .faq-a{display:block;animation:fa 0.2s}
 @keyframes fa{from{opacity:0}to{opacity:1}}
+.faq-a strong{color:#1c1c1e}
 
 .cta{text-align:center;padding:48px 24px;background:#1c1c1e;color:#fff}
 .cta h2{font-family:'Outfit',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;color:#fff;margin-bottom:6px}
@@ -129,7 +130,7 @@ section{padding:48px 24px}
 .footer-bot{text-align:center;padding-top:16px;margin-top:16px;border-top:1px solid #eee;font-size:11px;color:#999;max-width:1120px;margin:16px auto 0}
 
 @media(max-width:639px){
-  .proof-grid{grid-template-columns:1fr 1fr}
+  .proof-grid{grid-template-columns:1fr 1fr;gap:8px}
   .how-grid{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr 1fr}
   .footer-brand{grid-column:span 2}
@@ -158,7 +159,7 @@ section{padding:48px 24px}
 <section class="hero">
   <div class="container">
     <div class="hero-badge anim anim-d1 show">30 Gün Ücretsiz Deneme</div>
-    <h1 class="hero-title anim anim-d2 show">İşletmenize 7/24 çalışan bir <em>dijital resepsiyonist</em> katılıyor</h1>
+    <h1 class="hero-title anim anim-d2 show">'Dijital Resepsiyonist'inizle 7/24 <em>tanışın</em></h1>
     <p class="hero-desc anim anim-d3 show">WhatsApp üzerinden misafirlerinizle insan gibi konuşur, rezervasyon alır, soruları yanıtlar. Siz uyurken bile çalışır.</p>
     <div class="hero-btns anim anim-d4 show">
       <a class="btn btn-primary" href="https://wa.me/905427450654?text=Merhaba,%20denemek%20istiyorum">30 Gün Ücretsiz Dene</a>
@@ -176,7 +177,7 @@ section{padding:48px 24px}
 <section style="padding:0 24px 40px">
   <div class="container test anim" id="test-sec">
     <h2>WhatsApp'ta Şimdi Test Edin</h2>
-    <p>Test hesabımıza mesaj atın. Dijital resepsiyonistimizi bizzat görün — nasıl konuştuğunu, nasıl rezervasyon aldığını deneyimleyin.</p>
+    <p>Test hesabımıza mesaj atın. 'Dijital Resepsiyonist'imizi bizzat görün — nasıl konuştuğunu, nasıl rezervasyon aldığını deneyimleyin.</p>
     <a class="test-wa" href="https://wa.me/905427450654?text=Merhaba!%20Test%20etmek%20istiyorum" target="_blank" rel="noopener">💬 WhatsApp'ta Test Edin · 90542 745 0654</a>
   </div>
 </section>
@@ -188,7 +189,7 @@ section{padding:48px 24px}
     <div class="how-grid">
       <div class="how-card anim" data-anim><div class="how-num">1</div><div class="how-body"><h3>Bilgilerinizi Girin</h3><p>İşletmenizin adı, adresi, birimleri, fiyatları. 12 adımlık sihirbaz her an kaydeder, kaldığınız yerden devam edersiniz.</p></div></div>
       <div class="how-card anim" data-anim><div class="how-num">2</div><div class="how-body"><h3>WhatsApp'ı Bağlayın</h3><p>Kendi numaranızı QR kodla bağlayın. 10 saniye sürer.</p></div></div>
-      <div class="how-card anim" data-anim><div class="how-num">3</div><div class="how-body"><h3>Resepsiyonist Devrede</h3><p>Misafirler yazmaya başlar. Yanıtlar, rezervasyon alır, takvimi günceller.</p></div></div>
+      <div class="how-card anim" data-anim><div class="how-num">3</div><div class="how-body"><h3>'Dijital Resepsiyonist' Devrede</h3><p>Misafirler yazmaya başlar. Yanıtlar, rezervasyon alır, takvimi günceller.</p></div></div>
       <div class="how-card anim" data-anim><div class="how-num">4</div><div class="how-body"><h3>Siz Yönetin</h3><p>Panelden izleyin, gerektiğinde devralın, konuşmayı WhatsApp'ta kaldığınız yerden devam ettirin.</p></div></div>
     </div>
   </div>
@@ -197,11 +198,11 @@ section{padding:48px 24px}
 <section>
   <div class="container">
     <h2 class="section-title anim" data-anim>Her Şey Dahil, Ek Ücret Yok</h2>
-    <p class="section-desc anim" data-anim>Tek paket, tüm özellikler. Sınırsız tesis, sınırsız konuşma.</p>
+    <p class="section-desc anim" data-anim>Tek paket, tüm özellikler. İşletmenize özel çözüm.</p>
     <div class="feat-grid" id="feat-grid">
       <div class="feat-card anim" data-anim><div class="feat-icon">💬</div><div class="feat-body"><h3>İnsan Gibi Konuşma</h3><p>Doğal Türkçe, samimi ton. Misafir botla değil insanla konuştuğunu sanır.</p></div></div>
       <div class="feat-card anim" data-anim><div class="feat-icon">📅</div><div class="feat-body"><h3>Akıllı Takvim</h3><p>Birim bazlı takvim, renk kodlu doluluk, tek tıkla ekleme ve düzenleme.</p></div></div>
-      <div class="feat-card anim" data-anim><div class="feat-icon">🔄</div><div class="feat-body"><h3>Kesintisiz Devralma</h3><p>Resepsiyonistten devralın, WhatsApp'ta kaldığınız yerden devam edin.</p></div></div>
+      <div class="feat-card anim" data-anim><div class="feat-icon">🔄</div><div class="feat-body"><h3>Kesintisiz Devralma</h3><p>'Dijital Resepsiyonist'ten devralın, WhatsApp'ta kaldığınız yerden devam edin.</p></div></div>
       <div class="feat-card anim" data-anim><div class="feat-icon">📍</div><div class="feat-body"><h3>WhatsApp Konum</h3><p>Misafire tek tıkla Google Maps linki gönderir. Yol tarifi sormak tarih olur.</p></div></div>
       <div class="feat-card anim" data-anim><div class="feat-icon">📊</div><div class="feat-body"><h3>Canlı Panel</h3><p>Konuşmalar, rezervasyonlar, istatistikler tek ekranda.</p></div></div>
       <div class="feat-card anim" data-anim><div class="feat-icon">🔒</div><div class="feat-body"><h3>Güvenli ve Özel</h3><p>Verileriniz şifreli. IBAN ödeme. Misafir bilgileriniz asla paylaşılmaz.</p></div></div>
@@ -221,7 +222,7 @@ section{padding:48px 24px}
       <div class="pricing-pop">En Çok Tercih Edilen</div>
       <div class="pricing-body">
         <div class="pricing-name">Profesyonel Paket</div>
-        <div class="pricing-desc">Sınırsız tesis, sınırsız konuşma, sınırsız özellik</div>
+        <div class="pricing-desc">Tek işletme, sınırsız kullanım</div>
         <div><span class="pricing-price" id="pprice">4.000</span> <span class="pricing-period" id="pperiod">₺/ay</span></div>
         <div class="pricing-foot" id="pfoot">İlk 30 gün ücretsiz — kart bilgisi gerekmez</div>
         <div class="pricing-yearly" id="pyearly">
@@ -230,9 +231,8 @@ section{padding:48px 24px}
           <div class="soon">⏳ Yıllık ödeme seçeneği yakında aktif olacak</div>
         </div>
         <ul class="pricing-list">
-          <li><span>✓</span> Sınırsız tesis ekleme</li>
+          <li><span>✓</span> 7/24 'Dijital Resepsiyonist' hizmeti</li>
           <li><span>✓</span> Sınırsız WhatsApp konuşması</li>
-          <li><span>✓</span> 7/24 dijital resepsiyonist</li>
           <li><span>✓</span> Akıllı takvim ve rezervasyon</li>
           <li><span>✓</span> Kesintisiz devralma</li>
           <li><span>✓</span> Detaylı panel ve istatistikler</li>
@@ -253,8 +253,8 @@ section{padding:48px 24px}
     <h2 class="section-title anim" data-anim>Sık Sorulanlar</h2>
     <div class="faq-item open anim" data-anim><div class="faq-q">Kurulum ne kadar sürer? <span class="faq-arrow">▼</span></div><div class="faq-a">Ortalama 10-15 dakika. İşletme bilgilerinizi girin, WhatsApp'ı bağlayın, yayına geçin. Her adım kaydedilir, kaldığınız yerden devam edersiniz.</div></div>
     <div class="faq-item anim" data-anim><div class="faq-q">Kendi WhatsApp numaramı kullanabilir miyim? <span class="faq-arrow">▼</span></div><div class="faq-a">Evet. Mevcut numaranızı QR kodla saniyeler içinde bağlarsınız. Ekstra hat almanıza gerek yok.</div></div>
-    <div class="faq-item anim" data-anim><div class="faq-q">Ya dijital resepsiyonist yanlış cevap verirse? <span class="faq-arrow">▼</span></div><div class="faq-a">Panelden tüm konuşmaları izleyebilirsiniz. Bir hata görürseniz tek tıkla devralır, WhatsApp'tan kaldığınız yerden devam edersiniz.</div></div>
-    <div class="faq-item anim" data-anim><div class="faq-q">Birden fazla tesisim var, hepsi için ayrı ücret mi? <span class="faq-arrow">▼</span></div><div class="faq-a">Hayır. Tek paket ile sınırsız tesis ekleyebilirsiniz. Her tesis kendi birimleri, fiyatları ve resepsiyonist kişiliği ile çalışır.</div></div>
+    <div class="faq-item anim" data-anim><div class="faq-q">Ya 'Dijital Resepsiyonist' yanlış cevap verirse? <span class="faq-arrow">▼</span></div><div class="faq-a">Panelden tüm konuşmaları izleyebilirsiniz. Bir hata görürseniz tek tıkla devralır, WhatsApp'tan kaldığınız yerden devam edersiniz.</div></div>
+    <div class="faq-item anim" data-anim><div class="faq-q">Birden fazla işletmem var, hepsi için kullanabilir miyim? <span class="faq-arrow">▼</span></div><div class="faq-a"><strong>Hayır,</strong> şu an için her paket tek işletme içindir. Birden fazla işletmeniz varsa her biri için ayrı bir paket satın almanız gerekir.</div></div>
     <div class="faq-item anim" data-anim><div class="faq-q">İptal edersem verilerim ne olur? <span class="faq-arrow">▼</span></div><div class="faq-a">İstediğiniz an iptal edebilirsiniz. Verileriniz 30 gün boyunca saklanır, dönmek isterseniz kaldığınız yerden devam edersiniz.</div></div>
   </div>
 </section>
@@ -269,7 +269,7 @@ section{padding:48px 24px}
 
 <footer class="footer">
   <div class="footer-grid">
-    <div class="footer-brand"><a class="fl" href="/"><img src="logo-1.jpeg" alt="" /><span>Resepsiyonistim</span></a><p>Konaklama işletmeleri için 7/24 çalışan dijital resepsiyonist.</p></div>
+    <div class="footer-brand"><a class="fl" href="/"><img src="logo-1.jpeg" alt="" /><span>Resepsiyonistim</span></a><p>Konaklama işletmeniz için 7/24 çalışan 'Dijital Resepsiyonist'.</p></div>
     <div class="footer-col"><h4>Sayfalar</h4><a href="#nasil">Nasıl Çalışır?</a><a href="#fiyat">Fiyat</a></div>
     <div class="footer-col"><h4>İletişim</h4><a href="https://wa.me/905427450654">WhatsApp</a><a href="mailto:info@resepsiyonistim.com">E-posta</a></div>
     <div class="footer-col"><h4>Yasal</h4><a href="#">Gizlilik Politikası</a><a href="#">Kullanım Koşulları</a></div>
@@ -278,7 +278,6 @@ section{padding:48px 24px}
 </footer>
 
 <script>
-// Pricing toggle
 const pt=document.getElementById('pt');
 if(pt)pt.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
   pt.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
@@ -288,9 +287,7 @@ if(pt)pt.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
   document.getElementById('pfoot').textContent=y?'Yıllık ödeyin, ayda 3.000 ₺':'İlk 30 gün ücretsiz — kart bilgisi gerekmez';
   document.getElementById('pyearly').classList.toggle('show',y);
 }));
-// FAQ
 document.querySelectorAll('.faq-item').forEach(i=>i.querySelector('.faq-q').addEventListener('click',()=>i.classList.toggle('open')));
-// Scroll animations (hero already shows immediately)
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('show')})},{threshold:0.15});
 document.querySelectorAll('.anim:not(.show)').forEach(el=>obs.observe(el));
 </script>
