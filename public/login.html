@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Resepsiyonistim — Giriş Yap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px;-webkit-text-size-adjust:100%}
+  :root{--bg:#fff;--surface:#fff;--ink:#1c1c1e;--ink-muted:#8e8e93;--ink-light:#aeaeb2;--border:#e5e5ea;--input-bg:#f9f9fb;--shadow:0 2px 20px rgba(0,0,0,0.06),0 0 0 1px rgba(0,0,0,0.03);--shadow-focus:0 0 0 3px rgba(0,0,0,0.06);--error:#ff3b30}
+  .dark{--bg:#1c1c1e;--surface:#2c2c2e;--ink:#f5f5f7;--ink-muted:#8e8e93;--ink-light:#636366;--border:#3a3a3c;--input-bg:#3a3a3c;--shadow:0 2px 20px rgba(0,0,0,0.3),0 0 0 1px rgba(255,255,255,0.05);--shadow-focus:0 0 0 3px rgba(255,255,255,0.12);--error:#ff453a}
+  body{
+    font-family:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100vh;min-height:100dvh;
+    display:flex;flex-direction:column;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  input,button,textarea{font-family:inherit;font-size:inherit}
+
+  .logo-wrap{
+    display:flex;flex-direction:column;
+    align-items:center;
+    padding:48px 24px 8px;
+  }
+  .logo-img{
+    width:72px;height:72px;
+    border-radius:16px;
+    object-fit:cover;
+    margin-bottom:12px;
+  }
+  .logo-text{
+    font-family:'Outfit',sans-serif;
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:-0.4px;
+    color:var(--ink);
+  }
+  .tagline{
+    text-align:center;
+    font-size:13px;
+    color:var(--ink-muted);
+    padding:0 24px 28px;
+    font-weight:400;
+    line-height:1.5;
+  }
+
+  .card{
+    background:var(--surface);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    margin:0 16px;
+    overflow:hidden;
+  }
+
+  .tabs{display:flex;position:relative}
+  .tab-btn{
+    flex:1;padding:18px 12px 16px;
+    background:none;border:none;
+    font-family:'Outfit',sans-serif;
+    font-size:14px;font-weight:600;
+    color:var(--ink-muted);
+    cursor:pointer;
+    position:relative;
+    transition:color 0.2s;
+    -webkit-tap-highlight-color:transparent;
+    letter-spacing:0.2px;
+  }
+  .tab-btn::after{
+    content:'';position:absolute;
+    bottom:0;left:24%;right:24%;
+    height:2px;border-radius:2px;
+    background:var(--ink);
+    transform:scaleX(0);
+    transition:transform 0.25s ease;
+  }
+  .tab-btn.active{color:var(--ink)}
+  .tab-btn.active::after{transform:scaleX(1)}
+  .tab-btn:focus-visible{outline:2px solid var(--ink);outline-offset:-2px;border-radius:8px}
+
+  .tab-theme{
+    width:44px;height:44px;
+    border:none;background:none;
+    cursor:pointer;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-muted);
+    transition:color 0.2s,background 0.2s;
+    border-radius:8px;
+    margin:auto 4px auto 0;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .tab-theme:hover{color:var(--ink);background:var(--input-bg)}
+  .tab-theme:active{transform:scale(0.9)}
+  .tab-theme svg{width:18px;height:18px;fill:currentColor}
+  .tab-theme .sun{display:none}
+  .tab-theme .moon{display:block}
+  .dark .tab-theme .sun{display:block}
+  .dark .tab-theme .moon{display:none}
+
+  .tab-content{display:none;padding:24px 20px 20px}
+  .tab-content.active{display:block;animation:fadeIn 0.25s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+  .fg{margin-bottom:16px}
+  .fl{
+    display:block;
+    font-size:12px;font-weight:600;
+    color:var(--ink);
+    margin-bottom:5px;
+    letter-spacing:0.3px;
+    text-transform:uppercase;
+  }
+  .fi{
+    width:100%;padding:14px 16px;
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    font-size:15px;
+    color:var(--ink);
+    background:var(--input-bg);
+    transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;
+    appearance:none;-webkit-appearance:none;
+  }
+  .fi::placeholder{color:var(--ink-light)}
+  .fi:focus{
+    outline:none;
+    border-color:var(--ink);
+    box-shadow:var(--shadow-focus);
+    background:var(--surface);
+  }
+  .fi.error{border-color:var(--error)}
+  .fi.error:focus{box-shadow:0 0 0 3px rgba(255,59,48,0.12)}
+  .ferr{font-size:12px;color:var(--error);margin-top:4px;display:none}
+  .ferr.show{display:block}
+
+  .pw{position:relative}
+  .pw-toggle{
+    position:absolute;right:14px;top:50%;
+    transform:translateY(-50%);
+    background:none;border:none;
+    color:var(--ink-muted);font-size:12px;
+    padding:4px 6px;cursor:pointer;
+    font-weight:600;letter-spacing:0.3px;
+    text-transform:uppercase;
+    -webkit-tap-highlight-color:transparent;
+  }
+
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  .cb-group{
+    display:flex;align-items:flex-start;
+    gap:10px;margin-bottom:20px;
+  }
+  .cb-group input[type="checkbox"]{
+    width:18px;height:18px;margin-top:3px;
+    accent-color:var(--ink);flex-shrink:0;cursor:pointer;
+  }
+  .cb-label{
+    font-size:13px;color:var(--ink-muted);line-height:1.4;cursor:pointer;
+  }
+  .cb-label a{color:var(--ink);text-decoration:none;font-weight:600}
+  .cb-label a:hover{text-decoration:underline}
+
+  .btn{
+    width:100%;padding:15px;
+    border:none;border-radius:12px;
+    background:var(--ink);
+    color:var(--bg);
+    font-family:'Outfit',sans-serif;
+    font-size:15px;font-weight:600;
+    cursor:pointer;
+    transition:opacity 0.2s,transform 0.15s;
+    -webkit-tap-highlight-color:transparent;
+    letter-spacing:0.2px;
+  }
+  .btn:hover{opacity:0.9}
+  .btn:active{transform:scale(0.98)}
+  .btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+  .divider{
+    display:flex;align-items:center;gap:12px;
+    margin:20px 0;
+  }
+  .div-line{flex:1;height:1px;background:var(--border)}
+  .div-text{font-size:11px;color:var(--ink-light);font-weight:500;white-space:nowrap;letter-spacing:0.5px;text-transform:uppercase}
+
+  .social{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  }
+  .social-btn{
+    display:flex;align-items:center;justify-content:center;
+    gap:8px;padding:12px;
+    border:1.5px solid var(--border);
+    border-radius:12px;
+    background:var(--surface);
+    font-size:13px;font-weight:600;
+    color:var(--ink);
+    cursor:pointer;
+    transition:background 0.2s,border-color 0.2s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .social-btn:hover{background:var(--input-bg);border-color:var(--ink-muted)}
+  .social-btn:active{transform:scale(0.98)}
+  .social-btn svg{width:18px;height:18px;flex-shrink:0}
+
+  .ffoot{text-align:center;margin-top:20px;font-size:13px;color:var(--ink-muted)}
+  .ffoot a{color:var(--ink);text-decoration:none;font-weight:600}
+  .ffoot a:hover{text-decoration:underline}
+
+  .success{
+    display:none;flex-direction:column;
+    align-items:center;padding:40px 20px;
+    text-align:center;animation:fadeIn 0.3s ease;
+  }
+  .success.show{display:flex}
+  .s-icon{
+    width:56px;height:56px;border-radius:50%;
+    background:var(--ink);color:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Outfit',sans-serif;
+    font-size:24px;font-weight:600;margin-bottom:16px;
+  }
+  .s-title{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px}
+  .s-desc{font-size:14px;color:var(--ink-muted);max-width:280px}
+
+  .page-footer{text-align:center;padding:24px 20px;font-size:11px;color:var(--ink-light);margin-top:auto;letter-spacing:0.3px}
+
+  @media(min-width:640px){
+    .card{margin:0 auto;max-width:400px}
+    .logo-wrap{padding-top:64px}
+  }
+  @media(min-width:1024px){
+    body{justify-content:center;align-items:center}
+    .logo-wrap{padding-top:0}
+  }
+</style>
+</head>
+<body>
+
+<div class="logo-wrap">
+  <img class="logo-img" src="logo-1.jpeg" alt="Resepsiyonistim" />
+  <span class="logo-text">Resepsiyonistim</span>
+</div>
+<p class="tagline">7/24 çalışan dijital resepsiyonistiniz</p>
+
+<div class="card" id="app">
+  <div class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="login" role="tab" aria-selected="true">Giriş Yap</button>
+    <button class="tab-btn" data-tab="signup" role="tab" aria-selected="false">Kayıt Ol</button>
+    <button class="tab-theme" id="theme-toggle" aria-label="Tema değiştir">
+      <svg class="moon" viewBox="0 0 24 24"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/></svg>
+    </button>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="tab-content active" id="tab-login" role="tabpanel">
+    <form id="login-form" novalidate>
+      <div class="fg">
+        <label class="fl" for="login-email">E-posta</label>
+        <input class="fi" id="login-email" type="email" placeholder="ornek@isletme.com" autocomplete="email" required />
+        <div class="ferr">Geçerli bir e-posta adresi girin</div>
+      </div>
+      <div class="fg">
+        <label class="fl" for="login-password">Şifre</label>
+        <div class="pw">
+          <input class="fi" id="login-password" type="password" placeholder="••••••••" autocomplete="current-password" required />
+          <button class="pw-toggle" type="button" aria-label="Şifreyi göster/gizle">Göster</button>
+        </div>
+        <div class="ferr">Şifre en az 6 karakter olmalıdır</div>
+      </div>
+      <button class="btn" type="submit">Giriş Yap</button>
+      <div class="divider"><span class="div-line"></span><span class="div-text">veya</span><span class="div-line"></span></div>
+      <div class="social">
+        <button class="social-btn" type="button">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Google
+        </button>
+        <button class="social-btn" type="button">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M16.365 1.43c0 1.41-.84 2.76-2.13 3.74-1.29.97-2.94 1.35-4.57 1.17-.02-.49-.01-1.02.19-1.55.2-.53.56-1.06 1.03-1.47.47-.41 1.04-.7 1.69-.84.65-.14 1.31-.17 1.96-.04.21.55.51 1.07.92 1.49.41.42.92.73 1.48.9.14-.42.32-.82.53-1.19.22-.38.48-.72.78-1.02.3-.3.63-.55 1-.75.36-.2.74-.35 1.14-.44h-.02z" fill="#000"/><path d="M19.56 7.62c-.52.63-1.22 1.13-2.01 1.46.13.43.2.88.2 1.33 0 2.06-1.2 3.92-3.2 5.01-.75.41-1.57.7-2.43.86 2.04 1.27 4.51 1.7 6.72 1.15 1.1-.28 2.13-.78 3.02-1.48.89-.7 1.62-1.58 2.14-2.59.52-1.01.81-2.12.84-3.26.04-1.14-.17-2.27-.6-3.3-.43-1.03-1.06-1.96-1.84-2.72l-2.84 2.54z" fill="#000"/></svg>
+          Apple
+        </button>
+      </div>
+      <div class="ffoot">Hesabın yok mu? <a href="#" id="switch-to-signup">Kayıt ol</a></div>
+    </form>
+  </div>
+
+  <!-- SIGNUP -->
+  <div class="tab-content" id="tab-signup" role="tabpanel">
+    <form id="signup-form" novalidate>
+      <div class="frow">
+        <div class="fg">
+          <label class="fl" for="signup-name">Ad</label>
+          <input class="fi" id="signup-name" type="text" placeholder="Adın" autocomplete="given-name" required />
+        </div>
+        <div class="fg">
+          <label class="fl" for="signup-surname">Soyad</label>
+          <input class="fi" id="signup-surname" type="text" placeholder="Soyadın" autocomplete="family-name" required />
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl" for="signup-email">E-posta</label>
+        <input class="fi" id="signup-email" type="email" placeholder="ornek@isletme.com" autocomplete="email" required />
+        <div class="ferr">Geçerli bir e-posta adresi girin</div>
+      </div>
+      <div class="fg">
+        <label class="fl" for="signup-phone">Telefon</label>
+        <input class="fi" id="signup-phone" type="tel" placeholder="05XX XXX XX XX" autocomplete="tel" required />
+      </div>
+      <div class="fg">
+        <label class="fl" for="signup-password">Şifre</label>
+        <div class="pw">
+          <input class="fi" id="signup-password" type="password" placeholder="En az 6 karakter" autocomplete="new-password" required />
+          <button class="pw-toggle" type="button" aria-label="Şifreyi göster/gizle">Göster</button>
+        </div>
+        <div class="ferr">Şifre en az 6 karakter olmalıdır</div>
+      </div>
+      <div class="cb-group">
+        <input type="checkbox" id="signup-terms" required />
+        <label class="cb-label" for="signup-terms"><a href="#">Kullanım koşulları</a> ve <a href="#">gizlilik politikası</a>'nı kabul ediyorum</label>
+      </div>
+      <button class="btn" type="submit">30 Gün Ücretsiz Dene</button>
+      <div class="ffoot">Zaten hesabın var mı? <a href="#" id="switch-to-login">Giriş yap</a></div>
+    </form>
+  </div>
+
+  <div class="success" id="success-state">
+    <div class="s-icon">✓</div>
+    <div class="s-title">Hoş Geldiniz</div>
+    <div class="s-desc">Hesabınız oluşturuldu. Kısa süre içinde yönlendirileceksiniz.</div>
+  </div>
+</div>
+
+<div class="page-footer">© 2026 Resepsiyonistim</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // ── Dark Mode ────────────────────────────────────
+  const html = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+
+  function setTheme(dark) {
+    html.classList.toggle('dark', dark);
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }
+
+  // Init: localStorage > system preference > light
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    setTheme(saved === 'dark');
+  } else {
+    setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
+  }
+
+  themeBtn?.addEventListener('click', () => {
+    setTheme(!html.classList.contains('dark'));
+  });
+
+  // Listen for system changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) setTheme(e.matches);
+  });
+
+  // ── Tab Switching ────────────────────────────────
+  const tabs=document.querySelectorAll('.tab-btn');
+  const c={login:document.getElementById('tab-login'),signup:document.getElementById('tab-signup')};
+  const ss=document.getElementById('success-state');
+  const lf=document.getElementById('login-form');
+  const sf=document.getElementById('signup-form');
+
+  function switchTab(id){
+    tabs.forEach(b=>{const a=b.dataset.tab===id;b.classList.toggle('active',a);b.setAttribute('aria-selected',a)});
+    Object.entries(c).forEach(([i,e])=>{if(e)e.classList.toggle('active',i===id)});
+    ss.classList.remove('show');
+    document.querySelectorAll('.tab-content').forEach(e=>e.style.display='');
+  }
+  tabs.forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+  document.getElementById('switch-to-signup')?.addEventListener('click',e=>{e.preventDefault();switchTab('signup')});
+  document.getElementById('switch-to-login')?.addEventListener('click',e=>{e.preventDefault();switchTab('login')});
+
+  document.querySelectorAll('.pw-toggle').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const i=b.previousElementSibling;if(!i)return;
+      const p=i.type==='password';i.type=p?'text':'password';b.textContent=p?'Gizle':'Göster';
+    });
+  });
+
+  function se(i,m){const g=i.closest('.fg');if(!g)return;i.classList.add('error');const e=g.querySelector('.ferr');if(e){e.textContent=m||'Bu alan zorunludur';e.classList.add('show')}}
+  function ce(i){i.classList.remove('error');const g=i.closest('.fg');if(!g)return;const e=g.querySelector('.ferr');if(e)e.classList.remove('show')}
+  function vf(i){
+    ce(i);
+    if(!i.value.trim()&&i.required){se(i,'Bu alan zorunludur');return false}
+    if(i.type==='email'&&i.value.trim()&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim())){se(i,'Geçerli bir e-posta adresi girin');return false}
+    if(i.type==='password'&&i.value.trim().length<6){se(i,'Şifre en az 6 karakter olmalıdır');return false}
+    if(i.id==='signup-phone'&&i.value.trim()){const d=i.value.replace(/\D/g,'');if(d.length<10){se(i,'Geçerli bir telefon numarası girin');return false}}
+    return true;
+  }
+  document.querySelectorAll('.fi').forEach(i=>{
+    i.addEventListener('blur',()=>vf(i));
+    i.addEventListener('input',()=>{if(i.classList.contains('error'))vf(i)});
+  });
+
+  function sim(){
+    document.querySelectorAll('.tab-content').forEach(e=>e.style.display='none');
+    tabs.forEach(b=>b.style.display='none');
+    ss.classList.add('show');
+  }
+  lf.addEventListener('submit',e=>{e.preventDefault();let v=true;lf.querySelectorAll('.fi').forEach(i=>{if(!vf(i))v=false});if(v)sim()});
+  sf.addEventListener('submit',e=>{
+    e.preventDefault();let v=true;
+    sf.querySelectorAll('.fi').forEach(i=>{if(!vf(i))v=false});
+    const t=document.getElementById('signup-terms');
+    if(!t.checked){t.style.outline='2px solid #ff3b30';t.style.borderRadius='2px';setTimeout(()=>{t.style.outline=''},2000);v=false}
+    if(v)sim()
+  });
+
+  document.getElementById('signup-phone')?.addEventListener('input',function(){
+    let v=this.value.replace(/\D/g,'');
+    if(v.length>11)v=v.slice(0,11);
+    if(v.startsWith('0'))v=v;else if(v.length>0)v='0'+v;
+    if(v.length>0)this.value='0'+(v.slice(1,4)||'')+(v.length>4?' ':'')+(v.slice(4,7)||'')+(v.length>7?' ':'')+(v.slice(7,9)||'')+(v.length>9?' ':'')+(v.slice(9,11)||'');
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Resepsiyonistim — İşletme Kurulumu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+:root{--bg:#f5f5f7;--surface:#fff;--ink:#1c1c1e;--ink-muted:#8e8e93;--ink-light:#aeaeb2;--border:#e5e5ea;--input-bg:#f9f9fb;--teal:#0f766e;--teal-light:#d1fae5;--teal-dark:#065f46;--amber:#d97706;--amber-light:#fef3c7;--green:#16a34a;--shadow:0 1px 3px rgba(0,0,0,0.04)}
+.dark{--bg:#1c1c1e;--surface:#2c2c2e;--ink:#f5f5f7;--ink-muted:#8e8e93;--border:#3a3a3c;--input-bg:#3a3a3c;--teal:#14b8a6;--teal-light:#064e3b}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased}
+input,button,textarea,select{font-family:inherit;font-size:inherit}
+
+.header{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.header-logo{width:36px;height:36px;border-radius:10px;object-fit:cover;flex-shrink:0}
+.header-title{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;color:var(--ink);flex:1}
+.header-actions{display:flex;gap:6px}
+.header-btn{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-muted)}
+.header-btn svg{width:18px;height:18px;fill:currentColor}
+.header-btn .sun{display:none}.header-btn .moon{display:block}
+.dark .header-btn .sun{display:block}.dark .header-btn .moon{display:none}
+
+.content{padding:16px;max-width:600px;margin:0 auto}
+.card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden}
+.card-header{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 0}
+.card-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--ink)}
+
+.ob-progress{display:flex;gap:4px;padding:12px 16px 8px;justify-content:center}
+.ob-step-dot{width:10px;height:10px;border-radius:50%;background:var(--border);transition:all 0.25s;flex-shrink:0}
+.ob-step-dot.done{background:var(--teal)}
+.ob-step-dot.active{background:var(--teal);box-shadow:0 0 0 3px var(--teal-light);transform:scale(1.2)}
+.ob-step-label{display:flex;justify-content:space-between;padding:0 16px 12px;font-size:12px;color:var(--ink-muted)}
+.ob-step-label span{font-weight:600;color:var(--ink)}
+
+.ob-form{display:none;padding:0 16px 16px}
+.ob-form.active{display:block;animation:fade 0.2s}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+.ob-btns{display:flex;gap:8px;padding:0 16px 20px}
+.ob-btn{flex:1;padding:14px;border-radius:12px;border:none;font-weight:600;font-size:14px;cursor:pointer;text-align:center}
+.ob-btn.primary{background:var(--teal);color:#fff}
+.ob-btn.primary:hover{opacity:0.9}
+.ob-btn.secondary{background:var(--input-bg);color:var(--ink)}
+.ob-btn:disabled{opacity:0.4;cursor:default}
+
+.ob-hint{font-size:12px;color:var(--ink-muted);margin-top:4px;line-height:1.4}
+.ob-success{display:none;flex-direction:column;align-items:center;padding:40px 20px;text-align:center}
+.ob-success.show{display:flex}
+.ob-success-icon{width:56px;height:56px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;margin-bottom:12px}
+.ob-success-title{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.ob-success-desc{font-size:13px;color:var(--ink-muted)}
+
+.modal-label{display:block;font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px}
+.modal-field{margin-bottom:14px}
+.modal-input,.modal-select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--ink);background:var(--input-bg);appearance:none;-webkit-appearance:none;transition:border-color 0.2s}
+.modal-input:focus,.modal-select:focus{outline:none;border-color:var(--teal);background:var(--surface)}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+@media(min-width:640px){.content{padding:32px 24px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <img class="header-logo" src="logo-1.jpeg" alt="" />
+  <span class="header-title">İşletme Kurulumu</span>
+  <div class="header-actions">
+    <span style="font-size:12px;color:var(--ink-muted)" id="ob-saved"></span>
+    <button class="header-btn" id="theme-toggle" aria-label="Tema">
+      <svg class="moon" viewBox="0 0 24 24"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0z"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="content">
+<div class="card">
+  <div class="card-header"><span class="card-title">İşletme Bilgileri</span></div>
+  <div class="ob-progress" id="ob-progress"></div>
+  <div class="ob-step-label"><span id="ob-step-num">Adım 1/12</span><span id="ob-step-name">İşletme Bilgileri</span></div>
+
+  <!-- STEP 1 -->
+  <div class="ob-form active" data-step="1">
+    <div class="modal-field"><label class="modal-label">İşletme Adı</label><input class="modal-input ob-field s1" id="ob-1-name" /></div>
+    <div class="modal-field"><label class="modal-label">İşletme Türü</label>
+      <select class="modal-select ob-field s1" id="ob-1-type"><option value="bungalow">Bungalov</option><option value="tinyhouse">Tiny House</option><option value="villa">Villa</option><option value="hotel">Otel</option><option value="pension">Pansiyon</option><option value="glamping">Glamping</option><option value="apart">Apart</option><option value="camping">Kamp</option></select></div>
+    <div class="modal-field"><label class="modal-label">Adres</label><input class="modal-input ob-field s1" id="ob-1-address" /></div>
+    <div class="modal-row"><div class="modal-field"><label class="modal-label">Şehir</label><input class="modal-input ob-field s1" id="ob-1-city" /></div><div class="modal-field"><label class="modal-label">Telefon</label><input class="modal-input ob-field s1" id="ob-1-phone" /></div></div>
+    <div class="modal-field"><label class="modal-label">E-posta</label><input class="modal-input ob-field s1" id="ob-1-email" type="email" /></div>
+    <div class="modal-field"><label class="modal-label">WhatsApp</label><input class="modal-input ob-field s1" id="ob-1-wa" placeholder="05XX XXX XX XX" /></div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="ob-form" data-step="2">
+    <div class="modal-field"><label class="modal-label">Yol Tarifi</label><textarea class="modal-input ob-field s2" id="ob-2-dir" rows="2"></textarea></div>
+    <div class="modal-field"><label class="modal-label">Otopark</label><select class="modal-select ob-field s2" id="ob-2-park"><option value="yes">Var</option><option value="no">Yok</option></select></div>
+    <div class="modal-row"><div class="modal-field"><label class="modal-label">Enlem</label><input class="modal-input ob-field s2" id="ob-2-lat" /></div><div class="modal-field"><label class="modal-label">Boylam</label><input class="modal-input ob-field s2" id="ob-2-lng" /></div></div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="ob-form" data-step="3">
+    <div class="ob-hint">En az 1 birim ekleyin</div>
+    <div id="ob-3-units"></div>
+    <button class="ob-btn secondary" onclick="addUnit()" type="button" style="padding:10px;font-size:13px">+ Birim Ekle</button>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="ob-form" data-step="4">
+    <div class="modal-field"><label class="modal-label">Para Birimi</label><select class="modal-select ob-field s4" id="ob-4-cur"><option value="TRY">₺ TL</option><option value="EUR">€ Euro</option></select></div>
+    <div class="modal-field"><label class="modal-label">Minimum Gece</label><input class="modal-input ob-field s4" id="ob-4-min" type="number" value="1" min="1" /></div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="ob-form" data-step="5">
+    <div class="ob-hint">Özellikleri seçin</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" id="ob-5-am"></div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="ob-form" data-step="6">
+    <div class="modal-row"><div class="modal-field"><label class="modal-label">Giriş</label><input class="modal-input ob-field s6" id="ob-6-ci" type="time" value="14:00" /></div><div class="modal-field"><label class="modal-label">Çıkış</label><input class="modal-input ob-field s6" id="ob-6-co" type="time" value="11:00" /></div></div>
+    <div class="modal-field"><label class="modal-label">Evcil Hayvan</label><select class="modal-select ob-field s6" id="ob-6-pet"><option value="allowed">İzin</option><option value="not_allowed">Yasak</option></select></div>
+    <div class="modal-field"><label class="modal-label">Sigara</label><select class="modal-select ob-field s6" id="ob-6-smoke"><option value="not_allowed">Yasak</option><option value="outdoor">Dışarıda</option></select></div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="ob-form" data-step="7">
+    <div class="modal-field"><label class="modal-label">İptal Politikası</label><select class="modal-select ob-field s7" id="ob-7-pol"><option value="flexible">Esnek (7 gün ücretsiz)</option><option value="moderate">Orta (5 gün)</option><option value="strict">Katı (3 gün)</option></select></div>
+    <div class="modal-field"><label class="modal-label">Ücretsiz İptal (gün)</label><input class="modal-input ob-field s7" id="ob-7-free" type="number" value="7" /></div>
+  </div>
+
+  <!-- STEP 8 -->
+  <div class="ob-form" data-step="8">
+    <div class="modal-field"><label class="modal-label">Kapora %</label><input class="modal-input ob-field s8" id="ob-8-dep" type="number" value="30" /></div>
+    <div class="modal-field"><label class="modal-label">IBAN</label><input class="modal-input ob-field s8" id="ob-8-iban" placeholder="TR00 0000" /></div>
+    <div class="modal-row"><div class="modal-field"><label class="modal-label">Banka</label><input class="modal-input ob-field s8" id="ob-8-bank" /></div><div class="modal-field"><label class="modal-label">Hesap Sahibi</label><input class="modal-input ob-field s8" id="ob-8-holder" /></div></div>
+  </div>
+
+  <!-- STEP 9 -->
+  <div class="ob-form" data-step="9">
+    <div class="modal-field"><label class="modal-label">Market</label><input class="modal-input ob-field s9" id="ob-9-mkt" /></div>
+    <div class="modal-field"><label class="modal-label">Restoran</label><input class="modal-input ob-field s9" id="ob-9-res" /></div>
+    <div class="modal-row"><div class="modal-field"><label class="modal-label">Deniz</label><input class="modal-input ob-field s9" id="ob-9-beach" /></div><div class="modal-field"><label class="modal-label">Havalimanı</label><input class="modal-input ob-field s9" id="ob-9-air" /></div></div>
+  </div>
+
+  <!-- STEP 10 -->
+  <div class="ob-form" data-step="10">
+    <div class="modal-row"><div class="modal-field"><label class="modal-label">Yetkili Adı</label><input class="modal-input ob-field s10" id="ob-10-name" /></div><div class="modal-field"><label class="modal-label">Telefon</label><input class="modal-input ob-field s10" id="ob-10-phone" /></div></div>
+    <div class="modal-field"><label class="modal-label">En Yakın Hastane</label><input class="modal-input ob-field s10" id="ob-10-hosp" /></div>
+  </div>
+
+  <!-- STEP 11 -->
+  <div class="ob-form" data-step="11">
+    <div class="modal-field"><label class="modal-label">Resepsiyonist Adı</label><input class="modal-input ob-field s11" id="ob-11-per" placeholder="Örn: Elif" /></div>
+    <div class="modal-field"><label class="modal-label">Karşılama Mesajı</label><textarea class="modal-input ob-field s11" id="ob-11-greet" rows="2" placeholder="Merhaba, hoş geldiniz!"></textarea></div>
+    <div class="modal-field"><label class="modal-label">Ton</label><select class="modal-select ob-field s11" id="ob-11-tone"><option value="warm">Sıcak</option><option value="friendly">Samimi</option><option value="formal">Resmi</option></select></div>
+  </div>
+
+  <!-- STEP 12 -->
+  <div class="ob-form" data-step="12">
+    <div class="ob-hint">Tüm bilgiler kaydedildi. Onaylamak için Tamamla'ya basın.</div>
+  </div>
+
+  <div class="ob-success" id="ob-success">
+    <div class="ob-success-icon">✓</div>
+    <div class="ob-success-title">Kurulum Tamamlandı!</div>
+    <div class="ob-success-desc">İşletmeniz artık yayında. Dijital resepsiyonistiniz hazır.</div>
+    <button class="ob-btn primary" onclick="window.close()" style="margin-top:16px;max-width:200px">Kapat</button>
+  </div>
+
+  <div class="ob-btns">
+    <button class="ob-btn secondary" id="ob-back" onclick="prevStep()">← Geri</button>
+    <button class="ob-btn primary" id="ob-next" onclick="nextStep()">Devam →</button>
+  </div>
+</div>
+</div>
+
+<script>
+(function(){
+'use strict';
+const html=document.documentElement;
+const saved=localStorage.getItem('theme');
+function setTheme(d){html.classList.toggle('dark',d);localStorage.setItem('theme',d?'dark':'light')}
+if(saved)setTheme(saved==='dark');else setTheme(window.matchMedia('(prefers-color-scheme:dark)').matches);
+document.getElementById('theme-toggle')?.addEventListener('click',()=>setTheme(!html.classList.contains('dark')));
+
+const OB_KEY='ob_data';
+const steps=[
+{name:'İşletme Bilgileri',fields:['ob-1-name','ob-1-type','ob-1-address','ob-1-city','ob-1-phone','ob-1-email','ob-1-wa']},
+{name:'Konum',fields:['ob-2-dir','ob-2-park','ob-2-lat','ob-2-lng']},
+{name:'Birimler',fields:[]},
+{name:'Fiyatlandırma',fields:['ob-4-cur','ob-4-min']},
+{name:'Özellikler',fields:[]},
+{name:'Kurallar',fields:['ob-6-ci','ob-6-co','ob-6-pet','ob-6-smoke']},
+{name:'İptal',fields:['ob-7-pol','ob-7-free']},
+{name:'Ödeme',fields:['ob-8-dep','ob-8-iban','ob-8-bank','ob-8-holder']},
+{name:'Çevre',fields:['ob-9-mkt','ob-9-res','ob-9-beach','ob-9-air']},
+{name:'Acil',fields:['ob-10-name','ob-10-phone','ob-10-hosp']},
+{name:'Karşılama',fields:['ob-11-per','ob-11-greet','ob-11-tone']},
+{name:'Özet',fields:[]}];
+const amenityList=['Jakuzi','Havuz','WiFi','Klima','Mutfak','BBQ','Bahçe','TV','Şömine','Çamaşır','Evcil Hayvan','Otopark'];
+let curStep=1;
+
+function save(){
+  const d={};steps.forEach(s=>{s.fields.forEach(f=>{const e=document.getElementById(f);if(e)d[f]=e.value})});
+  document.querySelectorAll('#ob-5-am input').forEach((c,i)=>{if(c.checked)d['am_'+i]=true});
+  d._step=curStep;d._savedAt=new Date().toLocaleString('tr-TR');
+  localStorage.setItem(OB_KEY,JSON.stringify(d));
+  document.getElementById('ob-saved').textContent='✓ kaydedildi';
+}
+function load(){try{return JSON.parse(localStorage.getItem(OB_KEY))||{}}catch(e){return{}}}
+function apply(){
+  const d=load();
+  Object.keys(d).forEach(k=>{
+    if(k.startsWith('am_')){const i=parseInt(k.replace('am_',''));const c=document.querySelectorAll('#ob-5-am input');if(c[i])c[i].checked=true}
+    else{const e=document.getElementById(k);if(e)e.value=d[k]}
+  });
+  if(d._step)curStep=Math.max(1,Math.min(12,parseInt(d._step)));
+}
+
+function render(){
+  const p=document.getElementById('ob-progress');p.innerHTML='';
+  for(let i=1;i<=12;i++){const d=document.createElement('div');d.className='ob-step-dot';if(i<curStep)d.classList.add('done');if(i===curStep)d.classList.add('active');p.appendChild(d)}
+  document.getElementById('ob-step-num').textContent='Adım '+curStep+'/12';
+  document.getElementById('ob-step-name').textContent=steps[curStep-1].name;
+  document.querySelectorAll('.ob-form').forEach(f=>f.classList.toggle('active',parseInt(f.dataset.step)===curStep));
+  document.getElementById('ob-back').disabled=curStep<=1;
+  document.getElementById('ob-next').textContent=curStep>=12?'Tamamla':'Devam →';
+}
+
+function go(n){curStep=n;render()}
+
+window.nextStep=function(){
+  if(curStep>=12){finish();return}
+  save();
+  if(curStep<12){curStep++;go(curStep)}
+};
+window.prevStep=function(){
+  if(curStep>1){curStep--;go(curStep)}
+};
+window.addUnit=function(){
+  const c=document.getElementById('ob-3-units');
+  const d=document.createElement('div');d.style.cssText='background:var(--input-bg);border-radius:10px;padding:12px;margin-bottom:8px';
+  d.innerHTML='<div class="modal-row" style="margin-bottom:8px"><div class="modal-field" style="margin:0"><label class="modal-label">Ad</label><input class="modal-input ob-field" /></div><div class="modal-field" style="margin:0"><label class="modal-label">Adet</label><input class="modal-input ob-field" type="number" value="1" /></div></div><div class="modal-row"><div class="modal-field" style="margin:0"><label class="modal-label">Kapasite</label><input class="modal-input ob-field" type="number" value="2" /></div><div class="modal-field" style="margin:0"><label class="modal-label">Ücret</label><input class="modal-input ob-field" type="number" /></div></div>';
+  c.appendChild(d);
+};
+function finish(){
+  save();
+  document.querySelectorAll('.ob-form').forEach(f=>f.classList.remove('active'));
+  document.querySelector('.ob-btns').style.display='none';
+  document.getElementById('ob-progress').style.display='none';
+  document.getElementById('ob-step-label').style.display='none';
+  document.getElementById('ob-success').classList.add('show');
+  localStorage.setItem(OB_KEY+'_done','true');
+}
+
+// Init amenities
+const am=document.getElementById('ob-5-am');
+amenityList.forEach(a=>{const l=document.createElement('label');l.style.cssText='display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);font-size:13px;cursor:pointer';const c=document.createElement('input');c.type='checkbox';c.className='ob-field';l.appendChild(c);l.append(a);am.appendChild(l)});
+apply();
+go(curStep);
+
+// Auto-save on field change
+document.addEventListener('input',()=>{const t=document.getElementById('ob-saved');t.textContent='kaydediliyor...';clearTimeout(t._t);t._t=setTimeout(()=>save(),500)});
+
+})();
+</script>
+</body>
+</html>
