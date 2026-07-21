@@ -1,56 +1,28 @@
-# ─────────────────────────────────────────────────
 # Resepsiyonistim — Production Dockerfile
-# Next.js 16 Standalone Build
-# ─────────────────────────────────────────────────
+# Single-stage Next.js 16 production server
 
-# Stage 1: Install dependencies
-FROM node:20-alpine AS deps
+FROM node:20-alpine
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm ci && npm cache clean --force
-
-# Stage 2: Build
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-
-# Build-time env vars (baked into client bundle)
-ARG NEXT_PUBLIC_SUPABASE_URL
-ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
-ARG NEXT_PUBLIC_VAPID_PUBLIC_KEY
-ARG NEXT_PUBLIC_SITE_URL
-ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
-ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
-ENV NEXT_PUBLIC_VAPID_PUBLIC_KEY=$NEXT_PUBLIC_VAPID_PUBLIC_KEY
-ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
-
-RUN npm run build
-
-# Stage 3: Production runner
-FROM node:20-alpine AS runner
-WORKDIR /app
-
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Create non-root user
-RUN addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs
+# Install ALL dependencies (including devDependencies for build)
+COPY package.json package-lock.json* ./
+RUN npm ci && npm cache clean --force
 
-# Copy built assets
-COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Copy source code
+COPY . .
 
-USER nextjs
+# Build the Next.js application
+RUN npm run build
 
+# Expose port  
 EXPOSE 3000
-
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3000/api/health || exit 1
 
-CMD ["node", "server.js"]
+# Start Next.js production server
+CMD ["npm", "run", "start"]
