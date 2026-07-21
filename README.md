@@ -50,7 +50,21 @@ src/
 ├── components/   # UI components (shadcn/ui)
 ├── hooks/        # React hooks
 └── lib/          # Utilities, types, API clients
+public/
+├── login.html    # Mobil uyumlu giriş/kayıt sayfası
+├── panel.html    # Yönetim paneli (Panel, Sohbet, Takvim, Ayarlar)
+├── onboarding.html # 12 adımlı işletme kurulum sihirbazı
+├── logo-1.jpeg   # Marka logosu
+└── logo-2.jpeg   # Marka logosu (alternatif)
 ```
+
+## 🔗 Canlı Linkler
+
+| Sayfa | URL |
+|-------|-----|
+| **Giriş/Kayıt** | `https://n8n.merman.sbs/login.html` |
+| **Panel** | `https://n8n.merman.sbs/panel.html` |
+| **İşletme Kurulumu** | `https://n8n.merman.sbs/onboarding.html` |
 
 ## 🧬 Brand
 
