@@ -1,10 +1,41 @@
-# Resepsiyonistim — Dijital Resepsiyonist
+# Resepsiyonistim — 'Dijital Resepsiyonist'iniz
 
-**İşletmenize 7/24 çalışan, insan gibi konuşan bir dijital resepsiyonist.**
+**İşletmenize 7/24 çalışan, insan gibi konuşan bir 'Dijital Resepsiyonist'.**
 
-Konaklama işletmeleri için WhatsApp tabanlı dijital resepsiyonist. Misafirlerle insan gibi konuşur, anında yanıtlar, rezervasyonları otomatik alır. AI asistanınızın adını siz belirlersiniz — işletmenize özel bir kimlik kazanır.
+Konaklama işletmeleri için WhatsApp tabanlı dijital resepsiyonist. Misafirlerle insan gibi konuşur, anında yanıtlar, rezervasyonları otomatik alır.
 
-## 🏗️ Stack
+## 🚀 Canlı Sayfalar
+
+| Sayfa | Açıklama | Canlı URL |
+|-------|----------|-----------|
+| 🏠 **Landing Page** | Satış odaklı ana sayfa | [`resepsiyonistim.com`](https://resepsiyonistim.com) |
+| 🔐 **Giriş/Kayıt** | Mobil uyumlu login/signup + dark mode | [`/login.html`](https://resepsiyonistim.com/login.html) |
+| 📊 **Panel** | Yönetim paneli (Panel, Sohbet, Takvim, Ayarlar) | [`/panel.html`](https://resepsiyonistim.com/panel.html) |
+| 🛠️ **İşletme Kurulumu** | 12 adımlı onboarding sihirbazı | [`/onboarding.html`](https://resepsiyonistim.com/onboarding.html) |
+
+> Tüm statik sayfalar `public/` klasöründe. Next.js projesine entegre, doğrudan açılabilir.
+
+## 📁 Proje Yapısı
+
+```
+resepsiyonistim/
+├── public/                  # Statik HTML sayfaları
+│   ├── index.html           # Landing page (ana sayfa)
+│   ├── login.html           # Giriş / kayıt
+│   ├── panel.html           # Yönetim paneli
+│   ├── onboarding.html      # 12 adımlı kurulum
+│   ├── logo-1.jpeg          # Marka logosu
+│   └── logo-2.jpeg          # Marka logosu (alternatif)
+├── src/                     # Next.js App Router
+│   ├── app/                 # Sayfalar
+│   ├── components/          # Bileşenler
+│   ├── hooks/               # React hooks
+│   └── lib/                 # Araçlar, tipler, API
+├── docs/                    # Dokümantasyon
+└── ...config dosyaları
+```
+
+## 🧬 Stack
 
 - **Frontend:** Next.js 16 + React 19
 - **Styling:** Tailwind CSS 4 + shadcn/ui
@@ -12,66 +43,33 @@ Konaklama işletmeleri için WhatsApp tabanlı dijital resepsiyonist. Misafirler
 - **Database:** Supabase (PostgreSQL)
 - **Messaging:** Evolution API (WhatsApp)
 - **Payments:** IBAN (şu anlık) → Iyzico (planlanan)
-- **Orchestration:** n8n (WF02 — State+AI)
-- **Deploy:** Static export → nginx → Coolify
+- **Orchestration:** n8n
+- **Deploy:** Coolify
 
-## 🚀 Local Development
+## 🔧 Geliştirme
 
 ```bash
 npm ci
-cp .env.local.example .env.local  # fill in Supabase URL/ANON_KEY, VAPID key
+cp .env.local.example .env.local  # Supabase bilgilerini gir
 npm run dev
 ```
 
-## 🏗️ Production Build
+## 📦 Derleme
 
 ```bash
 npm run build
-# Static export goes to out/
 ```
 
-## 📦 Deploy
+## 🌐 GitHub Pages
 
-Static export served via nginx (see `nginx.conf`). Deployed on Coolify at `panel.merman.sbs`.
+Statik sayfalar (`public/`) GitHub Pages ile de yayına alınabilir:
 
-## 🔐 Environment Variables
+1. Repo → **Settings** → **Pages**
+2. **Branch**: `main`, **folder**: `/ (root)`
+3. URL: `https://mermancloud-cmd.github.io/resepsiyonistim/`
 
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key |
-| `NEXT_PUBLIC_VAPID_PUBLIC_KEY` | Web Push VAPID public key |
+Ya da doğrudan **Coolify** ile `resepsiyonistim.com` domaininde.
 
-## 📁 Project Structure
+---
 
-```
-src/
-├── app/          # Next.js App Router pages
-├── components/   # UI components (shadcn/ui)
-├── hooks/        # React hooks
-└── lib/          # Utilities, types, API clients
-public/
-├── login.html    # Mobil uyumlu giriş/kayıt sayfası
-├── panel.html    # Yönetim paneli (Panel, Sohbet, Takvim, Ayarlar)
-├── onboarding.html # 12 adımlı işletme kurulum sihirbazı
-├── logo-1.jpeg   # Marka logosu
-└── logo-2.jpeg   # Marka logosu (alternatif)
-```
-
-## 🔗 Canlı Linkler
-
-| Sayfa | URL |
-|-------|-----|
-| **Giriş/Kayıt** | `https://n8n.merman.sbs/login.html` |
-| **Panel** | `https://n8n.merman.sbs/panel.html` |
-| **İşletme Kurulumu** | `https://n8n.merman.sbs/onboarding.html` |
-
-## 🧬 Brand
-
-- Repo PRIVATE
-- "AI" / "yapay zeka" → "dijital resepsiyonist" / "dijital asistan"
-- Brand protection #1
-
-## 📄 License
-
-Private — Merman Cloud Inc.
+© 2026 Resepsiyonistim — Merman Cloud Inc.
