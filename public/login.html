@@ -10,8 +10,8 @@
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{font-size:16px;-webkit-text-size-adjust:100%}
-  :root{--bg:#fff;--surface:#fff;--ink:#1c1c1e;--ink-muted:#8e8e93;--ink-light:#aeaeb2;--border:#e5e5ea;--input-bg:#f9f9fb;--shadow:0 2px 20px rgba(0,0,0,0.06),0 0 0 1px rgba(0,0,0,0.03);--shadow-focus:0 0 0 3px rgba(0,0,0,0.06);--error:#ff3b30}
-  .dark{--bg:#1c1c1e;--surface:#2c2c2e;--ink:#f5f5f7;--ink-muted:#8e8e93;--ink-light:#636366;--border:#3a3a3c;--input-bg:#3a3a3c;--shadow:0 2px 20px rgba(0,0,0,0.3),0 0 0 1px rgba(255,255,255,0.05);--shadow-focus:0 0 0 3px rgba(255,255,255,0.12);--error:#ff453a}
+  :root{--bg:#fff;--surface:#fff;--ink:#1c1c1e;--ink-muted:#8e8e93;--ink-light:#aeaeb2;--border:#e5e5ea;--input-bg:#f9f9fb;--shadow:0 2px 20px rgba(0,0,0,0.06),0 0 0 1px rgba(0,0,0,0.03);--shadow-focus:0 0 0 3px rgba(0,0,0,0.06);--error:#ff3b30;--teal:#0f766e;--green:#16a34a}
+  .dark{--bg:#1c1c1e;--surface:#2c2c2e;--ink:#f5f5f7;--ink-muted:#8e8e93;--ink-light:#636366;--border:#3a3a3c;--input-bg:#3a3a3c;--shadow:0 2px 20px rgba(0,0,0,0.3),0 0 0 1px rgba(255,255,255,0.05);--shadow-focus:0 0 0 3px rgba(255,255,255,0.12);--error:#ff453a;--teal:#14b8a6;--green:#22c55e}
   body{
     font-family:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
     background:var(--bg);
@@ -22,221 +22,72 @@
     -webkit-font-smoothing:antialiased;
   }
   input,button,textarea{font-family:inherit;font-size:inherit}
-
-  .logo-wrap{
-    display:flex;flex-direction:column;
-    align-items:center;
-    padding:48px 24px 8px;
-  }
-  .logo-img{
-    width:72px;height:72px;
-    border-radius:16px;
-    object-fit:cover;
-    margin-bottom:12px;
-  }
-  .logo-text{
-    font-family:'Outfit',sans-serif;
-    font-size:20px;
-    font-weight:700;
-    letter-spacing:-0.4px;
-    color:var(--ink);
-  }
-  .tagline{
-    text-align:center;
-    font-size:13px;
-    color:var(--ink-muted);
-    padding:0 24px 28px;
-    font-weight:400;
-    line-height:1.5;
-  }
-
-  .card{
-    background:var(--surface);
-    border-radius:20px;
-    box-shadow:var(--shadow);
-    margin:0 16px;
-    overflow:hidden;
-  }
-
+  .logo-wrap{display:flex;flex-direction:column;align-items:center;padding:48px 24px 8px}
+  .logo-img{width:72px;height:72px;border-radius:16px;object-fit:cover;margin-bottom:12px}
+  .logo-text{font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;letter-spacing:-0.4px;color:var(--ink)}
+  .tagline{text-align:center;font-size:13px;color:var(--ink-muted);padding:0 24px 28px;font-weight:400;line-height:1.5}
+  .card{background:var(--surface);border-radius:20px;box-shadow:var(--shadow);margin:0 16px;overflow:hidden}
   .tabs{display:flex;position:relative}
-  .tab-btn{
-    flex:1;padding:18px 12px 16px;
-    background:none;border:none;
-    font-family:'Outfit',sans-serif;
-    font-size:14px;font-weight:600;
-    color:var(--ink-muted);
-    cursor:pointer;
-    position:relative;
-    transition:color 0.2s;
-    -webkit-tap-highlight-color:transparent;
-    letter-spacing:0.2px;
-  }
-  .tab-btn::after{
-    content:'';position:absolute;
-    bottom:0;left:24%;right:24%;
-    height:2px;border-radius:2px;
-    background:var(--ink);
-    transform:scaleX(0);
-    transition:transform 0.25s ease;
-  }
+  .tab-btn{flex:1;padding:18px 12px 16px;background:none;border:none;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;color:var(--ink-muted);cursor:pointer;position:relative;transition:color 0.2s;-webkit-tap-highlight-color:transparent;letter-spacing:0.2px}
+  .tab-btn::after{content:'';position:absolute;bottom:0;left:24%;right:24%;height:2px;border-radius:2px;background:var(--ink);transform:scaleX(0);transition:transform 0.25s ease}
   .tab-btn.active{color:var(--ink)}
   .tab-btn.active::after{transform:scaleX(1)}
   .tab-btn:focus-visible{outline:2px solid var(--ink);outline-offset:-2px;border-radius:8px}
-
-  .tab-theme{
-    width:44px;height:44px;
-    border:none;background:none;
-    cursor:pointer;flex-shrink:0;
-    display:flex;align-items:center;justify-content:center;
-    color:var(--ink-muted);
-    transition:color 0.2s,background 0.2s;
-    border-radius:8px;
-    margin:auto 4px auto 0;
-    -webkit-tap-highlight-color:transparent;
-  }
+  .tab-theme{width:44px;height:44px;border:none;background:none;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--ink-muted);transition:color 0.2s,background 0.2s;border-radius:8px;margin:auto 4px auto 0;-webkit-tap-highlight-color:transparent}
   .tab-theme:hover{color:var(--ink);background:var(--input-bg)}
   .tab-theme:active{transform:scale(0.9)}
   .tab-theme svg{width:18px;height:18px;fill:currentColor}
-  .tab-theme .sun{display:none}
-  .tab-theme .moon{display:block}
-  .dark .tab-theme .sun{display:block}
-  .dark .tab-theme .moon{display:none}
-
+  .tab-theme .sun{display:none}.tab-theme .moon{display:block}
+  .dark .tab-theme .sun{display:block}.dark .tab-theme .moon{display:none}
   .tab-content{display:none;padding:24px 20px 20px}
   .tab-content.active{display:block;animation:fadeIn 0.25s ease}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-
   .fg{margin-bottom:16px}
-  .fl{
-    display:block;
-    font-size:12px;font-weight:600;
-    color:var(--ink);
-    margin-bottom:5px;
-    letter-spacing:0.3px;
-    text-transform:uppercase;
-  }
-  .fi{
-    width:100%;padding:14px 16px;
-    border:1.5px solid var(--border);
-    border-radius:12px;
-    font-size:15px;
-    color:var(--ink);
-    background:var(--input-bg);
-    transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;
-    appearance:none;-webkit-appearance:none;
-  }
+  .fl{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:5px;letter-spacing:0.3px;text-transform:uppercase}
+  .fi{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:12px;font-size:15px;color:var(--ink);background:var(--input-bg);transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;appearance:none;-webkit-appearance:none}
   .fi::placeholder{color:var(--ink-light)}
-  .fi:focus{
-    outline:none;
-    border-color:var(--ink);
-    box-shadow:var(--shadow-focus);
-    background:var(--surface);
-  }
+  .fi:focus{outline:none;border-color:var(--ink);box-shadow:var(--shadow-focus);background:var(--surface)}
   .fi.error{border-color:var(--error)}
   .fi.error:focus{box-shadow:0 0 0 3px rgba(255,59,48,0.12)}
   .ferr{font-size:12px;color:var(--error);margin-top:4px;display:none}
   .ferr.show{display:block}
-
   .pw{position:relative}
-  .pw-toggle{
-    position:absolute;right:14px;top:50%;
-    transform:translateY(-50%);
-    background:none;border:none;
-    color:var(--ink-muted);font-size:12px;
-    padding:4px 6px;cursor:pointer;
-    font-weight:600;letter-spacing:0.3px;
-    text-transform:uppercase;
-    -webkit-tap-highlight-color:transparent;
-  }
-
+  .pw-toggle{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--ink-muted);font-size:12px;padding:4px 6px;cursor:pointer;font-weight:600;letter-spacing:0.3px;text-transform:uppercase;-webkit-tap-highlight-color:transparent}
   .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-  .cb-group{
-    display:flex;align-items:flex-start;
-    gap:10px;margin-bottom:20px;
-  }
-  .cb-group input[type="checkbox"]{
-    width:18px;height:18px;margin-top:3px;
-    accent-color:var(--ink);flex-shrink:0;cursor:pointer;
-  }
-  .cb-label{
-    font-size:13px;color:var(--ink-muted);line-height:1.4;cursor:pointer;
-  }
+  .cb-group{display:flex;align-items:flex-start;gap:10px;margin-bottom:20px}
+  .cb-group input[type="checkbox"]{width:18px;height:18px;margin-top:3px;accent-color:var(--ink);flex-shrink:0;cursor:pointer}
+  .cb-label{font-size:13px;color:var(--ink-muted);line-height:1.4;cursor:pointer}
   .cb-label a{color:var(--ink);text-decoration:none;font-weight:600}
   .cb-label a:hover{text-decoration:underline}
-
-  .btn{
-    width:100%;padding:15px;
-    border:none;border-radius:12px;
-    background:var(--ink);
-    color:var(--bg);
-    font-family:'Outfit',sans-serif;
-    font-size:15px;font-weight:600;
-    cursor:pointer;
-    transition:opacity 0.2s,transform 0.15s;
-    -webkit-tap-highlight-color:transparent;
-    letter-spacing:0.2px;
-  }
+  .btn{width:100%;padding:15px;border:none;border-radius:12px;background:var(--ink);color:var(--bg);font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity 0.2s,transform 0.15s;-webkit-tap-highlight-color:transparent;letter-spacing:0.2px}
   .btn:hover{opacity:0.9}
   .btn:active{transform:scale(0.98)}
   .btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-
-  .divider{
-    display:flex;align-items:center;gap:12px;
-    margin:20px 0;
-  }
+  .btn:disabled{opacity:0.5;cursor:not-allowed}
+  .divider{display:flex;align-items:center;gap:12px;margin:20px 0}
   .div-line{flex:1;height:1px;background:var(--border)}
   .div-text{font-size:11px;color:var(--ink-light);font-weight:500;white-space:nowrap;letter-spacing:0.5px;text-transform:uppercase}
-
-  .social{
-    display:grid;grid-template-columns:1fr 1fr;gap:10px;
-  }
-  .social-btn{
-    display:flex;align-items:center;justify-content:center;
-    gap:8px;padding:12px;
-    border:1.5px solid var(--border);
-    border-radius:12px;
-    background:var(--surface);
-    font-size:13px;font-weight:600;
-    color:var(--ink);
-    cursor:pointer;
-    transition:background 0.2s,border-color 0.2s;
-    -webkit-tap-highlight-color:transparent;
-  }
+  .social{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .social-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;transition:background 0.2s,border-color 0.2s;-webkit-tap-highlight-color:transparent}
   .social-btn:hover{background:var(--input-bg);border-color:var(--ink-muted)}
   .social-btn:active{transform:scale(0.98)}
   .social-btn svg{width:18px;height:18px;flex-shrink:0}
-
   .ffoot{text-align:center;margin-top:20px;font-size:13px;color:var(--ink-muted)}
   .ffoot a{color:var(--ink);text-decoration:none;font-weight:600}
   .ffoot a:hover{text-decoration:underline}
-
-  .success{
-    display:none;flex-direction:column;
-    align-items:center;padding:40px 20px;
-    text-align:center;animation:fadeIn 0.3s ease;
-  }
+  .success{display:none;flex-direction:column;align-items:center;padding:40px 20px;text-align:center;animation:fadeIn 0.3s ease}
   .success.show{display:flex}
-  .s-icon{
-    width:56px;height:56px;border-radius:50%;
-    background:var(--ink);color:var(--bg);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Outfit',sans-serif;
-    font-size:24px;font-weight:600;margin-bottom:16px;
-  }
+  .s-icon{width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-size:24px;font-weight:600;margin-bottom:16px}
   .s-title{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px}
   .s-desc{font-size:14px;color:var(--ink-muted);max-width:280px}
-
+  .s-error{margin-top:12px;font-size:12px;color:var(--error);text-align:center;display:none}
+  .s-error.show{display:block}
   .page-footer{text-align:center;padding:24px 20px;font-size:11px;color:var(--ink-light);margin-top:auto;letter-spacing:0.3px}
-
-  @media(min-width:640px){
-    .card{margin:0 auto;max-width:400px}
-    .logo-wrap{padding-top:64px}
-  }
-  @media(min-width:1024px){
-    body{justify-content:center;align-items:center}
-    .logo-wrap{padding-top:0}
-  }
+  .alert{background:#fef3c7;border:1px solid #f59e0b;border-radius:10px;padding:10px 14px;font-size:12px;color:#92400e;margin-bottom:14px;line-height:1.5;display:none}
+  .alert.show{display:block}
+  .dark .alert{background:#451a03;border-color:#d97706;color:#fde68a}
+  @media(min-width:640px){.card{margin:0 auto;max-width:400px}.logo-wrap{padding-top:64px}}
+  @media(min-width:1024px){body{justify-content:center;align-items:center}.logo-wrap{padding-top:0}}
 </style>
 </head>
 <body>
@@ -260,6 +111,7 @@
   <!-- LOGIN -->
   <div class="tab-content active" id="tab-login" role="tabpanel">
     <form id="login-form" novalidate>
+      <div class="alert" id="login-alert"></div>
       <div class="fg">
         <label class="fl" for="login-email">E-posta</label>
         <input class="fi" id="login-email" type="email" placeholder="ornek@isletme.com" autocomplete="email" required />
@@ -273,7 +125,7 @@
         </div>
         <div class="ferr">Şifre en az 6 karakter olmalıdır</div>
       </div>
-      <button class="btn" type="submit">Giriş Yap</button>
+      <button class="btn" type="submit" id="login-btn">Giriş Yap</button>
       <div class="divider"><span class="div-line"></span><span class="div-text">veya</span><span class="div-line"></span></div>
       <div class="social">
         <button class="social-btn" type="button">
@@ -292,6 +144,7 @@
   <!-- SIGNUP -->
   <div class="tab-content" id="tab-signup" role="tabpanel">
     <form id="signup-form" novalidate>
+      <div class="alert" id="signup-alert"></div>
       <div class="frow">
         <div class="fg">
           <label class="fl" for="signup-name">Ad</label>
@@ -321,110 +174,219 @@
       </div>
       <div class="cb-group">
         <input type="checkbox" id="signup-terms" required />
-        <label class="cb-label" for="signup-terms"><a href="#">Kullanım koşulları</a> ve <a href="#">gizlilik politikası</a>'nı kabul ediyorum</label>
+        <label class="cb-label" for="signup-terms"><a href="/terms.html" target="_blank">Kullanım koşulları</a> ve <a href="/privacy.html" target="_blank">gizlilik politikası</a>'nı kabul ediyorum</label>
       </div>
-      <button class="btn" type="submit">30 Gün Ücretsiz Dene</button>
+      <button class="btn" type="submit" id="signup-btn">30 Gün Ücretsiz Dene</button>
       <div class="ffoot">Zaten hesabın var mı? <a href="#" id="switch-to-login">Giriş yap</a></div>
     </form>
   </div>
 
   <div class="success" id="success-state">
     <div class="s-icon">✓</div>
-    <div class="s-title">Hoş Geldiniz</div>
-    <div class="s-desc">Hesabınız oluşturuldu. Kısa süre içinde yönlendirileceksiniz.</div>
+    <div class="s-title" id="success-title">Hoş Geldiniz</div>
+    <div class="s-desc" id="success-desc">Hesabınız oluşturuldu. Kısa süre içinde yönlendirileceksiniz.</div>
+    <div class="s-error" id="error-msg"></div>
   </div>
 </div>
 
-<div class="page-footer">© 2026 Resepsiyonistim</div>
+<div class="page-footer">© 2026 Resepsiyonistim — <a href="/privacy.html" style="color:var(--ink-light);text-decoration:none">Gizlilik</a> · <a href="/terms.html" style="color:var(--ink-light);text-decoration:none">Koşullar</a></div>
 
-<script>
-(function(){
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const SUPABASE_URL = 'https://xzmakpsongrcbnrpdvsy.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6bWFrcHNvbmdyY2JucnBkdnN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0MTU5MjgsImV4cCI6MjA5NTk5MTkyOH0.kIeLLVfO68wShvgPjEvHxtYG61U6a7_jM_1bDxisyYo';
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ── Add this to window for non-module scripts ──
+window.__supabase = supabase;
+window.__isSigningUp = false;
+
+(async function(){
   'use strict';
 
-  // ── Dark Mode ────────────────────────────────────
+  // ── Check if already logged in ──
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    showSuccess('Zaten giriş yaptınız', 'Panele yönlendiriliyorsunuz...', '/onboarding.html');
+    return;
+  }
+
+  // ── UI Elements ──
   const html = document.documentElement;
   const themeBtn = document.getElementById('theme-toggle');
+  const tabs = document.querySelectorAll('.tab-btn');
+  const c = {login: document.getElementById('tab-login'), signup: document.getElementById('tab-signup')};
+  const ss = document.getElementById('success-state');
+  const lf = document.getElementById('login-form');
+  const sf = document.getElementById('signup-form');
+  const loginAlert = document.getElementById('login-alert');
+  const signupAlert = document.getElementById('signup-alert');
+  const loginBtn = document.getElementById('login-btn');
+  const signupBtn = document.getElementById('signup-btn');
 
+  function showAlert(el, msg) { el.textContent = msg; el.classList.add('show'); }
+  function hideAlert(el) { el.classList.remove('show'); el.textContent = ''; }
+
+  // ── Dark Mode ──
   function setTheme(dark) {
     html.classList.toggle('dark', dark);
     localStorage.setItem('theme', dark ? 'dark' : 'light');
   }
-
-  // Init: localStorage > system preference > light
   const saved = localStorage.getItem('theme');
-  if (saved) {
-    setTheme(saved === 'dark');
-  } else {
-    setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  }
-
-  themeBtn?.addEventListener('click', () => {
-    setTheme(!html.classList.contains('dark'));
-  });
-
-  // Listen for system changes
+  if (saved) setTheme(saved === 'dark');
+  else setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
+  themeBtn?.addEventListener('click', () => setTheme(!html.classList.contains('dark')));
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     if (!localStorage.getItem('theme')) setTheme(e.matches);
   });
 
-  // ── Tab Switching ────────────────────────────────
-  const tabs=document.querySelectorAll('.tab-btn');
-  const c={login:document.getElementById('tab-login'),signup:document.getElementById('tab-signup')};
-  const ss=document.getElementById('success-state');
-  const lf=document.getElementById('login-form');
-  const sf=document.getElementById('signup-form');
-
-  function switchTab(id){
-    tabs.forEach(b=>{const a=b.dataset.tab===id;b.classList.toggle('active',a);b.setAttribute('aria-selected',a)});
-    Object.entries(c).forEach(([i,e])=>{if(e)e.classList.toggle('active',i===id)});
+  // ── Tab Switching ──
+  function switchTab(id) {
+    tabs.forEach(b => { const a = b.dataset.tab === id; b.classList.toggle('active', a); b.setAttribute('aria-selected', a); });
+    Object.entries(c).forEach(([i, e]) => { if (e) e.classList.toggle('active', i === id); });
     ss.classList.remove('show');
-    document.querySelectorAll('.tab-content').forEach(e=>e.style.display='');
+    document.querySelectorAll('.tab-content').forEach(e => e.style.display = '');
+    hideAlert(loginAlert);
+    hideAlert(signupAlert);
   }
-  tabs.forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
-  document.getElementById('switch-to-signup')?.addEventListener('click',e=>{e.preventDefault();switchTab('signup')});
-  document.getElementById('switch-to-login')?.addEventListener('click',e=>{e.preventDefault();switchTab('login')});
+  tabs.forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
+  document.getElementById('switch-to-signup')?.addEventListener('click', e => { e.preventDefault(); switchTab('signup'); });
+  document.getElementById('switch-to-login')?.addEventListener('click', e => { e.preventDefault(); switchTab('login'); });
 
-  document.querySelectorAll('.pw-toggle').forEach(b=>{
-    b.addEventListener('click',()=>{
-      const i=b.previousElementSibling;if(!i)return;
-      const p=i.type==='password';i.type=p?'text':'password';b.textContent=p?'Gizle':'Göster';
+  // ── Toggle Password ──
+  document.querySelectorAll('.pw-toggle').forEach(b => {
+    b.addEventListener('click', () => {
+      const i = b.previousElementSibling; if (!i) return;
+      const p = i.type === 'password'; i.type = p ? 'text' : 'password'; b.textContent = p ? 'Gizle' : 'Göster';
     });
   });
 
-  function se(i,m){const g=i.closest('.fg');if(!g)return;i.classList.add('error');const e=g.querySelector('.ferr');if(e){e.textContent=m||'Bu alan zorunludur';e.classList.add('show')}}
-  function ce(i){i.classList.remove('error');const g=i.closest('.fg');if(!g)return;const e=g.querySelector('.ferr');if(e)e.classList.remove('show')}
-  function vf(i){
+  // ── Validation ──
+  function se(i, m) { const g = i.closest('.fg'); if (!g) return; i.classList.add('error'); const e = g.querySelector('.ferr'); if (e) { e.textContent = m || 'Bu alan zorunludur'; e.classList.add('show'); } }
+  function ce(i) { i.classList.remove('error'); const g = i.closest('.fg'); if (!g) return; const e = g.querySelector('.ferr'); if (e) e.classList.remove('show'); }
+  function vf(i) {
     ce(i);
-    if(!i.value.trim()&&i.required){se(i,'Bu alan zorunludur');return false}
-    if(i.type==='email'&&i.value.trim()&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim())){se(i,'Geçerli bir e-posta adresi girin');return false}
-    if(i.type==='password'&&i.value.trim().length<6){se(i,'Şifre en az 6 karakter olmalıdır');return false}
-    if(i.id==='signup-phone'&&i.value.trim()){const d=i.value.replace(/\D/g,'');if(d.length<10){se(i,'Geçerli bir telefon numarası girin');return false}}
+    if (!i.value.trim() && i.required) { se(i, 'Bu alan zorunludur'); return false; }
+    if (i.type === 'email' && i.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim())) { se(i, 'Geçerli bir e-posta adresi girin'); return false; }
+    if (i.type === 'password' && i.value.trim().length < 6) { se(i, 'Şifre en az 6 karakter olmalıdır'); return false; }
+    if (i.id === 'signup-phone' && i.value.trim()) { const d = i.value.replace(/\D/g, ''); if (d.length < 10) { se(i, 'Geçerli bir telefon numarası girin'); return false; } }
     return true;
   }
-  document.querySelectorAll('.fi').forEach(i=>{
-    i.addEventListener('blur',()=>vf(i));
-    i.addEventListener('input',()=>{if(i.classList.contains('error'))vf(i)});
+  document.querySelectorAll('.fi').forEach(i => {
+    i.addEventListener('blur', () => vf(i));
+    i.addEventListener('input', () => { if (i.classList.contains('error')) vf(i); });
   });
 
-  function sim(){
-    document.querySelectorAll('.tab-content').forEach(e=>e.style.display='none');
-    tabs.forEach(b=>b.style.display='none');
-    ss.classList.add('show');
+  // ── Phone Formatting ──
+  document.getElementById('signup-phone')?.addEventListener('input', function() {
+    let v = this.value.replace(/\D/g, '');
+    if (v.length > 11) v = v.slice(0, 11);
+    if (!v.startsWith('0') && v.length > 0) v = '0' + v;
+    if (v.length > 0) this.value = '0' + (v.slice(1, 4) || '') + (v.length > 4 ? ' ' : '') + (v.slice(4, 7) || '') + (v.length > 7 ? ' ' : '') + (v.slice(7, 9) || '') + (v.length > 9 ? ' ' : '') + (v.slice(9, 11) || '');
+  });
+
+  // ── Show Loading State ──
+  function setLoading(btn, loading) {
+    btn.disabled = loading;
+    btn.textContent = loading ? (btn.id === 'login-btn' ? 'Giriş yapılıyor...' : 'Hesap oluşturuluyor...') : (btn.id === 'login-btn' ? 'Giriş Yap' : '30 Gün Ücretsiz Dene');
   }
-  lf.addEventListener('submit',e=>{e.preventDefault();let v=true;lf.querySelectorAll('.fi').forEach(i=>{if(!vf(i))v=false});if(v)sim()});
-  sf.addEventListener('submit',e=>{
-    e.preventDefault();let v=true;
-    sf.querySelectorAll('.fi').forEach(i=>{if(!vf(i))v=false});
-    const t=document.getElementById('signup-terms');
-    if(!t.checked){t.style.outline='2px solid #ff3b30';t.style.borderRadius='2px';setTimeout(()=>{t.style.outline=''},2000);v=false}
-    if(v)sim()
+
+  // ── Show Success ──
+  function showSuccess(title, desc, redirectUrl) {
+    document.querySelectorAll('.tab-content').forEach(e => e.style.display = 'none');
+    tabs.forEach(b => b.style.display = 'none');
+    document.getElementById('success-title').textContent = title;
+    document.getElementById('success-desc').textContent = desc;
+    ss.classList.add('show');
+    if (redirectUrl) {
+      setTimeout(() => { window.location.href = redirectUrl; }, 2000);
+    }
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('error-msg');
+    el.textContent = msg;
+    el.classList.add('show');
+  }
+
+  // ── LOGIN ──
+  lf.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideAlert(loginAlert);
+    let valid = true;
+    lf.querySelectorAll('.fi').forEach(i => { if (!vf(i)) valid = false; });
+    if (!valid) return;
+    setLoading(loginBtn, true);
+
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    setLoading(loginBtn, false);
+
+    if (error) {
+      if (error.message.includes('Invalid login') || error.message.includes('Email not confirmed')) {
+        showAlert(loginAlert, '❌ E-posta veya şifre hatalı. Hesabınız yoksa kayıt olun.');
+      } else {
+        showAlert(loginAlert, '❌ ' + error.message);
+      }
+      return;
+    }
+
+    showSuccess('Hoş Geldiniz', 'Panele yönlendiriliyorsunuz...', '/onboarding.html');
   });
 
-  document.getElementById('signup-phone')?.addEventListener('input',function(){
-    let v=this.value.replace(/\D/g,'');
-    if(v.length>11)v=v.slice(0,11);
-    if(v.startsWith('0'))v=v;else if(v.length>0)v='0'+v;
-    if(v.length>0)this.value='0'+(v.slice(1,4)||'')+(v.length>4?' ':'')+(v.slice(4,7)||'')+(v.length>7?' ':'')+(v.slice(7,9)||'')+(v.length>9?' ':'')+(v.slice(9,11)||'');
+  // ── SIGNUP ──
+  sf.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideAlert(signupAlert);
+    let valid = true;
+    sf.querySelectorAll('.fi').forEach(i => { if (!vf(i)) valid = false; });
+    const terms = document.getElementById('signup-terms');
+    if (!terms.checked) { terms.style.outline = '2px solid #ff3b30'; terms.style.borderRadius = '2px'; setTimeout(() => { terms.style.outline = ''; }, 2000); valid = false; }
+    if (!valid) return;
+    setLoading(signupBtn, true);
+
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value;
+    const name = document.getElementById('signup-name').value.trim();
+    const surname = document.getElementById('signup-surname').value.trim();
+    const phone = document.getElementById('signup-phone').value.trim();
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+          surname,
+          phone: phone.replace(/\s/g, ''),
+          full_name: name + ' ' + surname,
+        },
+        emailRedirectTo: window.location.origin + '/onboarding.html',
+      }
+    });
+
+    setLoading(signupBtn, false);
+
+    if (error) {
+      if (error.message.includes('already registered')) {
+        showAlert(signupAlert, '❌ Bu e-posta adresi zaten kayıtlı. Giriş yapmayı deneyin.');
+      } else {
+        showAlert(signupAlert, '❌ ' + error.message);
+      }
+      return;
+    }
+
+    // Check if user was created (might need email confirmation)
+    if (data?.user?.identities?.length === 0) {
+      showSuccess('Neredeyse Hazır!', 'E-posta adresinize bir onay bağlantısı gönderdik. Lütfen gelen kutunuzu kontrol edin.', null);
+      return;
+    }
+
+    // User created successfully
+    showSuccess('Hoş Geldiniz!', 'Hesabınız oluşturuldu. İşletme kurulumuna yönlendiriliyorsunuz...', '/onboarding.html');
   });
 })();
 </script>

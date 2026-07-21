@@ -270,7 +270,24 @@ input,button,textarea,select{font-family:inherit;font-size:inherit}
 </div>
 </div>
 
-<script>
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const SUPABASE_URL_OB = 'https://xzmakpsongrcbnrpdvsy.supabase.co';
+const SUPABASE_ANON_KEY_OB = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6bWFrcHNvbmdyY2JucnBkdnN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0MTU5MjgsImV4cCI6MjA5NTk5MTkyOH0.kIeLLVfO68wShvgPjEvHxtYG61U6a7_jM_1bDxisyYo';
+const __supabase = createClient(SUPABASE_URL_OB, SUPABASE_ANON_KEY_OB);
+window.__supabase = __supabase;
+
+let __session = null;
+(async () => {
+  const { data: { session } } = await __supabase.auth.getSession();
+  __session = session;
+  if (session) {
+    const el = document.getElementById('ob-saved');
+    if (el) el.textContent = '✓ bağlı';
+  }
+})();
+
 (function(){
 'use strict';
 const html=document.documentElement;
@@ -369,6 +386,71 @@ window.getLocation=function(){
 
 function finish(){
   save();
+  // Try to save to Supabase if authenticated
+  (async () => {
+    const d = load();
+    const supabase = window.__supabase;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      try {
+        // Call signup_tenant RPC to create tenant + trial subscription
+        const businessName = d['ob-1-name'] || 'İşletmem';
+        const phone = d['ob-1-phone'] || '';
+        const { data: tenantResult, error: tenantError } = await supabase.rpc('signup_tenant', {
+          p_business_name: businessName,
+          p_phone: phone.replace(/\s/g, ''),
+          p_plan_id: 'pro'
+        });
+        if (tenantError) {
+          console.warn('Tenant creation deferred:', tenantError.message);
+          // Onboarding data saved locally, admin can import
+        } else {
+          // Save onboarding step data
+          if (tenantResult && tenantResult.length > 0) {
+            const tenantId = tenantResult[0].tenant_id;
+            // Save all steps data
+            for (let step = 1; step <= 12; step++) {
+              const stepFields = steps[step-1]?.fields || [];
+              const stepData = {};
+              stepFields.forEach(f => { if (d[f]) stepData[f] = d[f]; });
+              // Also save amenities and units
+              if (step === 5) {
+                const amenities = [];
+                document.querySelectorAll('#ob-5-am input').forEach((c,i) => {
+                  if(c.checked) amenities.push(document.querySelectorAll('#ob-5-am label')[i]?.textContent?.trim() || '');
+                });
+                if (amenities.length > 0) stepData.amenities = amenities;
+              }
+              if (step === 3) {
+                const units = [];
+                document.querySelectorAll('.unit-entry').forEach(u => {
+                  const inputs = u.querySelectorAll('input');
+                  units.push({ name: inputs[0]?.value || '', qty: inputs[1]?.value || '1', cap: inputs[2]?.value || '2', price: inputs[3]?.value || '' });
+                });
+                if (units.length > 0) stepData.units = units;
+              }
+              await supabase.from('onboarding_steps').upsert({
+                business_id: tenantId,
+                step_number: step,
+                is_completed: true,
+                step_data: stepData,
+                completed_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+              }, { onConflict: 'business_id,step_number' });
+            }
+            // Mark tenant onboarding as complete
+            await supabase.from('tenants').update({
+              onboarding_completed: true,
+              onboarding_completed_at: new Date().toISOString()
+            }).eq('id', tenantId);
+          }
+        }
+      } catch (e) {
+        console.warn('Supabase save deferred:', e.message);
+      }
+    }
+  })();
+
   document.querySelectorAll('.ob-form').forEach(f=>f.classList.remove('active'));
   document.querySelector('.ob-btns').style.display='none';
   document.getElementById('ob-progress').style.display='none';
