@@ -1,0 +1,145 @@
+{
+  "name": "Hos Geldiniz E-postasi",
+  "nodes": [
+    {
+      "id": "webhook-trigger",
+      "name": "Webhook (Yeni Kayit)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "webhookId": "welcome-email",
+      "parameters": {
+        "path": "welcome-email",
+        "responseMode": "responseNode",
+        "options": {
+          "rawBody": true
+        }
+      }
+    },
+    {
+      "id": "check-source",
+      "name": "Kaynak Kontrol",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.email || $json.record?.email }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "prepare-email",
+      "name": "E-posta Icerigini Hazirla",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [650, 250],
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "to",
+              "value": "={{ $json.email || $json.record?.email }}"
+            },
+            {
+              "name": "subject",
+              "value": "Resepsiyonistim'e Hos Geldiniz! 🎉"
+            },
+            {
+              "name": "text",
+              "value": "Merhaba {{ $json.name || $json.record?.name || 'Degerli Kullanici' }},\n\nResepsiyonistim'e hos geldiniz!\n\nIsletmeniz icin 7/24 calisan dijital resepsiyonistiniz hazir. Hesabinizi aktif etmek ve isletme kurulumunu tamamlamak icin asagidaki baglantiyi tiklayin:\n\n{{ $json.onboarding_url || 'https://resepsiyonistim.com/onboarding.html' }}\n\n30 gunluk ucretsiz deneme sureniz basladi. Herhangi bir sorunuzda WhatsApp uzerinden bize ulasabilirsiniz:\nhttps://wa.me/905427450654\n\nIyi gunler,\nResepsiyonistim Ekibi"
+            },
+            {
+              "name": "html",
+              "value": "<div style=\"max-width:560px;margin:0 auto;font-family:'Sora',sans-serif;color:#1c1c1e\">\n  <div style=\"text-align:center;padding:32px 0 16px\">\n    <img src=\"https://resepsiyonistim.com/logo-1.jpeg\" alt=\"Resepsiyonistim\" style=\"width:64px;height:64px;border-radius:14px\" />\n    <h1 style=\"font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;margin-top:10px\">Resepsiyonistim'e Hos Geldiniz!</h1>\n  </div>\n  <p style=\"font-size:15px;line-height:1.6\">Merhaba <strong>{{ $json.name || $json.record?.name || 'Degerli Kullanici' }}</strong>,</p>\n  <p style=\"font-size:15px;line-height:1.6\">Resepsiyonistim'e kaydoldugunuz icin tesekkur ederiz! Isletmeniz icin 7/24 calisan dijital resepsiyonistiniz hazir.</p>\n  <div style=\"text-align:center;padding:20px 0\">\n    <a href=\"{{ $json.onboarding_url || 'https://resepsiyonistim.com/onboarding.html' }}\" style=\"display:inline-block;padding:14px 32px;background:#1c1c1e;color:#fff;text-decoration:none;border-radius:10px;font-weight:600;font-size:14px\">\n      Isletme Kurulumunu Tamamla\n    </a>\n  </div>\n  <p style=\"font-size:14px;line-height:1.5;color:#737373\">30 gunluk ucretsiz deneme sureniz basladi. Herhangi bir sorunuzda WhatsApp uzerinden bize ulasabilirsiniz.</p>\n  <p style=\"font-size:14px\">\n    <a href=\"https://wa.me/905427450654\" style=\"color:#0f766e;text-decoration:none;font-weight:600\">WhatsApp'tan Ulasin</a>\n  </p>\n  <hr style=\"border:none;border-top:1px solid #e5e5ea;margin:20px 0\" />\n  <p style=\"font-size:12px;color:#aeaeb2;text-align:center\">Resepsiyonistim &mdash; Merman Cloud Inc.</p>\n</div>"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "send-email",
+      "name": "E-posta Gonder (SMTP)",
+      "type": "n8n-nodes-base.smtp",
+      "typeVersion": 1,
+      "position": [850, 250],
+      "credentials": {
+        "smtp": {
+          "id": "resepsiyonistim-smtp",
+          "name": "Resepsiyonistim SMTP"
+        }
+      },
+      "parameters": {
+        "fromEmail": "noreply@resepsiyonistim.com",
+        "fromName": "Resepsiyonistim",
+        "toEmail": "={{ $json.to }}",
+        "subject": "={{ $json.subject }}",
+        "text": "={{ $json.text }}",
+        "html": "={{ $json.html }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "log-supabase",
+      "name": "Logla (Supabase)",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [1050, 300],
+      "credentials": {
+        "supabaseApi": {
+          "id": "resepsiyonistim-supabase",
+          "name": "Resepsiyonistim Supabase"
+        }
+      },
+      "parameters": {
+        "tableId": "email_logs",
+        "operation": "insert",
+        "dataToSend": "defineBelow",
+        "fieldsToSend": {
+          "values": {
+            "string": [
+              { "name": "recipient", "value": "={{ $json.to }}" },
+              { "name": "type", "value": "welcome" },
+              { "name": "status", "value": "sent" },
+              { "name": "sent_at", "value": "={{ new Date().toISOString() }}" }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "connections": {
+    "webhook-trigger": {
+      "main": [
+        [{ "node": "check-source", "type": "main", "index": 0 }]
+      ]
+    },
+    "check-source": {
+      "main": [
+        [{ "node": "prepare-email", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "prepare-email": {
+      "main": [
+        [{ "node": "send-email", "type": "main", "index": 0 }]
+      ]
+    },
+    "send-email": {
+      "main": [
+        [{ "node": "log-supabase", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": ["email", "welcome", "transactional"]
+}
