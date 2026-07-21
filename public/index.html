@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resepsiyonistim — 7/24 Çalışan Dijital Resepsiyonistiniz</title>
+<meta name="description" content="İşletmenize 7/24 çalışan, insan gibi konuşan bir dijital resepsiyonist katılıyor. WhatsApp üzerinden rezervasyon alır, misafirleri karşılar, sizi yormaz." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:#fff;color:#1c1c1e;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+
+.container{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* ─── Font ─── */
+h1,h2,h3,.font-outfit{font-family:'Outfit',sans-serif}
+
+/* ─── Header ─── */
+.header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid #f0f0f0}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:1120px;margin:0 auto}
+.header-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.header-logo-img{width:32px;height:32px;border-radius:8px;object-fit:cover}
+.header-logo-text{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;color:#1c1c1e}
+.header-cta{padding:10px 20px;border-radius:10px;border:none;background:#1c1c1e;color:#fff;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none;transition:opacity 0.2s}
+.header-cta:hover{opacity:0.85}
+
+/* ─── Hero ─── */
+.hero{text-align:center;padding:64px 20px 48px}
+.hero-badge{display:inline-block;padding:6px 14px;border-radius:20px;background:#f0fdf4;color:#16a34a;font-size:12px;font-weight:600;margin-bottom:20px}
+.hero-title{font-family:'Outfit',sans-serif;font-size:clamp(32px,7vw,56px);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:#1c1c1e;margin-bottom:16px}
+.hero-title em{font-style:normal;color:#0f766e}
+.hero-desc{font-size:clamp(15px,2.2vw,18px);color:#6b7280;max-width:580px;margin:0 auto 28px;line-height:1.6}
+.hero-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;border-radius:12px;border:none;background:#1c1c1e;color:#fff;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;transition:all 0.2s}
+.btn-primary:hover{opacity:0.88;transform:translateY(-1px)}
+.btn-primary.teal{background:#0f766e}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;border-radius:12px;border:1.5px solid #e5e5ea;background:#fff;color:#1c1c1e;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;transition:all 0.2s}
+.btn-secondary:hover{background:#f9f9fb;border-color:#d1d1d6}
+.btn-free{font-size:13px;color:#6b7280;text-align:center;margin-top:10px}
+
+/* ─── Logos / Trust Bar ─── */
+.trust-bar{text-align:center;padding:0 20px 48px}
+.trust-text{font-size:12px;color:#9ca3af;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:16px}
+.trust-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:24px;opacity:0.5}
+.trust-item{font-size:22px;font-weight:700;color:#9ca3af;font-family:'Outfit',sans-serif}
+
+/* ─── Section ─── */
+section{padding:64px 20px}
+.section-title{font-family:'Outfit',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:700;text-align:center;color:#1c1c1e;margin-bottom:12px}
+.section-desc{font-size:15px;color:#6b7280;text-align:center;max-width:520px;margin:0 auto 40px}
+
+/* ─── How It Works ─── */
+.how-grid{display:grid;grid-template-columns:1fr;gap:24px;max-width:800px;margin:0 auto}
+.how-card{display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:14px;background:#f9f9fb;transition:background 0.2s}
+.how-card:hover{background:#f3f4f6}
+.how-num{width:36px;height:36px;border-radius:10px;background:#0f766e;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;flex-shrink:0}
+.how-body{flex:1}
+.how-body h3{font-size:15px;font-weight:700;color:#1c1c1e;margin-bottom:4px}
+.how-body p{font-size:13px;color:#6b7280;line-height:1.6}
+
+/* ─── Features ─── */
+.features-grid{display:grid;grid-template-columns:1fr;gap:16px;max-width:900px;margin:0 auto}
+.feature-card{padding:24px;border-radius:14px;border:1px solid #f0f0f0;transition:box-shadow 0.2s,border-color 0.2s}
+.feature-card:hover{border-color:#e5e5ea;box-shadow:0 4px 12px rgba(0,0,0,0.04)}
+.feature-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:20px}
+.feature-icon.teal{background:#d1fae5}
+.feature-icon.amber{background:#fef3c7}
+.feature-icon.ink{background:#f3f4f6}
+.feature-card h3{font-family:'Outfit',sans-serif;font-size:16px;font-weight:600;color:#1c1c1e;margin-bottom:6px}
+.feature-card p{font-size:13px;color:#6b7280;line-height:1.6}
+
+/* ─── Test Drive ─── */
+.test-drive{text-align:center;background:#f9f9fb;border-radius:20px;padding:40px 24px;max-width:700px;margin:0 auto}
+.test-drive-icon{font-size:48px;margin-bottom:12px}
+.test-drive h2{font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;color:#1c1c1e;margin-bottom:8px}
+.test-drive p{font-size:14px;color:#6b7280;margin-bottom:20px;max-width:480px;margin-left:auto;margin-right:auto}
+.test-drive .btn-primary{display:inline-flex}
+
+/* ─── Pricing ─── */
+.pricing-card{max-width:420px;margin:0 auto;border-radius:20px;border:2px solid #e5e5ea;overflow:hidden;position:relative}
+.pricing-badge{position:absolute;top:16px;right:16px;background:#fef3c7;color:#b45309;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.pricing-body{padding:32px 24px 24px}
+.pricing-name{font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;color:#1c1c1e;margin-bottom:4px}
+.pricing-desc{font-size:13px;color:#6b7280;margin-bottom:20px}
+.pricing-amount{display:flex;align-items:baseline;gap:4px;margin-bottom:4px}
+.pricing-price{font-family:'Outfit',sans-serif;font-size:42px;font-weight:800;color:#1c1c1e;letter-spacing:-1px}
+.pricing-period{font-size:15px;color:#6b7280}
+.pricing-note{font-size:12px;color:#9ca3af;margin-bottom:20px}
+.pricing-features{list-style:none;margin-bottom:24px}
+.pricing-features li{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:13px;color:#374151}
+.pricing-features li:last-child{border-bottom:none}
+.pricing-features li span{color:#16a34a;font-weight:700}
+.pricing-cta{width:100%;padding:16px;border-radius:12px;border:none;background:#0f766e;color:#fff;font-weight:700;font-size:15px;cursor:pointer;transition:opacity 0.2s}
+.pricing-cta:hover{opacity:0.9}
+.pricing-guarantee{text-align:center;font-size:12px;color:#9ca3af;margin-top:12px}
+
+/* ─── FAQ ─── */
+.faq-list{max-width:640px;margin:0 auto}
+.faq-item{padding:16px 0;border-bottom:1px solid #f0f0f0;cursor:pointer}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;font-weight:600;color:#1c1c1e}
+.faq-arrow{font-size:12px;color:#9ca3af;transition:transform 0.2s;flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg)}
+.faq-a{font-size:13px;color:#6b7280;line-height:1.6;margin-top:8px;display:none}
+.faq-item.open .faq-a{display:block;animation:fadeIn 0.25s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ─── CTA Section ─── */
+.cta-section{text-align:center;padding:64px 20px}
+.cta-section h2{font-family:'Outfit',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:700;color:#1c1c1e;margin-bottom:12px}
+.cta-section p{font-size:15px;color:#6b7280;margin-bottom:28px}
+
+/* ─── Footer ─── */
+.footer{text-align:center;padding:32px 20px;border-top:1px solid #f0f0f0;font-size:12px;color:#9ca3af}
+.footer a{color:#1c1c1e;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+
+@media(min-width:640px){
+  .how-grid{grid-template-columns:1fr 1fr}
+  .features-grid{grid-template-columns:1fr 1fr}
+  .hero{padding:80px 20px 56px}
+  section{padding:80px 20px}
+}
+@media(min-width:900px){
+  .features-grid{grid-template-columns:1fr 1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header class="header">
+  <div class="header-inner">
+    <a class="header-logo" href="/">
+      <img class="header-logo-img" src="logo-1.jpeg" alt="" />
+      <span class="header-logo-text">Resepsiyonistim</span>
+    </a>
+    <a class="header-cta" href="https://wa.me/905427450654?text=Merhaba" target="_blank" rel="noopener">30 Gün Ücretsiz Dene</a>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">🎯 30 Gün Ücretsiz Deneme</div>
+    <h1 class="hero-title">İşletmenize 7/24 çalışan bir <em>dijital resepsiyonist</em> katılıyor</h1>
+    <p class="hero-desc">WhatsApp üzerinden misafirlerinizle insan gibi konuşur, rezervasyon alır, soruları yanıtlar. Siz uyurken bile çalışır.</p>
+    <div class="hero-btns">
+      <a class="btn-primary teal" href="https://wa.me/905427450654?text=Merhaba,%20Resepsiyonistim%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum" target="_blank" rel="noopener">📱 Hemen Dene — 30 Gün Ücretsiz</a>
+      <a class="btn-secondary" href="#nasil-calisir">Nasıl Çalışır?</a>
+    </div>
+    <div class="btn-free">⏱️ 30 gün boyunca ücretsiz, kart bilgisi gerekmez</div>
+  </div>
+</section>
+
+<!-- ═══ TRUST BAR ═══ -->
+<div class="trust-bar">
+  <div class="trust-text">Bungalov, Tiny House, Villa, Butik Otel, Pansiyon, Glamping, Kamp</div>
+  <div class="trust-grid">
+    <span class="trust-item">🏡</span>
+    <span class="trust-item">🏕️</span>
+    <span class="trust-item">🏠</span>
+    <span class="trust-item">🏘️</span>
+    <span class="trust-item">⛺</span>
+  </div>
+</div>
+
+<!-- ═══ TEST DRIVE ═══ -->
+<section>
+  <div class="container test-drive">
+    <div class="test-drive-icon">🤖</div>
+    <h2>AI'ı Şimdi Dene — WhatsApp'ta Konuş</h2>
+    <p>Test hesabımıza WhatsApp'tan mesaj at. İnsan gibi konuşan dijital resepsiyonisti bizzat gör. Rezervasyon sormaktan çekinme — gerçek bir misafir gibi test et.</p>
+    <a class="btn-primary teal" href="https://wa.me/905427450654?text=Merhaba!%20Konaklama%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum" target="_blank" rel="noopener">📲 WhatsApp'ta Test Et</a>
+    <p style="font-size:12px;color:#9ca3af;margin-top:10px">90542 745 0654 — Tıkla, konuşmaya başla</p>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section id="nasil-calisir" style="background:#f9f9fb">
+  <div class="container">
+    <h2 class="section-title">Nasıl Çalışır?</h2>
+    <p class="section-desc">10 dakikada kurulum. Tek yapman gereken işletme bilgilerini girmek.</p>
+    <div class="how-grid">
+      <div class="how-card"><div class="how-num">1</div><div class="how-body"><h3>İşletme Bilgilerini Gir</h3><p>Adın, adresin, birimlerin, fiyatların. 12 adımlık onboarding ile adım adım ilerle, her an kaldığın yerden devam et.</p></div></div>
+      <div class="how-card"><div class="how-num">2</div><div class="how-body"><h3>WhatsApp'ı Bağla</h3><p>Mevcut WhatsApp numaranı sisteme ekle. QR kodu okutarak saniyeler içinde bağlan.</p></div></div>
+      <div class="how-card"><div class="how-num">3</div><div class="how-body"><h3>AI Devrede</h3><p>Misafirlerin WhatsApp'tan yazmaya başlar. AI insan gibi yanıtlar, rezervasyon alır, takvimi günceller.</p></div></div>
+      <div class="how-card"><div class="how-num">4</div><div class="how-body"><h3>Sen Kontrol Sende</h3><p>Panelden tüm konuşmaları izle, gerektiğinde devral, istediğin an kaldığın yerden WhatsApp'tan devam et.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Her Şey Dahil</h2>
+    <p class="section-desc">Tek paket — sınırsız konuşma, sınırsız tesis, sınırsız özellik.</p>
+    <div class="features-grid">
+      <div class="feature-card"><div class="feature-icon teal">💬</div><h3>İnsan Gibi Konuşma</h3><p>AI'ınız misafirlerle doğal Türkçe konuşur. Samimi, sıcak, profesyonel. Kimse botla konuştuğunu anlamaz.</p></div>
+      <div class="feature-card"><div class="feature-icon amber">📅</div><h3>Akıllı Takvim</h3><p>Rezervasyonlar otomatik takvime işlenir. Birim bazlı görüntüle, düzenle, ekle. Dolu/müsait anında belli.</p></div>
+      <div class="feature-card"><div class="feature-icon ink">🔄</div><h3>Kolay Devralma</h3><p>AI çözemezse sen devral. Konuşmayı WhatsApp'ta kaldığın yerden devam ettir. Hiçbir misafir kaybolmaz.</p></div>
+      <div class="feature-card"><div class="feature-icon teal">📍</div><h3>Konum Paylaşımı</h3><p>AI, misafirlere WhatsApp üzerinden tek tıkla Google Maps konumu gönderir. Yol tarifi sormak tarih olur.</p></div>
+      <div class="feature-card"><div class="feature-icon amber">📊</div><h3>Canlı Panel</h3><p>Konuşma sayısı, rezervasyonlar, memnuniyet oranı. Tüm metrikler tek ekranda.</p></div>
+      <div class="feature-card"><div class="feature-icon ink">🔒</div><h3>Güvenli & Özel</h3><p>IBAN ödeme. İleride Iyzico. Verilerin Supabase'de şifreli. Misafir bilgileri asla üçüncü tarafla paylaşılmaz.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section style="background:#f9f9fb">
+  <div class="container" style="max-width:500px">
+    <h2 class="section-title">Tek Paket — Sınırsız</h2>
+    <p class="section-desc">Karmaşık planlar yok. Her şey dahil tek fiyat.</p>
+    <div class="pricing-card">
+      <div class="pricing-badge">🔥 En Popüler</div>
+      <div class="pricing-body">
+        <div class="pricing-name">Profesyonel Paket</div>
+        <div class="pricing-desc">Sınırsız tesis, sınırsız konuşma, sınırsız özellik</div>
+        <div class="pricing-amount"><span class="pricing-price">4.000</span><span class="pricing-period">₺/ay</span></div>
+        <div class="pricing-note">⏱️ İlk 30 gün ücretsiz — kart bilgisi gerekmez</div>
+        <ul class="pricing-features">
+          <li><span>✓</span> Sınırsız tesis ekleme</li>
+          <li><span>✓</span> Sınırsız WhatsApp konuşması</li>
+          <li><span>✓</span> 7/24 AI resepsiyonist</li>
+          <li><span>✓</span> Akıllı takvim & rezervasyon</li>
+          <li><span>✓</span> Sohbet devralma & WhatsApp entegrasyonu</li>
+          <li><span>✓</span> Detaylı panel & istatistikler</li>
+          <li><span>✓</span> 12 adımlı onboarding</li>
+          <li><span>✓</span> WhatsApp konum paylaşımı</li>
+          <li><span>✓</span> Çoklu dil desteği (TR/EN/AR)</li>
+          <li><span>✓</span> Telegram bildirimleri</li>
+        </ul>
+        <a class="pricing-cta" href="https://wa.me/905427450654?text=Merhaba,%20Resepsiyonistim%2030%20g%C3%BCn%20%C3%BCcretsiz%20denemek%20istiyorum" target="_blank" rel="noopener">🚀 30 Gün Ücretsiz Dene</a>
+        <div class="pricing-guarantee">🔒 Kart bilgisi gerekmez. İstediğin an iptal.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section>
+  <div class="container">
+    <h2 class="section-title">Sık Sorulanlar</h2>
+    <div class="faq-list">
+      <div class="faq-item open"><div class="faq-q">Kurulum ne kadar sürer? <span class="faq-arrow">▼</span></div><div class="faq-a">Ortalama 10-15 dakika. 12 adımlık onboarding sihirbazı ile adım adım ilerlersiniz. Her adım otomatik kaydedilir, istediğiniz zaman kaldığınız yerden devam edersiniz.</div></div>
+      <div class="faq-item"><div class="faq-q">Kendi WhatsApp numaramı kullanabilir miyim? <span class="faq-arrow">▼</span></div><div class="faq-a">Evet. Mevcut WhatsApp numaranızı bağlarsınız. QR kodu okutarak saniyeler içinde entegrasyon tamamlanır.</div></div>
+      <div class="faq-item"><div class="faq-q">AI yanlış cevap verirse ne olur? <span class="faq-arrow">▼</span></div><div class="faq-a">AI'ın yanıtlarını panelden izleyebilirsiniz. Bir hata görürseniz konuşmayı tek tıkla devralır, kaldığınız yerden WhatsApp'ta devam edersiniz.</div></div>
+      <div class="faq-item"><div class="faq-q">Birden fazla tesisim var, hepsi için kullanabilir miyim? <span class="faq-arrow">▼</span></div><div class="faq-a">Evet, tek paket ile sınırsız tesis ekleyebilirsiniz. Her tesisin kendi birimleri, fiyatları ve AI ayarları olur.</div></div>
+      <div class="faq-item"><div class="faq-q">Ödeme nasıl alınıyor? <span class="faq-arrow">▼</span></div><div class="faq-a">Şu an IBAN ile ödeme alıyoruz. İleride kredi kartı (Iyzico) entegrasyonu eklenecek. 30 günlük deneme süresinde kart bilgisi istemiyoruz.</div></div>
+      <div class="faq-item"><div class="faq-q">İptal edersem verilerim ne olur? <span class="faq-arrow">▼</span></div><div class="faq-a">İstediğiniz zaman iptal edebilirsiniz. Verileriniz 30 gün boyunca saklanır, dönmek isterseniz kaldığınız yerden devam edersiniz.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta-section" style="background:#1c1c1e;color:#fff">
+  <div class="container">
+    <h2 style="color:#fff">30 Gün Ücretsiz Dene</h2>
+    <p style="color:#9ca3af">Kart bilgisi gerekmez. İstediğin an iptal et.</p>
+    <a class="btn-primary teal" href="https://wa.me/905427450654?text=Merhaba,%20Resepsiyonistim%20denemek%20istiyorum" target="_blank" rel="noopener" style="background:#fff;color:#1c1c1e;padding:16px 40px">📱 Hemen Başla</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <p>© 2026 <a href="https://resepsiyonistim.com">Resepsiyonistim</a> — Merman Cloud Inc.</p>
+  <p style="margin-top:4px">WhatsApp: <a href="https://wa.me/905427450654">90542 745 0654</a></p>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.querySelector('.faq-q').addEventListener('click',()=>item.classList.toggle('open'));
+});
+</script>
+</body>
+</html>
