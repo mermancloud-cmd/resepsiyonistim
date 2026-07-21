@@ -196,7 +196,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const SUPABASE_URL = 'https://xzmakpsongrcbnrpdvsy.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6bWFrcHNvbmdyY2JucnBkdnN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0MTU5MjgsImV4cCI6MjA5NTk5MTkyOH0.kIeLLVfO68wShvgPjEvHxtYG61U6a7_jM_1bDxisyYo';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6bWFrcHNvbmdyY2JucnBkdnN5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjEyMzQ1NjcsImV4cCI6MjAzNjgxMDU2N30.syYo';
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ── Add this to window for non-module scripts ──
@@ -310,6 +310,24 @@ window.__isSigningUp = false;
     el.textContent = msg;
     el.classList.add('show');
   }
+
+  // ── Social Login ──
+  async function handleSocialLogin(provider) {
+    hideAlert(loginAlert);
+    const redirectTo = window.location.origin + '/onboarding.html';
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: { redirectTo }
+    });
+    if (error) showAlert(loginAlert, '❌ ' + error.message);
+  }
+
+  document.querySelectorAll('.social-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isGoogle = btn.textContent.includes('Google');
+      handleSocialLogin(isGoogle ? 'google' : 'apple');
+    });
+  });
 
   // ── LOGIN ──
   lf.addEventListener('submit', async (e) => {

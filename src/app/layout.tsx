@@ -1,20 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Outfit, Sora } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "@/components/providers";
 import { AnalyticsInit } from "@/components/analytics-init";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-});
-
-const fraunces = Fraunces({
+const outfit = Outfit({
   variable: "--font-heading",
   subsets: ["latin", "latin-ext"],
   display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
+
+const sora = Sora({
+  variable: "--font-sans",
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -55,7 +57,7 @@ export default function RootLayout({
   return (
     <html
       lang="tr"
-      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${outfit.variable} ${sora.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
