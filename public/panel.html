@@ -8,225 +8,198 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+:root{--bg:#f5f5f7;--surface:#fff;--ink:#171717;--muted:#737373;--light:#a3a3a3;--border:#e5e5e5;--fill:#f5f5f5;--teal:#0f766e;--teal-l:#d1fae5;--teal-d:#065f46;--amber:#d97706;--amber-l:#fef3c7;--amber-d:#b45309;--green:#16a34a;--green-l:#dcfce7;--red:#dc2626;--red-l:#fee2e2;--shadow:0 1px 3px rgba(0,0,0,0.04)}
+.dark{--bg:#1c1c1e;--surface:#2c2c2e;--ink:#f5f5f7;--muted:#8e8e93;--light:#636366;--border:#3a3a3c;--fill:#3a3a3c;--teal:#14b8a6;--teal-l:#064e3b;--teal-d:#5eead4;--amber:#f59e0b;--amber-l:#451a03;--amber-d:#fde68a;--green:#22c55e;--green-l:#052e16;--red:#ef4444;--red-l:#450a0a;--shadow:0 1px 3px rgba(0,0,0,0.2)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:16px;-webkit-text-size-adjust:100%}
-:root{--bg:#f5f5f7;--surface:#fff;--ink:#1c1c1e;--ink-muted:#8e8e93;--ink-light:#aeaeb2;--border:#e5e5ea;--input-bg:#f9f9fb;--teal:#0f766e;--teal-light:#d1fae5;--teal-dark:#065f46;--amber:#d97706;--amber-light:#fef3c7;--amber-dark:#b45309;--green:#16a34a;--green-light:#dcfce7;--red:#dc2626;--red-light:#fee2e2;--shadow:0 1px 3px rgba(0,0,0,0.04);--shadow-lg:0 4px 16px rgba(0,0,0,0.06)}
-.dark{--bg:#1c1c1e;--surface:#2c2c2e;--ink:#f5f5f7;--ink-muted:#8e8e93;--ink-light:#636366;--border:#3a3a3c;--input-bg:#3a3a3c;--teal:#14b8a6;--teal-light:#064e3b;--teal-dark:#5eead4;--amber:#f59e0b;--amber-light:#451a03;--amber-dark:#fde68a;--green:#22c55e;--green-light:#052e16;--red:#ef4444;--red-light:#450a0a;--shadow:0 1px 3px rgba(0,0,0,0.2);--shadow-lg:0 4px 16px rgba(0,0,0,0.3)}
-body{font-family:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;min-height:100dvh;line-height:1.5;-webkit-font-smoothing:antialiased}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;min-height:100dvh;line-height:1.5;-webkit-font-smoothing:antialiased}
 input,button,textarea,select{font-family:inherit;font-size:inherit}
 
 .header{display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
-.header-logo{width:36px;height:36px;border-radius:10px;object-fit:cover;flex-shrink:0}
-.header-title{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;color:var(--ink);flex:1}
+.header-logo{width:32px;height:32px;border-radius:8px;object-fit:cover;flex-shrink:0}
+.header-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:var(--ink);flex:1}
 .header-actions{display:flex;gap:6px}
-.header-btn{width:36px;height:36px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-muted);transition:all 0.2s}
-.header-btn:hover{background:var(--input-bg);border-color:var(--ink-muted)}
-.header-btn svg{width:18px;height:18px;fill:currentColor}
+.header-btn{width:34px;height:34px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all 0.2s}
+.header-btn:hover{background:var(--fill)}
+.header-btn svg{width:16px;height:16px;fill:currentColor}
 .header-btn .sun{display:none}.header-btn .moon{display:block}
 .dark .header-btn .sun{display:block}.dark .header-btn .moon{display:none}
-.header-avatar{width:36px;height:36px;border-radius:10px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:600;font-size:15px;cursor:pointer;flex-shrink:0}
+.header-avatar{width:32px;height:32px;border-radius:8px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:600;font-size:14px;cursor:pointer;flex-shrink:0}
 
-.page{display:none;padding:16px 16px 24px;flex-direction:column;gap:16px;max-width:640px;margin:0 auto}
-.page.active{display:flex;animation:fadeIn 0.2s}
-@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.page{display:none;padding:16px 16px 24px;flex-direction:column;gap:14px;max-width:640px;margin:0 auto}
+.page.active{display:flex;animation:fade 0.2s}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-.card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden}
-.card-header{display:flex;align-items:center;justify-content:space-between;padding:16px 16px 0}
-.card-title{font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;color:var(--ink)}
-.card-body{padding:16px}
-.card-flush{padding:0}
+.card{background:var(--surface);border-radius:14px;box-shadow:var(--shadow);border:1px solid var(--border);overflow:hidden}
+.card-h{padding:14px 16px 0;display:flex;align-items:center;justify-content:space-between}
+.card-t{font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;color:var(--ink)}
+.card-b{padding:14px 16px}
 
+/* AI Status */
 .ai-card{background:linear-gradient(135deg,var(--teal),#0d9488);color:#fff;border:none}
-.ai-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.ai-info{flex:1}
-.ai-name{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:2px}
-.ai-status{font-size:12px;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:4px}
-.ai-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;display:inline-block}
+.ai-r{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ai-l{flex:1;min-width:0}
+.ai-n{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;color:#fff}
+.ai-s{font-size:12px;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:4px;margin-top:1px}
+.ai-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;display:inline-block}
 .ai-dot.off{background:#f87171}
-.toggle{width:48px;height:28px;border-radius:14px;background:rgba(255,255,255,0.3);cursor:pointer;position:relative;transition:background 0.25s;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+.toggle{width:46px;height:26px;border-radius:13px;background:rgba(255,255,255,0.3);cursor:pointer;position:relative;transition:background 0.25s;flex-shrink:0}
 .toggle.on{background:rgba(255,255,255,0.9)}
-.toggle-knob{width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:transform 0.25s ease;box-shadow:0 1px 4px rgba(0,0,0,0.15)}
-.toggle.on .toggle-knob{transform:translateX(20px)}
+.toggle-k{width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:transform 0.25s;box-shadow:0 1px 3px rgba(0,0,0,0.15)}
+.toggle.on .toggle-k{transform:translateX(20px)}
 
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.stat{background:var(--surface);border-radius:14px;border:1px solid var(--border);padding:14px;text-align:center}
-.stat-num{font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;color:var(--ink);line-height:1.2}
-.stat-label{font-size:11px;color:var(--ink-muted);margin-top:2px}
+/* Stats */
+.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.stat{padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--surface);text-align:center}
+.stat-n{font-family:'Outfit',sans-serif;font-size:20px;font-weight:700;color:var(--ink);line-height:1.2}
+.stat-l{font-size:11px;color:var(--muted);margin-top:2px}
 
-.handoff-banner{background:var(--amber-light);border:1px solid var(--amber);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:10px;margin:0}
-.handoff-icon{width:36px;height:36px;border-radius:10px;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.handoff-text{flex:1;font-size:13px;color:var(--amber-dark);line-height:1.4}
-.handoff-text strong{display:block;font-size:14px}
-.handoff-btn{padding:8px 16px;border-radius:10px;border:none;background:var(--amber);color:#fff;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap}
+/* Handoff */
+.handoff-b{background:var(--amber-l);border:1px solid var(--amber);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.handoff-i{width:32px;height:32px;border-radius:8px;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.handoff-t{flex:1;font-size:12px;color:var(--amber-d);line-height:1.4}
+.handoff-t strong{display:block;font-size:13px}
+.handoff-bt{padding:7px 14px;border-radius:8px;border:none;background:var(--amber);color:#fff;font-weight:600;font-size:12px;cursor:pointer;white-space:nowrap}
 
-.chat-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;transition:background 0.15s;border-bottom:1px solid var(--border)}
+/* Chat */
+.chat-item{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;cursor:pointer;transition:background 0.15s;border-bottom:1px solid var(--border)}
 .chat-item:last-child{border-bottom:none}
-.chat-item:hover{background:var(--input-bg)}
-.chat-avatar{width:40px;height:40px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:600;font-size:16px}
-.chat-avatar.ai-handled{background:var(--teal-light);color:var(--teal-dark)}
-.chat-avatar.human-handled{background:var(--amber-light);color:var(--amber-dark)}
-.chat-body{flex:1;min-width:0}
-.chat-name{font-size:14px;font-weight:600;color:var(--ink)}
-.chat-msg{font-size:13px;color:var(--ink-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
-.chat-meta{display:flex;align-items:center;gap:6px;margin-top:4px}
-.chat-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:6px;background:var(--teal-light);color:var(--teal-dark)}
-.chat-badge.human{background:var(--amber-light);color:var(--amber-dark)}
-.chat-badge.handoff{background:var(--red-light);color:var(--red)}
-.chat-time{font-size:11px;color:var(--ink-light);margin-left:auto}
-.chat-arrow{color:var(--ink-light);flex-shrink:0;margin-top:2px}
+.chat-item:hover{background:var(--fill)}
+.chat-av{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:600;font-size:14px}
+.chat-av.r{background:var(--teal-l);color:var(--teal-d)}
+.chat-av.y{background:var(--amber-l);color:var(--amber-d)}
+.chat-bd{flex:1;min-width:0}
+.chat-n{font-size:13px;font-weight:600;color:var(--ink)}
+.chat-msg{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.chat-mt{display:flex;align-items:center;gap:6px;margin-top:3px}
+.chat-badge{font-size:10px;font-weight:600;padding:2px 6px;border-radius:5px;background:var(--teal-l);color:var(--teal-d)}
+.chat-badge.h{background:var(--red-l);color:var(--red)}
+.chat-badge.y{background:var(--amber-l);color:var(--amber-d)}
+.chat-tm{font-size:10px;color:var(--light);margin-left:auto}
+.chat-ar{color:var(--light);flex-shrink:0;margin-top:2px}
 
-.chat-detail-header{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border)}
-.chat-back-btn{width:32px;height:32px;border-radius:8px;border:none;background:var(--input-bg);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink)}
-.chat-detail-name{font-size:15px;font-weight:600;color:var(--ink);flex:1}
-.chat-detail-status{font-size:11px;color:var(--ink-muted)}
-.chat-messages{padding:16px;display:flex;flex-direction:column;gap:10px}
-.msg{max-width:85%;padding:12px 14px;border-radius:14px;font-size:14px;line-height:1.5}
-.msg.guest{background:var(--input-bg);color:var(--ink);align-self:flex-start;border-bottom-left-radius:4px}
-.msg.ai{background:var(--teal-light);color:var(--teal-dark);align-self:flex-end;border-bottom-right-radius:4px}
-.msg.you{background:var(--ink);color:var(--bg);align-self:flex-end;border-bottom-right-radius:4px}
-.msg-time{font-size:10px;color:var(--ink-light);margin-top:4px}
-.chat-input-bar{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface)}
-.chat-input{flex:1;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:14px;color:var(--ink);background:var(--input-bg);outline:none;transition:border-color 0.2s}
-.chat-input:focus{border-color:var(--teal);background:var(--surface)}
-.chat-send-btn{width:44px;height:44px;border-radius:12px;border:none;background:var(--teal);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.chat-send-btn svg{width:20px;height:20px;fill:currentColor}
+.chat-dh{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border)}
+.chat-back{width:30px;height:30px;border-radius:8px;border:none;background:var(--fill);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.chat-dn{font-size:14px;font-weight:600;color:var(--ink);flex:1}
+.chat-ds{font-size:10px;color:var(--muted)}
+.chat-msgs{padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.5}
+.msg.g{background:var(--fill);color:var(--ink);align-self:flex-start;border-bottom-left-radius:3px}
+.msg.a{background:var(--teal-l);color:var(--teal-d);align-self:flex-end;border-bottom-right-radius:3px}
+.msg.u{background:var(--ink);color:var(--bg);align-self:flex-end;border-bottom-right-radius:3px}
+.msg-tm{font-size:10px;color:var(--light);margin-top:3px}
+.chat-inp{display:flex;gap:8px;padding:10px 16px;border-top:1px solid var(--border);background:var(--surface)}
+.chat-in{flex:1;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:13px;color:var(--ink);background:var(--fill);outline:none;transition:border-color 0.2s}
+.chat-in:focus{border-color:var(--teal);background:var(--surface)}
+.chat-snd{width:40px;height:40px;border-radius:10px;border:none;background:var(--teal);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chat-snd svg{width:18px;height:18px;fill:currentColor}
 
-.unit-selector{display:flex;gap:6px;padding:0 16px 8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.unit-selector::-webkit-scrollbar{display:none}
-.unit-chip{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;white-space:nowrap;font-size:12px;font-weight:600;color:var(--ink-muted);transition:all 0.2s;flex-shrink:0}
-.unit-chip.active{background:var(--teal);border-color:var(--teal);color:#fff}
-.unit-chip.all{background:var(--input-bg);color:var(--ink)}
-.unit-chip.all.active{background:var(--ink);border-color:var(--ink);color:#fff}
+/* Calendar */
+.unit-s{display:flex;gap:6px;padding:0 16px 8px;overflow-x:auto;scrollbar-width:none}
+.unit-s::-webkit-scrollbar{display:none}
+.unit-c{padding:6px 12px;border-radius:16px;border:1px solid var(--border);background:var(--surface);cursor:pointer;white-space:nowrap;font-size:11px;font-weight:600;color:var(--muted);transition:all 0.2s;flex-shrink:0}
+.unit-c.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.unit-c.all{background:var(--fill)}
+.unit-c.all.active{background:var(--ink);border-color:var(--ink);color:#fff}
 
-.cal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 8px}
-.cal-nav{width:32px;height:32px;border-radius:8px;border:none;background:var(--input-bg);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink)}
-.cal-nav svg{width:16px;height:16px;fill:currentColor}
-.cal-month{font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;color:var(--ink)}
-.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:0 12px 12px}
-.cal-day-label{text-align:center;font-size:11px;color:var(--ink-light);font-weight:600;padding:6px 0;text-transform:uppercase}
-.cal-day{aspect-ratio:1;border-radius:10px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:var(--ink);position:relative;transition:background 0.15s}
-.cal-day:hover{background:var(--input-bg)}
-.cal-day.other{color:var(--ink-light)}
-.cal-day.today{font-weight:700;color:var(--teal)}
-.cal-day.today::after{content:'';position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:var(--teal)}
-.cal-dot{width:5px;height:5px;border-radius:50%;margin-top:2px}
-.cal-dot.booked{background:var(--red)}
-.cal-dot.pending{background:var(--amber)}
-.cal-dot.available{background:var(--green)}
-.cal-day.selected{background:var(--teal);color:#fff}
-.cal-legend{display:flex;gap:16px;padding:0 16px 14px;flex-wrap:wrap}
-.cal-legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-muted)}
-.cal-legend-dot{width:8px;height:8px;border-radius:50%}
-.cal-legend-dot.booked{background:var(--red)}
-.cal-legend-dot.pending{background:var(--amber)}
-.cal-legend-dot.available{background:var(--green)}
-.day-detail{padding:0 16px 16px;display:none}
-.day-detail.show{display:block;animation:fadeIn 0.2s}
-.day-detail-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.day-add-btn{margin-left:auto;width:28px;height:28px;border-radius:8px;border:none;background:var(--teal);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600;flex-shrink:0}
-.day-event{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--input-bg);margin-bottom:6px}
-.day-event:last-child{margin-bottom:0}
-.day-event-dot{width:4px;height:32px;border-radius:2px;flex-shrink:0}
-.day-event-dot.confirmed{background:var(--green)}
-.day-event-dot.pending{background:var(--amber)}
-.day-event-dot.checked-in{background:var(--teal)}
-.day-event-body{flex:1}
-.day-event-name{font-size:13px;font-weight:600;color:var(--ink)}
-.day-event-info{font-size:11px;color:var(--ink-muted);margin-top:1px}
-.day-event-actions{display:flex;gap:4px;flex-shrink:0;opacity:0;transition:opacity 0.15s}
-.day-event:hover .day-event-actions{opacity:1}
-.day-event-btn{width:26px;height:26px;border-radius:6px;border:none;background:var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-muted);font-size:12px}
-.day-event-btn.delete:hover{background:var(--red);color:#fff}
+.cal-h{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 6px}
+.cal-nav{width:30px;height:30px;border-radius:8px;border:none;background:var(--fill);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+.cal-nav svg{width:14px;height:14px;fill:currentColor}
+.cal-m{font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;color:var(--ink)}
+.cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:0 10px 10px}
+.cl{text-align:center;font-size:10px;color:var(--light);font-weight:600;padding:5px 0;text-transform:uppercase}
+.cd{aspect-ratio:1;border-radius:8px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--ink);transition:background 0.15s}
+.cd:hover{background:var(--fill)}
+.cd.o{color:var(--light)}
+.cd.t{font-weight:700;color:var(--teal)}
+.cd.t::after{content:'';position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--teal)}
+.cd-dot{width:4px;height:4px;border-radius:50%;margin-top:1px}
+.cd-dot.b{background:var(--red)}
+.cd-dot.p{background:var(--amber)}
+.cd-dot.a{background:var(--green)}
+.cd.s{background:var(--teal);color:#fff}
+.cd.s::after{display:none}
+.cal-legend{display:flex;gap:14px;padding:0 16px 12px;flex-wrap:wrap}
+.cal-l-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)}
+.cal-l-dot{width:7px;height:7px;border-radius:50%}
+.cal-l-dot.a{background:var(--green)}
+.cal-l-dot.p{background:var(--amber)}
+.cal-l-dot.b{background:var(--red)}
 
-.ob-progress{display:flex;gap:4px;padding:0 16px 12px;justify-content:center}
-.ob-step-dot{width:10px;height:10px;border-radius:50%;background:var(--border);transition:all 0.25s;flex-shrink:0}
-.ob-step-dot.done{background:var(--teal)}
-.ob-step-dot.active{background:var(--teal);box-shadow:0 0 0 3px var(--teal-light);transform:scale(1.2)}
-.ob-step-label{display:flex;justify-content:space-between;padding:0 16px 16px;font-size:11px;color:var(--ink-muted)}
-.ob-step-label span{font-weight:600;color:var(--ink)}
-.ob-form{display:none;padding:0 16px 16px}
-.ob-form.active{display:block;animation:fadeIn 0.2s}
-.ob-btns{display:flex;gap:8px;padding:0 16px 20px}
-.ob-btn{flex:1;padding:14px;border-radius:12px;border:none;font-weight:600;font-size:14px;cursor:pointer;text-align:center}
-.ob-btn.primary{background:var(--teal);color:#fff}
-.ob-btn.primary:hover{opacity:0.9}
-.ob-btn.secondary{background:var(--input-bg);color:var(--ink)}
-.ob-btn:disabled{opacity:0.4;cursor:default}
-.ob-hint{font-size:12px;color:var(--ink-muted);margin-top:4px;line-height:1.4}
-.ob-summary-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.ob-summary-item:last-child{border-bottom:none}
-.ob-summary-label{color:var(--ink-muted)}
-.ob-summary-value{color:var(--ink);font-weight:600;text-align:right}
-.ob-success{display:none;flex-direction:column;align-items:center;padding:40px 20px;text-align:center}
-.ob-success.show{display:flex}
-.ob-success-icon{width:56px;height:56px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;margin-bottom:12px}
-.ob-success-title{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px}
-.ob-success-desc{font-size:13px;color:var(--ink-muted);max-width:280px}
+.day-d{padding:0 16px 14px;display:none}
+.day-d.show{display:block;animation:fade 0.2s}
+.day-dt{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.day-add{margin-left:auto;width:26px;height:26px;border-radius:7px;border:none;background:var(--teal);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0}
+.day-ev{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:var(--fill);margin-bottom:5px}
+.day-ev:last-child{margin-bottom:0}
+.day-ev-dot{width:3px;height:28px;border-radius:2px;flex-shrink:0}
+.day-ev-dot.c{background:var(--green)}
+.day-ev-dot.p{background:var(--amber)}
+.day-ev-dot.ci{background:var(--teal)}
+.day-ev-bd{flex:1}
+.day-ev-n{font-size:12px;font-weight:600;color:var(--ink)}
+.day-ev-i{font-size:10px;color:var(--muted);margin-top:1px}
 
-.setting-group{margin-bottom:20px}
-.setting-group-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;padding:0 16px}
-.setting-item,.setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s}
-.setting-item:hover,.setting-row:hover{background:var(--input-bg)}
-.setting-item-left{display:flex;align-items:center;gap:12px;flex:1}
-.setting-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.setting-icon svg{width:16px;height:16px;fill:currentColor}
-.setting-icon.teal{background:var(--teal-light);color:var(--teal-dark)}
-.setting-icon.amber{background:var(--amber-light);color:var(--amber-dark)}
-.setting-icon.green{background:var(--green-light);color:var(--green)}
-.setting-icon.red{background:var(--red-light);color:var(--red)}
-.setting-label{font-size:14px;font-weight:600;color:var(--ink)}
-.setting-desc{font-size:11px;color:var(--ink-muted);margin-top:1px}
-.setting-value{font-size:13px;color:var(--ink-muted)}
-.setting-arrow{color:var(--ink-light);flex-shrink:0}
-.setting-toggle{width:42px;height:24px;border-radius:12px;background:var(--border);cursor:pointer;position:relative;transition:background 0.25s;flex-shrink:0}
-.setting-toggle.on{background:var(--teal)}
-.setting-toggle-knob{width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:transform 0.25s ease;box-shadow:0 1px 3px rgba(0,0,0,0.15)}
-.setting-toggle.on .setting-toggle-knob{transform:translateX(18px)}
+/* Settings */
+.set-g{margin-bottom:18px}
+.set-g:last-child{margin-bottom:0}
+.set-gt{font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;padding:0 16px}
+.set-r{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s}
+.set-r:last-child{border-bottom:none}
+.set-r:hover{background:var(--fill)}
+.set-l{display:flex;align-items:center;gap:10px;flex:1}
+.set-ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.set-ic svg{width:14px;height:14px;fill:currentColor}
+.set-ic.t{background:var(--teal-l);color:var(--teal-d)}
+.set-ic.a{background:var(--amber-l);color:var(--amber-d)}
+.set-ic.g{background:var(--green-l);color:var(--green)}
+.set-ic.r{background:var(--red-l);color:var(--red)}
+.set-lb{font-size:13px;font-weight:600;color:var(--ink)}
+.set-de{font-size:10px;color:var(--muted);margin-top:1px}
+.set-ar{color:var(--light);flex-shrink:0}
+.set-tog{width:40px;height:22px;border-radius:11px;background:var(--border);cursor:pointer;position:relative;transition:background 0.25s;flex-shrink:0}
+.set-tog.on{background:var(--teal)}
+.set-tog-k{width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:transform 0.25s;box-shadow:0 1px 3px rgba(0,0,0,0.15)}
+.set-tog.on .set-tog-k{transform:translateX(18px)}
 
-.help-fab{position:fixed;bottom:80px;left:16px;z-index:50;width:48px;height:48px;border-radius:16px;border:none;background:var(--teal);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(15,118,110,0.35)}
-.help-fab:hover{transform:scale(1.05)}
-.help-fab svg{width:22px;height:22px;fill:currentColor}
+/* Help */
+.help-fab{position:fixed;bottom:76px;left:16px;z-index:50;width:44px;height:44px;border-radius:14px;border:none;background:var(--teal);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(15,118,110,0.3)}
+.help-fab svg{width:20px;height:20px;fill:currentColor}
+.help-o{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.4);align-items:flex-end;justify-content:center}
+.help-o.show{display:flex;animation:fade 0.2s}
+.help-m{background:var(--surface);border-radius:18px 18px 0 0;width:100%;max-width:600px;max-height:80vh;overflow-y:auto;animation:slide 0.25s;padding:20px}
+@keyframes slide{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.help-hd{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.help-t{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;color:var(--ink);flex:1}
+.help-x{width:30px;height:30px;border-radius:8px;border:none;background:var(--fill);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.help-s{margin-bottom:16px}
+.help-h2{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--teal);margin-bottom:6px}
+.help-p{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:4px}
 
-.help-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.5);align-items:flex-end;justify-content:center}
-.help-overlay.show{display:flex;animation:fadeIn 0.2s}
-.help-modal{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:600px;max-height:85vh;overflow-y:auto;animation:slideUp 0.25s ease;padding:20px}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.help-header{display:flex;align-items:center;gap:8px;margin-bottom:20px;position:sticky;top:0;background:var(--surface);z-index:1}
-.help-title{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--ink);flex:1}
-.help-close{width:32px;height:32px;border-radius:8px;border:none;background:var(--input-bg);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-muted)}
-.help-section{margin-bottom:20px}
-.help-h2{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;color:var(--teal);margin-bottom:8px}
-.help-h3{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:4px;margin-top:10px}
-.help-p{font-size:13px;color:var(--ink-muted);line-height:1.6;margin-bottom:6px}
-.help-step{display:flex;gap:10px;margin-bottom:10px}
-.help-step-num{width:24px;height:24px;border-radius:8px;background:var(--teal-light);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px}
-.help-step-text{flex:1;font-size:13px;color:var(--ink-muted);line-height:1.5}
-.help-step-text strong{color:var(--ink)}
-.help-tip{background:var(--amber-light);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--amber-dark);line-height:1.5;margin-bottom:10px}
-.help-divider{height:1px;background:var(--border);margin:16px 0}
+/* Modal */
+.modal-o{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.35);align-items:flex-end;justify-content:center}
+.modal-o.show{display:flex;animation:fade 0.2s}
+.modal{background:var(--surface);border-radius:18px 18px 0 0;width:100%;max-width:480px;padding:20px;animation:slide 0.25s}
+.modal-t{font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.modal-x{margin-left:auto;width:28px;height:28px;border-radius:7px;border:none;background:var(--fill);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.modal-f{margin-bottom:12px}
+.modal-l{display:block;font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.modal-i,.modal-s{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;color:var(--ink);background:var(--fill);appearance:none;transition:border-color 0.2s}
+.modal-i:focus,.modal-s:focus{outline:none;border-color:var(--teal);background:var(--surface)}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.modal-acts{display:flex;gap:8px;margin-top:4px}
+.modal-b{flex:1;padding:11px;border-radius:8px;border:none;font-weight:600;font-size:13px;cursor:pointer}
+.modal-b.p{background:var(--teal);color:#fff}
+.modal-b.s{background:var(--fill);color:var(--ink)}
 
-.modal-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.4);align-items:flex-end;justify-content:center}
-.modal-overlay.show{display:flex;animation:fadeIn 0.2s}
-.modal{background:var(--surface);border-radius:20px 20px 0 0;width:100%;max-width:500px;padding:20px;animation:slideUp 0.25s ease}
-.modal-title{font-family:'Outfit',sans-serif;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.modal-close{margin-left:auto;width:28px;height:28px;border-radius:8px;border:none;background:var(--input-bg);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink-muted)}
-.modal-field{margin-bottom:14px}
-.modal-label{display:block;font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px}
-.modal-input,.modal-select{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;color:var(--ink);background:var(--input-bg);appearance:none;-webkit-appearance:none;transition:border-color 0.2s}
-.modal-input:focus,.modal-select:focus{outline:none;border-color:var(--teal);background:var(--surface)}
-.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal-actions{display:flex;gap:8px;margin-top:4px}
-.modal-btn{flex:1;padding:13px;border-radius:10px;border:none;font-weight:600;font-size:14px;cursor:pointer}
-.modal-btn.primary{background:var(--teal);color:#fff}
-.modal-btn.secondary{background:var(--input-bg);color:var(--ink)}
-
+/* Bottom Nav */
 .bottom-nav{display:flex;background:var(--surface);border-top:1px solid var(--border);position:sticky;bottom:0;z-index:10}
-.nav-item{flex:1;padding:8px 4px;text-align:center;background:none;border:none;cursor:pointer;color:var(--ink-muted);transition:color 0.2s}
-.nav-item.active{color:var(--teal)}
-.nav-item svg{width:22px;height:22px;fill:currentColor;display:block;margin:0 auto 2px}
-.nav-item span{font-size:10px;font-weight:600;display:block}
+.nav-i{flex:1;padding:6px 4px;text-align:center;background:none;border:none;cursor:pointer;color:var(--muted);transition:color 0.2s}
+.nav-i.active{color:var(--teal)}
+.nav-i svg{width:20px;height:20px;fill:currentColor;display:block;margin:0 auto 1px}
+.nav-i span{font-size:9px;font-weight:600;display:block}
 
-@media(min-width:640px){.page{padding:24px 24px 32px;gap:20px}.help-modal{border-radius:20px;margin:auto;max-height:80vh}.help-overlay{align-items:center}}
+@media(min-width:640px){.page{padding:20px 24px 28px;gap:16px}.help-m{border-radius:18px;margin:auto;max-height:75vh}.help-o,.modal-o{align-items:center}}
 </style>
 </head>
 <body>
@@ -235,94 +208,82 @@ input,button,textarea,select{font-family:inherit;font-size:inherit}
   <img class="header-logo" src="logo-1.jpeg" alt="" />
   <span class="header-title">Resepsiyonistim</span>
   <div class="header-actions">
-    <button class="header-btn" id="theme-toggle" aria-label="Tema"><svg class="moon" viewBox="0 0 24 24"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg><svg class="sun" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.697 7.757a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"/></svg></button><div class="header-avatar">UM</div></div></div>
+    <button class="header-btn" id="theme-toggle" aria-label="Tema">
+      <svg class="moon" viewBox="0 0 24 24"><path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0z"/></svg>
+    </button>
+    <div class="header-avatar">UM</div>
+  </div>
+</div>
 
 <!-- PAGE 1: PANEL -->
 <div class="page active" id="page-panel">
-  <div class="card ai-card"><div class="card-body"><div class="ai-row"><div class="ai-info"><div class="ai-name">Dijital Resepsiyonist</div><div class="ai-status"><span class="ai-dot" id="ai-dot"></span> <span id="ai-status-text">Aktif — 7/24 çalışıyor</span></div></div><div class="toggle on" id="ai-toggle" role="switch" aria-checked="true" tabindex="0"><div class="toggle-knob"></div></div></div></div></div>
-  <div class="stats"><div class="stat"><div class="stat-num">24</div><div class="stat-label">Konuşma</div></div><div class="stat"><div class="stat-num">12</div><div class="stat-label">Rezervasyon</div></div><div class="stat"><div class="stat-num">%92</div><div class="stat-label">Memnuniyet</div></div></div>
-  <div class="handoff-banner"><div class="handoff-icon">!</div><div class="handoff-text"><strong>Devralma Bekliyor</strong>Ayşe Yılmaz, "İptal ve iade" için yardım istiyor</div><button class="handoff-btn">Devral</button></div>
-  <div class="card"><div class="card-header"><span class="card-title">Sohbetler</span><span style="font-size:12px;color:var(--ink-muted)">3 beklemede</span></div>
-  <div><div class="chat-item" onclick="switchPage('chat')"><div class="chat-avatar ai-handled">AY</div><div class="chat-body"><div class="chat-name">Ayşe Yılmaz</div><div class="chat-msg">İptal ve iade politikasını öğrenmek istiyorum</div><div class="chat-meta"><span class="chat-badge handoff">Devral</span><span class="chat-time">2 dk</span></div></div><svg class="chat-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-  <div class="chat-item" onclick="switchPage('chat')"><div class="chat-avatar ai-handled">MK</div><div class="chat-body"><div class="chat-name">Mehmet Kaya</div><div class="chat-msg">15 Ağustos için jakuzili bungalov var mı?</div><div class="chat-meta"><span class="chat-badge">AI</span><span class="chat-time">15 dk</span></div></div><svg class="chat-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-  <div class="chat-item" onclick="switchPage('chat')"><div class="chat-avatar human-handled">ZD</div><div class="chat-body"><div class="chat-name">Zeynep Demir</div><div class="chat-msg">Teşekkürler, rezervasyonu onaylıyorum</div><div class="chat-meta"><span class="chat-badge human">Siz</span><span class="chat-time">1 sa</span></div></div><svg class="chat-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div></div></div></div>
+  <div class="card ai-card"><div class="card-b"><div class="ai-r"><div class="ai-l"><div class="ai-n">'Dijital Resepsiyonist'</div><div class="ai-s"><span class="ai-dot" id="ai-dot"></span> <span id="ai-st">Çalışıyor</span></div></div><div class="toggle on" id="ai-toggle" role="switch" aria-checked="true"><div class="toggle-k"></div></div></div></div></div>
+  <div class="stats"><div class="stat"><div class="stat-n">24</div><div class="stat-l">Konuşma</div></div><div class="stat"><div class="stat-n">12</div><div class="stat-l">Rezervasyon</div></div><div class="stat"><div class="stat-n">%92</div><div class="stat-l">Memnuniyet</div></div></div>
+  <div class="handoff-b"><div class="handoff-i">!</div><div class="handoff-t"><strong>Devralma Bekliyor</strong>Ayşe Yılmaz yardım istiyor</div><button class="handoff-bt">Devral</button></div>
+  <div class="card"><div class="card-h"><span class="card-t">Sohbetler</span><span style="font-size:11px;color:var(--muted)">3 beklemede</span></div>
+  <div><div class="chat-item" onclick="switchPage('chat')"><div class="chat-av r">AY</div><div class="chat-bd"><div class="chat-n">Ayşe Yılmaz</div><div class="chat-msg">İptal ve iade politikasını öğrenmek istiyorum</div><div class="chat-mt"><span class="chat-badge h">Devral</span><span class="chat-tm">2 dk</span></div></div><svg class="chat-ar" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+  <div class="chat-item" onclick="switchPage('chat')"><div class="chat-av r">MK</div><div class="chat-bd"><div class="chat-n">Mehmet Kaya</div><div class="chat-msg">15 Ağustos için jakuzili bungalov var mı?</div><div class="chat-mt"><span class="chat-badge">Yanıtlandı</span><span class="chat-tm">15 dk</span></div></div><svg class="chat-ar" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+  <div class="chat-item" onclick="switchPage('chat')"><div class="chat-av y">ZD</div><div class="chat-bd"><div class="chat-n">Zeynep Demir</div><div class="chat-msg">Teşekkürler, rezervasyonu onaylıyorum</div><div class="chat-mt"><span class="chat-badge y">Siz</span><span class="chat-tm">1 sa</span></div></div><svg class="chat-ar" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div></div></div>
+</div>
 
 <!-- PAGE 2: CHAT -->
 <div class="page" id="page-chat">
-  <div id="chat-list-view"><div class="card"><div class="card-header"><span class="card-title">Sohbetler</span><span style="font-size:12px;color:var(--ink-muted)">8 konuşma</span></div>
-  <div><div class="chat-item" onclick="openChat('Ayşe Yılmaz','handoff')"><div class="chat-avatar ai-handled">AY</div><div class="chat-body"><div class="chat-name">Ayşe Yılmaz</div><div class="chat-msg">İptal ve iade politikasını öğrenmek istiyorum</div><div class="chat-meta"><span class="chat-badge handoff">Devral</span><span class="chat-time">2 dk</span></div></div><svg class="chat-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-  <div class="chat-item" onclick="openChat('Mehmet Kaya','ai')"><div class="chat-avatar ai-handled">MK</div><div class="chat-body"><div class="chat-name">Mehmet Kaya</div><div class="chat-msg">15 Ağustos için jakuzili bungalov var mı?</div><div class="chat-meta"><span class="chat-badge">AI</span><span class="chat-time">15 dk</span></div></div><svg class="chat-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-  <div class="chat-item" onclick="openChat('Zeynep Demir','human')"><div class="chat-avatar human-handled">ZD</div><div class="chat-body"><div class="chat-name">Zeynep Demir</div><div class="chat-msg">Teşekkürler, rezervasyonu onaylıyorum</div><div class="chat-meta"><span class="chat-badge human">Siz</span><span class="chat-time">1 sa</span></div></div><svg class="chat-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-  <div class="chat-item" onclick="openChat('Ali Can','ai')"><div class="chat-avatar ai-handled">AC</div><div class="chat-body"><div class="chat-name">Ali Can</div><div class="chat-msg">Hafta sonu kamp alanında yer var mı?</div><div class="chat-meta"><span class="chat-badge">AI</span><span class="chat-time">2 sa</span></div></div><svg class="chat-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div></div></div></div>
-  <div id="chat-detail-view" style="display:none"><div class="card"><div class="chat-detail-header"><button class="chat-back-btn" onclick="closeChat()"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button><span class="chat-detail-name" id="chat-detail-name">Ayşe</span><span class="chat-detail-status" id="chat-detail-status">AI ile</span><button class="handoff-btn" onclick="handoffChat()" style="padding:6px 12px;font-size:12px">Devral</button></div>
-  <div class="chat-messages" id="chat-messages-container"><div class="msg guest">Merhaba<span class="msg-time">14:23</span></div><div class="msg ai">Merhaba! Nasıl yardımcı olabilirim?<span class="msg-time">14:23</span></div></div>
-  <div class="chat-input-bar"><input class="chat-input" id="chat-input" placeholder="Mesaj yazın..." /><button class="chat-send-btn" onclick="sendChatMsg()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button></div></div></div></div>
+  <div id="chat-list"><div class="card"><div class="card-h"><span class="card-t">Sohbetler</span><span style="font-size:11px;color:var(--muted)">8 konuşma</span></div>
+  <div><div class="chat-item" onclick="openChat('Ayşe Yılmaz','h')"><div class="chat-av r">AY</div><div class="chat-bd"><div class="chat-n">Ayşe Yılmaz</div><div class="chat-msg">İptal ve iade politikasını öğrenmek istiyorum</div><div class="chat-mt"><span class="chat-badge h">Devral</span><span class="chat-tm">2 dk</span></div></div><svg class="chat-ar" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+  <div class="chat-item" onclick="openChat('Mehmet Kaya','r')"><div class="chat-av r">MK</div><div class="chat-bd"><div class="chat-n">Mehmet Kaya</div><div class="chat-msg">15 Ağustos için jakuzili bungalov var mı?</div><div class="chat-mt"><span class="chat-badge">Yanıtlandı</span><span class="chat-tm">15 dk</span></div></div><svg class="chat-ar" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+  <div class="chat-item" onclick="openChat('Zeynep Demir','y')"><div class="chat-av y">ZD</div><div class="chat-bd"><div class="chat-n">Zeynep Demir</div><div class="chat-msg">Teşekkürler, rezervasyonu onaylıyorum</div><div class="chat-mt"><span class="chat-badge y">Siz</span><span class="chat-tm">1 sa</span></div></div><svg class="chat-ar" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+  <div class="chat-item" onclick="openChat('Ali Can','r')"><div class="chat-av r">AC</div><div class="chat-bd"><div class="chat-n">Ali Can</div><div class="chat-msg">Hafta sonu kamp alanında yer var mı?</div><div class="chat-mt"><span class="chat-badge">Yanıtlandı</span><span class="chat-tm">2 sa</span></div></div><svg class="chat-ar" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div></div></div></div>
+  <div id="chat-detail" style="display:none"><div class="card"><div class="chat-dh"><button class="chat-back" onclick="closeChat()"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button><span class="chat-dn" id="chat-dn">Ayşe</span><span class="chat-ds" id="chat-ds">Yanıtlıyor</span><button class="handoff-bt" onclick="handoffChat()" style="padding:5px 10px;font-size:11px">Devral</button></div>
+  <div class="chat-msgs" id="chat-msgs"><div class="msg g">Merhaba<span class="msg-tm">14:23</span></div><div class="msg a">Merhaba! Nasıl yardımcı olabilirim?<span class="msg-tm">14:23</span></div></div>
+  <div class="chat-inp"><input class="chat-in" id="chat-in" placeholder="Mesaj yazın..." /><button class="chat-snd" onclick="sendMsg()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button></div></div></div>
+</div>
 
 <!-- PAGE 3: CALENDAR -->
 <div class="page" id="page-calendar">
-  <div class="card"><div class="card-header"><span class="card-title">Takvim</span></div>
-  <div class="unit-selector" id="cal-unit-selector"><button class="unit-chip all active">Hepsi</button><button class="unit-chip">Jakuzili Bungalov</button><button class="unit-chip">Tiny House</button><button class="unit-chip">Deluxe Villa</button><button class="unit-chip">Kamp Alanı</button></div>
-  <div class="cal-header"><button class="cal-nav" id="cal-prev"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button><span class="cal-month" id="cal-month"></span><button class="cal-nav" id="cal-next"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button></div>
-  <div class="cal-days" id="cal-grid"></div>
-  <div class="cal-legend"><span class="cal-legend-item"><span class="cal-legend-dot available"></span> Müsait</span><span class="cal-legend-item"><span class="cal-legend-dot pending"></span> Beklemede</span><span class="cal-legend-item"><span class="cal-legend-dot booked"></span> Dolu</span></div>
-  <div class="day-detail" id="cal-day-detail"><div class="day-detail-title"><span id="cal-day-title">15 Temmuz</span><button class="day-add-btn" id="cal-add-btn">+</button></div><div id="cal-day-events"></div></div></div></div>
+  <div class="card"><div class="card-h"><span class="card-t">Takvim</span></div>
+  <div class="unit-s" id="cal-units"><button class="unit-c all active">Hepsi</button><button class="unit-c">Jakuzili Bungalov</button><button class="unit-c">Tiny House</button><button class="unit-c">Deluxe Villa</button><button class="unit-c">Kamp Alanı</button></div>
+  <div class="cal-h"><button class="cal-nav" id="cal-p"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button><span class="cal-m" id="cal-m"></span><button class="cal-nav" id="cal-n"><svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button></div>
+  <div class="cal-days" id="cal-g"></div>
+  <div class="cal-legend"><span class="cal-l-item"><span class="cal-l-dot a"></span> Müsait</span><span class="cal-l-item"><span class="cal-l-dot p"></span> Beklemede</span><span class="cal-l-item"><span class="cal-l-dot b"></span> Dolu</span></div>
+  <div class="day-d" id="cal-dd"><div class="day-dt"><span id="cal-dt">15 Temmuz</span><button class="day-add" id="cal-add">+</button></div><div id="cal-events"><div class="day-ev"><div class="day-ev-dot c"></div><div class="day-ev-bd"><div class="day-ev-n">Ayşe Yılmaz</div><div class="day-ev-i">Jakuzili Bungalov · 2 gece</div></div></div></div></div></div>
+</div>
 
 <!-- PAGE 4: SETTINGS -->
 <div class="page" id="page-settings">
-  <div class="card"><div class="setting-group-title">İşletme</div>
-  <div class="setting-row" onclick="window.open('onboarding.html','_self')"><div class="setting-item-left"><div class="setting-icon amber"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div><div><div class="setting-label">İşletme Bilgilerini Gir</div><div class="setting-desc">Ad, adres, birimler, fiyatlar, kurallar ve daha fazlası</div></div></div><svg class="setting-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-  <div class="setting-row"><div class="setting-item-left"><div class="setting-icon teal"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><div><div class="setting-label">Profil</div><div class="setting-desc">Ad, soyad, e-posta</div></div></div></div>
-  <div class="setting-row"><div class="setting-item-left"><div class="setting-icon teal"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><div><div class="setting-label">Birimler</div><div class="setting-desc">Odalar, kapasiteler</div></div></div></div></div>
-  <div class="card"><div class="setting-group-title">Dijital Resepsiyonist</div>
-  <div class="setting-row"><div class="setting-item-left"><div class="setting-icon green"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div><div><div class="setting-label">AI Asistan</div><div class="setting-desc" id="settings-ai-status">Aktif</div></div></div><div class="setting-toggle on" id="settings-ai-toggle"><div class="setting-toggle-knob"></div></div></div>
-  <div class="setting-row"><div class="setting-item-left"><div class="setting-icon amber"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div><div><div class="setting-label">Karşılama Mesajı</div></div></div></div></div>
-  <div class="card"><div class="setting-group-title">WhatsApp</div>
-  <div class="setting-row"><div class="setting-item-left"><div class="setting-icon green"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div><div><div class="setting-label">905427450654</div><div class="setting-desc">Bağlı ✅</div></div></div></div>
-  <div class="setting-row"><div class="setting-item-left"><div class="setting-icon amber"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div><div><div class="setting-label">Bildirimler</div></div></div><div class="setting-toggle on"><div class="setting-toggle-knob"></div></div></div></div>
-  <div class="card"><div class="setting-group-title">Hesap</div>
-  <div class="setting-row"><div class="setting-item-left"><div class="setting-icon red"><svg viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg></div><div><div class="setting-label">Abonelik</div><div class="setting-desc">1.999 ₺/ay</div></div></div></div></div></div>
-
-<!-- PAGE 5: ONBOARDING -->
-<div class="page" id="page-onboarding">
-  <div class="card">
-    <div class="card-header"><span class="card-title">İşletme Kurulumu</span><span style="font-size:12px;color:var(--ink-muted)">son kayıt: <span id="ob-saved-time">-</span></span></div>
-    <div class="ob-progress" id="ob-progress"></div>
-    <div class="ob-step-label"><span id="ob-step-num">Adım 1/12</span><span id="ob-step-name">İşletme Bilgileri</span></div>
-    <div class="ob-form active" data-step="1"><div class="modal-field"><label class="modal-label">İşletme Adı</label><input class="modal-input ob-field s1" id="ob-1-name" /></div><div class="modal-field"><label class="modal-label">Tür</label><select class="modal-select ob-field s1" id="ob-1-type"><option value="bungalow">Bungalov</option><option value="tinyhouse">Tiny House</option><option value="villa">Villa</option><option value="hotel">Otel</option><option value="pension">Pansiyon</option><option value="glamping">Glamping</option><option value="apart">Apart</option><option value="camping">Kamp</option></select></div><div class="modal-field"><label class="modal-label">Adres</label><input class="modal-input ob-field s1" id="ob-1-address" /></div><div class="modal-row"><div class="modal-field"><label class="modal-label">Şehir</label><input class="modal-input ob-field s1" id="ob-1-city" /></div><div class="modal-field"><label class="modal-label">Telefon</label><input class="modal-input ob-field s1" id="ob-1-phone" /></div></div><div class="modal-field"><label class="modal-label">E-posta</label><input class="modal-input ob-field s1" id="ob-1-email" /></div></div>
-    <div class="ob-form" data-step="2"><div class="modal-field"><label class="modal-label">Yol Tarifi</label><textarea class="modal-input ob-field s2" id="ob-2-dir" rows="2"></textarea></div><div class="modal-field"><label class="modal-label">Otopark</label><select class="modal-select ob-field s2" id="ob-2-park"><option value="yes">Var</option><option value="no">Yok</option></select></div></div>
-    <div class="ob-form" data-step="3"><div class="ob-hint">En az 1 birim ekleyin</div><div id="ob-3-units"></div><button class="ob-btn secondary" onclick="addUnit()" type="button" style="padding:10px;font-size:13px">+ Birim</button></div>
-    <div class="ob-form" data-step="4"><div class="modal-field"><label class="modal-label">Para Birimi</label><select class="modal-select ob-field s4" id="ob-4-cur"><option value="TRY">₺</option><option value="EUR">€</option></select></div><div class="modal-field"><label class="modal-label">Min Gece</label><input class="modal-input ob-field s4" id="ob-4-min" type="number" value="1" /></div></div>
-    <div class="ob-form" data-step="5"><div class="ob-hint" style="margin-bottom:10px">Özellikler</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px" id="ob-5-am"></div></div>
-    <div class="ob-form" data-step="6"><div class="modal-row"><div class="modal-field"><label class="modal-label">Giriş</label><input class="modal-input ob-field s6" id="ob-6-ci" type="time" value="14:00" /></div><div class="modal-field"><label class="modal-label">Çıkış</label><input class="modal-input ob-field s6" id="ob-6-co" type="time" value="11:00" /></div></div><div class="modal-field"><label class="modal-label">Evcil Hayvan</label><select class="modal-select ob-field s6" id="ob-6-pet"><option value="allowed">İzin</option><option value="not_allowed">Yasak</option></select></div></div>
-    <div class="ob-form" data-step="7"><div class="modal-field"><label class="modal-label">İptal</label><select class="modal-select ob-field s7" id="ob-7-pol"><option value="flexible">Esnek</option><option value="strict">Katı</option></select></div><div class="modal-field"><label class="modal-label">Ücretsiz (gün)</label><input class="modal-input ob-field s7" id="ob-7-free" type="number" value="7" /></div></div>
-    <div class="ob-form" data-step="8"><div class="modal-field"><label class="modal-label">Kapora %</label><input class="modal-input ob-field s8" id="ob-8-dep" type="number" value="30" /></div><div class="modal-field"><label class="modal-label">IBAN</label><input class="modal-input ob-field s8" id="ob-8-iban" /></div></div>
-    <div class="ob-form" data-step="9"><div class="modal-field"><label class="modal-label">Market</label><input class="modal-input ob-field s9" id="ob-9-mkt" /></div><div class="modal-field"><label class="modal-label">Restoran</label><input class="modal-input ob-field s9" id="ob-9-res" /></div></div>
-    <div class="ob-form" data-step="10"><div class="modal-row"><div class="modal-field"><label class="modal-label">Yetkili</label><input class="modal-input ob-field s10" id="ob-10-name" /></div><div class="modal-field"><label class="modal-label">Tel</label><input class="modal-input ob-field s10" id="ob-10-phone" /></div></div></div>
-    <div class="ob-form" data-step="11"><div class="modal-field"><label class="modal-label">Adı</label><input class="modal-input ob-field s11" id="ob-11-per" placeholder="Elif" /></div><div class="modal-field"><label class="modal-label">Karşılama</label><textarea class="modal-input ob-field s11" id="ob-11-greeting" rows="2"></textarea></div></div>
-    <div class="ob-form" data-step="12"><div class="ob-hint">Bilgileri kontrol edin</div><div id="ob-summary"></div></div>
-    <div class="ob-success" id="ob-success"><div class="ob-success-icon">✓</div><div class="ob-success-title">Tamamlandı!</div><div class="ob-success-desc">İşletmeniz yayında.</div><button class="ob-btn primary" onclick="switchPage('panel')" style="margin-top:16px;max-width:200px">Panele Dön</button></div>
-    <div class="ob-btns"><button class="ob-btn secondary" id="ob-back" onclick="prevStep()">← Geri</button><button class="ob-btn primary" id="ob-next" onclick="nextStep()">Devam →</button></div></div></div>
+  <div class="card"><div class="set-gt">İşletme</div>
+  <div class="set-r" onclick="window.open('onboarding.html','_self')"><div class="set-l"><div class="set-ic a"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div><div><div class="set-lb">İşletme Bilgilerini Gir</div><div class="set-de">Ad, adres, birimler, fiyatlar</div></div></div><svg class="set-ar" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+  <div class="set-r"><div class="set-l"><div class="set-ic t"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div><div><div class="set-lb">Profil</div><div class="set-de">Ad, soyad, e-posta</div></div></div></div>
+  <div class="set-r"><div class="set-l"><div class="set-ic t"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div><div><div class="set-lb">Birimler</div><div class="set-de">Odalar, kapasiteler</div></div></div></div></div>
+  <div class="card"><div class="set-gt">'Dijital Resepsiyonist'</div>
+  <div class="set-r"><div class="set-l"><div class="set-ic g"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg></div><div><div class="set-lb">Asistan</div><div class="set-de" id="set-ai">Aktif</div></div></div><div class="set-tog on" id="set-ai-t"><div class="set-tog-k"></div></div></div>
+  <div class="set-r"><div class="set-l"><div class="set-ic a"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div><div><div class="set-lb">Karşılama Mesajı</div></div></div></div></div>
+  <div class="card"><div class="set-gt">WhatsApp</div>
+  <div class="set-r"><div class="set-l"><div class="set-ic g"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div><div><div class="set-lb">905427450654</div><div class="set-de">Bağlı</div></div></div></div>
+  <div class="set-r"><div class="set-l"><div class="set-ic a"><svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div><div><div class="set-lb">Bildirimler</div></div></div><div class="set-tog on"><div class="set-tog-k"></div></div></div></div>
+  <div class="card"><div class="set-gt">Hesap</div>
+  <div class="set-r"><div class="set-l"><div class="set-ic r"><svg viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg></div><div><div class="set-lb">Abonelik</div><div class="set-de">4.000 ₺/ay</div></div></div></div></div>
+</div>
 
 <button class="help-fab" id="help-fab" aria-label="Yardım"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15h2v2h-2v-2zm1-4c-.55 0-1-.45-1-1v-1c0-1.66 1.34-3 3-3s3 1.34 3 3c0 1.05-.55 1.99-1.38 2.55-.38.27-.62.7-.62 1.08v.37h-2v-.37c0-1.05.55-1.99 1.38-2.55.38-.27.62-.7.62-1.08 0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v1c0 .55-.45 1-1 1z"/></svg></button>
 
-<div class="help-overlay" id="help-overlay"><div class="help-modal"><div class="help-header"><span class="help-title">❓ Nasıl Kullanılır?</span><button class="help-close" id="help-close">✕</button></div>
-<div class="help-section"><div class="help-h2">Panel</div><div class="help-p">Ana ekran. AI durumu, istatistikler ve son konuşmalar.</div><div class="help-h3">AI Aç/Kapa</div><div class="help-p">Yeşil karttaki toggle ile AI'ı açıp kapatın. Kapalıyken tüm mesajlar size yönlendirilir.</div><div class="help-h3">Devralma</div><div class="help-p">AI çözemezse turuncu kutuda bildirim görürsünüz. "Devral"a basın.</div></div>
-<div class="help-section"><div class="help-h2">Sohbet</div><div class="help-p">Tüm WhatsApp konuşmaları. Birine tıklayınca mesajları görür, yanıt yazabilirsiniz.</div></div>
-<div class="help-section"><div class="help-h2">Takvim</div><div class="help-p">Rezervasyon takvimi. Üstten birim seçin, güne tıklayın, + ile ekleyin.</div></div>
-<div class="help-section"><div class="help-h2">Ayarlar</div><div class="help-p">İşletme bilgileri, AI ayarları, WhatsApp bağlantısı.</div></div>
-<div class="help-section"><div class="help-h2">İşletme Bilgilerini Gir</div><div class="help-p">12 adımlık kurulum sihirbazı. Her adım otomatik kaydedilir, istediğiniz zaman kaldığınız yerden devam edebilirsiniz.</div></div></div></div>
+<div class="help-o" id="help-o"><div class="help-m"><div class="help-hd"><span class="help-t">Nasıl Kullanılır?</span><button class="help-x" id="help-x">X</button></div>
+<div class="help-s"><div class="help-h2">Panel</div><div class="help-p">Ana sayfa. Resepsiyonistin durumunu, istatistikleri ve son konuşmaları gösterir.</div><div class="help-p">Resepsiyonist kartındaki düğme ile acip kapatabilirsiniz. Kapaliyken mesajlar size yonlendirilir.</div><div class="help-p">Turuncu kutuda devralma bildirimi gorurseniz "Devral"a basin.</div></div>
+<div class="help-s"><div class="help-h2">Sohbet</div><div class="help-p">Tum WhatsApp konusmalari. Birine tiklayinca mesajlari gorur, yanit yazabilirsiniz.</div></div>
+<div class="help-s"><div class="help-h2">Takvim</div><div class="help-p">Rezervasyon takvimi. Ustten birim secin, gune tiklayin, arti ile ekleyin.</div></div>
+<div class="help-s"><div class="help-h2">Ayarlar</div><div class="help-p">Isletme bilgileri, resepsiyonist ayarlari, WhatsApp baglantisi.</div></div></div></div>
 
-<div class="modal-overlay" id="event-modal"><div class="modal"><div class="modal-title"><span>Rezervasyon Ekle/Düzenle</span><button class="modal-close" id="ev-close">✕</button></div>
-<form id="ev-form"><div class="modal-field"><label class="modal-label">Ad</label><input class="modal-input" id="ev-name" required /></div>
-<div class="modal-row"><div class="modal-field"><label class="modal-label">Birim</label><select class="modal-select" id="ev-unit"><option>Bungalov</option><option>Tiny House</option><option>Villa</option></select></div><div class="modal-field"><label class="modal-label">Durum</label><select class="modal-select" id="ev-status"><option value="confirmed">Onaylı</option><option value="pending">Bekliyor</option></select></div></div>
-<div class="modal-row"><div class="modal-field"><label class="modal-label">Giriş</label><input class="modal-input" id="ev-ci" type="date" required /></div><div class="modal-field"><label class="modal-label">Çıkış</label><input class="modal-input" id="ev-co" type="date" required /></div></div>
-<div class="modal-actions"><button class="modal-btn secondary" type="button" id="ev-cancel">İptal</button><button class="modal-btn primary" type="submit">Kaydet</button></div></form></div></div>
+<div class="modal-o" id="ev-modal"><div class="modal"><div class="modal-t"><span>Rezervasyon Ekle</span><button class="modal-x" id="ev-x">X</button></div>
+<form id="ev-form"><div class="modal-f"><label class="modal-l">Ad</label><input class="modal-i" id="ev-name" required /></div>
+<div class="modal-row"><div class="modal-f"><label class="modal-l">Birim</label><select class="modal-s" id="ev-unit"><option>Bungalov</option><option>Tiny House</option><option>Villa</option></select></div><div class="modal-f"><label class="modal-l">Durum</label><select class="modal-s" id="ev-st"><option value="confirmed">Onayli</option><option value="pending">Bekliyor</option></select></div></div>
+<div class="modal-row"><div class="modal-f"><label class="modal-l">Giris</label><input class="modal-i" id="ev-ci" type="date" required /></div><div class="modal-f"><label class="modal-l">Cikis</label><input class="modal-i" id="ev-co" type="date" required /></div></div>
+<div class="modal-acts"><button class="modal-b s" type="button" id="ev-cancel">Iptal</button><button class="modal-b p" type="submit">Kaydet</button></div></form></div></div>
 
 <div class="bottom-nav">
-<button class="nav-item active" onclick="switchPage('panel')"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Panel</span></button>
-<button class="nav-item" onclick="switchPage('chat')"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg><span>Sohbet</span></button>
-<button class="nav-item" onclick="switchPage('calendar')"><svg viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg><span>Takvim</span></button>
-<button class="nav-item" onclick="switchPage('settings')"><svg viewBox="0 0 24 24"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-7H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-1.75 9c0 .23-.02.46-.05.68l1.48 1.16c.13.11.17.3.08.45l-1.4 2.42c-.09.15-.27.21-.43.15l-1.74-.7c-.36.28-.76.51-1.18.69l-.26 1.85c-.03.17-.18.3-.35.3h-2.8c-.17 0-.32-.13-.35-.29l-.26-1.85c-.43-.18-.82-.41-1.18-.69l-1.74.7c-.16.06-.34 0-.43-.15l-1.4-2.42c-.09-.15-.05-.34.08-.45l1.48-1.16c-.03-.23-.05-.46-.05-.69s.02-.46.05-.68l-1.48-1.16c-.13-.11-.17-.3-.08-.45l1.4-2.42c.09-.15.27-.21.43-.15l1.74.7c.36-.28.76-.51 1.18-.69l.26-1.85c.03-.17.18-.3.35-.3h2.8c.17 0 .32.13.35.29l.26 1.85c.43.18.82.41 1.18.69l1.74-.7c.16-.06.34 0 .43.15l1.4 2.42c.09.15.05.34-.08.45l-1.48 1.16c.03.23.05.46.05.68z"/></svg><span>Ayarlar</span></button>
+<button class="nav-i active" onclick="switchPage('panel')"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Panel</span></button>
+<button class="nav-i" onclick="switchPage('chat')"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg><span>Sohbet</span></button>
+<button class="nav-i" onclick="switchPage('calendar')"><svg viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg><span>Takvim</span></button>
+<button class="nav-i" onclick="switchPage('settings')"><svg viewBox="0 0 24 24"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7-7H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2z"/></svg><span>Ayarlar</span></button>
 </div>
 
 <script>
@@ -338,224 +299,114 @@ document.getElementById('theme-toggle')?.addEventListener('click',()=>setTheme(!
 window.switchPage=function(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.nav-i').forEach(n=>n.classList.remove('active'));
   const map={panel:0,chat:1,calendar:2,settings:3};
-  document.querySelectorAll('.nav-item')[map[id]]?.classList.add('active');
+  document.querySelectorAll('.nav-i')[map[id]]?.classList.add('active');
   if(id==='calendar')renderCal();
-  if(id==='onboarding')initOnboarding();
 };
 
-// Settings → Onboarding
-document.querySelector('#page-settings .setting-row:first-child')?.addEventListener('click',()=>switchPage('onboarding'));
-
-// AI Toggle
-const aiToggle=document.getElementById('ai-toggle');
-if(aiToggle){
-  aiToggle.addEventListener('click',()=>{
-    const on=!aiToggle.classList.contains('on');
-    aiToggle.classList.toggle('on',on);aiToggle.setAttribute('aria-checked',on);
-    document.getElementById('ai-dot')?.classList.toggle('off',!on);
-    document.getElementById('ai-status-text').textContent=on?'Aktif — 7/24 çalışıyor':'Pasif';
-  });
-}
-document.getElementById('settings-ai-toggle')?.addEventListener('click',function(){
+// AI Toggle (panel)
+const aiT=document.getElementById('ai-toggle');
+if(aiT)aiT.addEventListener('click',()=>{
+  const on=!aiT.classList.contains('on');
+  aiT.classList.toggle('on',on);aiT.setAttribute('aria-checked',on);
+  document.getElementById('ai-dot')?.classList.toggle('off',!on);
+  document.getElementById('ai-st').textContent=on?'Çalışıyor':'Kapalı';
+});
+// AI Toggle (settings)
+document.getElementById('set-ai-t')?.addEventListener('click',function(){
   this.classList.toggle('on');
-  document.getElementById('settings-ai-status').textContent=this.classList.contains('on')?'Aktif':'Pasif';
+  document.getElementById('set-ai').textContent=this.classList.contains('on')?'Aktif':'Pasif';
 });
 
 // Handoff
-document.querySelectorAll('.handoff-btn').forEach(b=>{
+document.querySelectorAll('.handoff-bt').forEach(b=>{
   b.addEventListener('click',function(e){
-    e.stopPropagation();this.textContent='✓ Devralındı';this.style.background='var(--green)';
-    setTimeout(()=>{const p=this.closest('.handoff-banner');if(p)p.style.display='none'},1200);
+    e.stopPropagation();this.textContent='Devralindi';this.style.background='var(--green)';
+    setTimeout(()=>{const p=this.closest('.handoff-b');if(p)p.style.display='none'},1000);
   });
 });
 
 // Chat
 window.openChat=function(n,t){
-  document.getElementById('chat-list-view').style.display='none';
-  document.getElementById('chat-detail-view').style.display='block';
-  document.getElementById('chat-detail-name').textContent=n;
-  const labels={ai:'AI yanıtlıyor',handoff:'Devralma bekliyor',human:'Siz yanıtlıyorsunuz'};
-  document.getElementById('chat-detail-status').textContent=labels[t]||'AI';
+  document.getElementById('chat-list').style.display='none';
+  document.getElementById('chat-detail').style.display='block';
+  document.getElementById('chat-dn').textContent=n;
+  const lb={'r':'Yanitliyor','h':'Devralma bekliyor','y':'Siz yanitliyorsunuz'};
+  document.getElementById('chat-ds').textContent=lb[t]||'';
 };
 window.closeChat=function(){
-  document.getElementById('chat-list-view').style.display='';
-  document.getElementById('chat-detail-view').style.display='none';
+  document.getElementById('chat-list').style.display='';
+  document.getElementById('chat-detail').style.display='none';
 };
-window.sendChatMsg=function(){
-  const inp=document.getElementById('chat-input');const t=inp.value.trim();
+window.sendMsg=function(){
+  const inp=document.getElementById('chat-in');const t=inp.value.trim();
   if(!t)return;
-  const c=document.getElementById('chat-messages-container');
-  c.innerHTML+=`<div class="msg you">${t}<span class="msg-time">${new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</span></div>`;
+  document.getElementById('chat-msgs').innerHTML+=`<div class="msg u">${t}<div class="msg-tm">${new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'})}</div></div>`;
   inp.value='';
 };
-document.getElementById('chat-input')?.addEventListener('keydown',e=>{if(e.key==='Enter')sendChatMsg()});
+document.getElementById('chat-in')?.addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg()});
 
 // Calendar
-const monthNames=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
-const dayNames=['Pts','Sal','Çar','Per','Cum','Cmt','Paz'];
-let curDate=new Date();
-const calGrid=document.getElementById('cal-grid');
-const calMonth=document.getElementById('cal-month');
-const dayDetail=document.getElementById('cal-day-detail');
-const dayTitle=document.getElementById('cal-day-title');
-const events={'2026-7-15':['booked','pending'],'2026-7-18':['booked'],'2026-7-22':['pending']};
+const mn=['Ocak','Subat','Mart','Nisan','Mayis','Haziran','Temmuz','Agustos','Eylul','Ekim','Kasim','Aralik'];
+const dn=['Pts','Sal','Car','Per','Cum','Cmt','Paz'];
+let cd=new Date();
+const cg=document.getElementById('cal-g');
+const cm=document.getElementById('cal-m');
+const dd=document.getElementById('cal-dd');
+const dt=document.getElementById('cal-dt');
+const evnts={'2026-7-15':['b','p'],'2026-7-18':['b'],'2026-7-22':['p']};
 window.renderCal=function(){
-  const y=curDate.getFullYear(),m=curDate.getMonth();
-  calMonth.textContent=monthNames[m]+' '+y;
-  const first=new Date(y,m,1).getDay();
+  const y=cd.getFullYear(),m=cd.getMonth();
+  cm.textContent=mn[m]+' '+y;
+  const f=new Date(y,m,1).getDay();
   const dim=new Date(y,m+1,0).getDate();
   const dip=new Date(y,m,0).getDate();
-  const today=new Date();
-  let html='';dayNames.forEach(d=>html+=`<div class="cal-day-label">${d}</div>`);
-  let day=1,started=false;
+  const td=new Date();
+  let h='';dn.forEach(d=>h+=`<div class="cl">${d}</div>`);
+  let day=1,st=false;
   for(let i=0;i<42;i++){
-    if(i%7===first%7&&!started)started=true;
-    if(!started){const d=dip-(first===0?6:first-1)+i;html+=`<button class="cal-day other">${d}</button>`}
+    if(i%7===f%7&&!st)st=true;
+    if(!st){const d=dip-(f===0?6:f-1)+i;h+=`<button class="cd o">${d}</button>`}
     else if(day<=dim){
-      const key=`${y}-${m+1}-${day}`;const ev=events[key]||[];
-      const cls=['cal-day'];if(day===today.getDate()&&m===today.getMonth()&&y===today.getFullYear())cls.push('today');
-      if(ev.length)cls.push('has-event');
-      html+=`<button class="${cls.join(' ')}" data-key="${key}">${day}`;
-      if(ev.length){html+=`<div style="display:flex;gap:2px;margin-top:1px">`;ev.forEach(e=>html+=`<div class="cal-dot ${e}"></div>`);html+=`</div>`}
-      html+=`</button>`;day++;
-    }else{html+=`<button class="cal-day other">${day++-dim}</button>`}
+      const k=y+'-'+(m+1)+'-'+day;const ev=evnts[k]||[];
+      const cls=['cd'];if(day===td.getDate()&&m===td.getMonth()&&y===td.getFullYear())cls.push('t');
+      h+=`<button class="${cls.join(' ')}" data-key="${k}">${day}`;
+      if(ev.length){h+=`<div style="display:flex;gap:2px;margin-top:1px">`;ev.forEach(e=>h+=`<div class="cd-dot ${e}"></div>`);h+=`</div>`}
+      h+=`</button>`;day++;
+    }else{h+=`<button class="cd o">${day++-dim}</button>`}
   }
-  calGrid.innerHTML=html;
-  calGrid.querySelectorAll('.cal-day:not(.other)').forEach(b=>{
+  cg.innerHTML=h;
+  cg.querySelectorAll('.cd:not(.o)').forEach(b=>{
     b.addEventListener('click',function(){
-      calGrid.querySelectorAll('.selected').forEach(x=>x.classList.remove('selected'));
-      this.classList.add('selected');
-      const d=this.dataset.key;if(d){const[y,mm,dd]=d.split('-');dayTitle.textContent=dd+' '+monthNames[parseInt(mm)-1]+' '+y;dayDetail.classList.add('show')}
+      cg.querySelectorAll('.s').forEach(x=>x.classList.remove('s'));
+      this.classList.add('s');
+      const d=this.dataset.key;if(d){const[y,mm,dd2]=d.split('-');dt.textContent=dd2+' '+mn[parseInt(mm)-1]+' '+y;dd.classList.add('show')}
     });
   });
 };
 renderCal();
-document.getElementById('cal-prev').addEventListener('click',()=>{curDate.setMonth(curDate.getMonth()-1);renderCal();dayDetail.classList.remove('show')});
-document.getElementById('cal-next').addEventListener('click',()=>{curDate.setMonth(curDate.getMonth()+1);renderCal();dayDetail.classList.remove('show')});
-document.querySelectorAll('#cal-unit-selector .unit-chip').forEach(c=>c.addEventListener('click',function(){document.querySelectorAll('#cal-unit-selector .unit-chip').forEach(x=>x.classList.remove('active'));this.classList.add('active')}));
+document.getElementById('cal-p').addEventListener('click',()=>{cd.setMonth(cd.getMonth()-1);renderCal();dd.classList.remove('show')});
+document.getElementById('cal-n').addEventListener('click',()=>{cd.setMonth(cd.getMonth()+1);renderCal();dd.classList.remove('show')});
+document.querySelectorAll('#cal-units .unit-c').forEach(c=>c.addEventListener('click',function(){document.querySelectorAll('#cal-units .unit-c').forEach(x=>x.classList.remove('active'));this.classList.add('active')}));
 
 // Event modal
-const evModal=document.getElementById('event-modal');
-document.getElementById('cal-add-btn')?.addEventListener('click',()=>evModal.classList.add('show'));
-document.getElementById('ev-close')?.addEventListener('click',()=>evModal.classList.remove('show'));
-document.getElementById('ev-cancel')?.addEventListener('click',()=>evModal.classList.remove('show'));
-evModal?.addEventListener('click',e=>{if(e.target===evModal)evModal.classList.remove('show')});
+const evM=document.getElementById('ev-modal');
+document.getElementById('cal-add')?.addEventListener('click',()=>evM.classList.add('show'));
+document.getElementById('ev-x')?.addEventListener('click',()=>evM.classList.remove('show'));
+document.getElementById('ev-cancel')?.addEventListener('click',()=>evM.classList.remove('show'));
+evM?.addEventListener('click',e=>{if(e.target===evM)evM.classList.remove('show')});
 document.getElementById('ev-form')?.addEventListener('submit',function(e){
-  e.preventDefault();const name=document.getElementById('ev-name').value;
-  const unit=document.getElementById('ev-unit').value;
-  const status=document.getElementById('ev-status').value;
-  const html=`<div class="day-event"><div class="day-event-dot ${status}"></div><div class="day-event-body"><div class="day-event-name">${name}</div><div class="day-event-info">${unit}</div></div></div>`;
-  const c=document.getElementById('cal-day-events');c.innerHTML+=html;evModal.classList.remove('show');this.reset();
-  const key=`${curDate.getFullYear()}-${curDate.getMonth()+1}-${new Date().getDate()}`;
-  if(!events[key])events[key]=[];events[key].push(status);renderCal();
+  e.preventDefault();const n=document.getElementById('ev-name').value;
+  const st=document.getElementById('ev-st').value;
+  const h=`<div class="day-ev"><div class="day-ev-dot ${st}"></div><div class="day-ev-bd"><div class="day-ev-n">${n}</div><div class="day-ev-i">Rezervasyon</div></div></div>`;
+  document.getElementById('cal-events').innerHTML+=h;evM.classList.remove('show');this.reset();
 });
 
-// ─── ONBOARDING ───
-const ONBOARDING_KEY='ob_data';
-const obSteps=[{name:'İşletme Bilgileri',id:'1',fields:['ob-1-name','ob-1-type','ob-1-address','ob-1-city','ob-1-phone','ob-1-email']},
-{name:'Konum',id:'2',fields:['ob-2-dir','ob-2-park']},
-{name:'Birimler',id:'3',fields:[]},
-{name:'Fiyatlandırma',id:'4',fields:['ob-4-cur','ob-4-min']},
-{name:'Özellikler',id:'5',fields:[]},
-{name:'Kurallar',id:'6',fields:['ob-6-ci','ob-6-co','ob-6-pet']},
-{name:'İptal',id:'7',fields:['ob-7-pol','ob-7-free']},
-{name:'Ödeme',id:'8',fields:['ob-8-dep','ob-8-iban']},
-{name:'Çevre',id:'9',fields:['ob-9-mkt','ob-9-res']},
-{name:'Acil',id:'10',fields:['ob-10-name','ob-10-phone']},
-{name:'Karşılama',id:'11',fields:['ob-11-per','ob-11-greeting']},
-{name:'Özet',id:'12',fields:[]}];
-let obStep=1;
-const amenityList=['Jakuzi','Havuz','WiFi','Klima','Mutfak','BBQ','Bahçe','TV','Şömine','Çamaşır','Evcil Hayvan','Otopark'];
-
-function saveObData(){
-  const data={};obSteps.forEach(s=>{s.fields.forEach(f=>{const el=document.getElementById(f);if(el)data[f]=el.value||el.textContent||''})});
-  // Amenities
-  document.querySelectorAll('#ob-5-am input').forEach((cb,i)=>{if(cb.checked)data['am_'+i]=true});
-  data._step=obStep;data._savedAt=new Date().toLocaleString('tr-TR');
-  localStorage.setItem(ONBOARDING_KEY,JSON.stringify(data));
-  document.getElementById('ob-saved-time').textContent='kaydedildi';
-}
-
-function loadObData(){
-  try{return JSON.parse(localStorage.getItem(ONBOARDING_KEY))||{}}catch(e){return{}}
-}
-
-function applyObData(){
-  const data=loadObData();
-  Object.keys(data).forEach(k=>{
-    if(k.startsWith('am_')){
-      const idx=parseInt(k.replace('am_',''));
-      const cbs=document.querySelectorAll('#ob-5-am input');
-      if(cbs[idx])cbs[idx].checked=true;
-    }else{
-      const el=document.getElementById(k);if(el){el.value=data[k]}
-    }
-  });
-  if(data._step)obStep=Math.max(1,Math.min(12,parseInt(data._step)));
-}
-
-window.initOnboarding=function(){
-  // Build amenities
-  const am=document.getElementById('ob-5-am');
-  if(am&&!am.children.length)amenityList.forEach(a=>{const l=document.createElement('label');l.style.cssText='display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);font-size:13px;cursor:pointer';const c=document.createElement('input');c.type='checkbox';c.className='ob-field';l.appendChild(c);l.append(a);am.appendChild(l)});
-  applyObData();
-  renderOb();
-  goToStep(obStep);
-};
-
-function renderOb(){
-  const p=document.getElementById('ob-progress');p.innerHTML='';
-  for(let i=1;i<=12;i++){
-    const d=document.createElement('div');d.className='ob-step-dot';
-    if(i<obStep)d.classList.add('done');if(i===obStep)d.classList.add('active');
-    p.appendChild(d);
-  }
-  document.getElementById('ob-step-num').textContent='Adım '+obStep+'/12';
-  document.getElementById('ob-step-name').textContent=obSteps[obStep-1].name;
-  document.querySelectorAll('.ob-form').forEach(f=>f.classList.toggle('active',parseInt(f.dataset.step)===obStep));
-  document.getElementById('ob-back').disabled=obStep<=1;
-  document.getElementById('ob-next').textContent=obStep>=12?'Tamamla':'Devam →';
-}
-
-function goToStep(n){obStep=n;renderOb();document.getElementById('ob-back').disabled=obStep<=1}
-
-window.nextStep=function(){
-  if(obStep>=12){finishOb();return}
-  saveObData();
-  if(obStep<12){obStep++;goToStep(obStep)}
-};
-
-window.prevStep=function(){
-  if(obStep>1){obStep--;goToStep(obStep)}
-};
-
-window.addUnit=function(){
-  const c=document.getElementById('ob-3-units');
-  const d=document.createElement('div');d.className='unit-entry';d.style.cssText='background:var(--input-bg);border-radius:10px;padding:12px;margin-bottom:8px';
-  d.innerHTML='<div class="modal-row" style="margin-bottom:8px"><div class="modal-field" style="margin:0"><label class="modal-label">Ad</label><input class="modal-input ob-field" /></div><div class="modal-field" style="margin:0"><label class="modal-label">Adet</label><input class="modal-input ob-field" type="number" value="1" /></div></div><div class="modal-row"><div class="modal-field" style="margin:0"><label class="modal-label">Kapasite</label><input class="modal-input ob-field" type="number" value="2" /></div><div class="modal-field" style="margin:0"><label class="modal-label">Ücret</label><input class="modal-input ob-field" type="number" /></div></div>';
-  c.appendChild(d);
-};
-
-function finishOb(){
-  saveObData();
-  document.querySelectorAll('.ob-form').forEach(f=>f.classList.remove('active'));
-  document.querySelector('.ob-btns').style.display='none';
-  document.getElementById('ob-progress').style.display='none';
-  document.getElementById('ob-step-label').style.display='none';
-  document.getElementById('ob-success').classList.add('show');
-  localStorage.setItem(ONBOARDING_KEY+'_done','true');
-}
-
-// Init on page load: if onboarding was started, show saved time
-const savedData=loadObData();
-if(savedData._savedAt)document.getElementById('ob-saved-time').textContent=savedData._savedAt;
-
 // Help
-const ho=document.getElementById('help-overlay');
+const ho=document.getElementById('help-o');
 document.getElementById('help-fab').addEventListener('click',()=>ho.classList.add('show'));
-document.getElementById('help-close').addEventListener('click',()=>ho.classList.remove('show'));
+document.getElementById('help-x').addEventListener('click',()=>ho.classList.remove('show'));
 ho.addEventListener('click',e=>{if(e.target===ho)ho.classList.remove('show')});
 
 })();
