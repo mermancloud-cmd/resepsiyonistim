@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Resepsiyonistim — 7/24 Çalışan Dijital Resepsiyonistiniz</title>
-<meta name="description" content="İşletmenize 7/24 çalışan, insan gibi konuşan bir dijital resepsiyonist katılıyor. WhatsApp üzerinden rezervasyon alır, misafirleri karşılar, sizi yormaz." />
+<meta name="description" content="İşletmenize 7/24 çalışan, insan gibi konuşan bir dijital resepsiyonist katılıyor. WhatsApp üzerinden rezervasyon alır, misafirleri karşılar." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,126 +14,122 @@ html{font-size:16px;scroll-behavior:smooth}
 body{font-family:'Sora',sans-serif;background:#fff;color:#1c1c1e;line-height:1.6;-webkit-font-smoothing:antialiased}
 img{max-width:100%}.container{max-width:1120px;margin:0 auto;padding:0 24px}
 
-.header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid #f0f0f0}
+.header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid #eee}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;max-width:1168px;margin:0 auto}
 .header-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
 .header-logo-img{width:28px;height:28px;border-radius:7px;object-fit:cover}
 .header-logo-text{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;color:#1c1c1e}
 .header-nav{display:flex;gap:6px}
 .header-nav a{padding:8px 14px;border-radius:8px;font-weight:500;font-size:13px;text-decoration:none;transition:all 0.2s;color:#6b7280}
-.header-nav a:hover{color:#1c1c1e;background:#f9f9fb}
+.header-nav a:hover{color:#1c1c1e;background:#f5f5f5}
 .header-nav .cta{padding:8px 16px;background:#1c1c1e;color:#fff;font-weight:600}
 .header-nav .cta:hover{opacity:0.88;background:#1c1c1e}
 
 .hero{text-align:center;padding:64px 24px 56px}
 .hero-badge{display:inline-block;padding:4px 12px;border-radius:20px;background:#f0fdf4;color:#16a34a;font-size:11px;font-weight:600;margin-bottom:16px;letter-spacing:0.3px}
-.hero-title{font-family:'Outfit',sans-serif;font-size:clamp(24px,4.5vw,38px);font-weight:700;line-height:1.2;letter-spacing:-0.5px;color:#1c1c1e;margin-bottom:12px;max-width:680px;margin-left:auto;margin-right:auto}
-.hero-title em{font-style:normal;color:#0f766e}
+.hero-title{font-family:'Outfit',sans-serif;font-size:clamp(26px,5vw,42px);font-weight:700;line-height:1.2;letter-spacing:-0.5px;color:#1c1c1e;margin-bottom:12px;max-width:680px;margin-left:auto;margin-right:auto}
+.hero-title em{font-style:normal}
 .hero-desc{font-size:15px;color:#6b7280;max-width:500px;margin:0 auto 20px;line-height:1.6}
 .hero-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:10px;border:none;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;transition:all 0.2s}
-.btn-teal{background:#0f766e;color:#fff}
-.btn-teal:hover{opacity:0.9;transform:translateY(-1px)}
-.btn-outline{background:#fff;color:#1c1c1e;border:1.5px solid #e5e5ea}
-.btn-outline:hover{background:#f9f9fb}
+.btn-primary{background:#1c1c1e;color:#fff}
+.btn-primary:hover{opacity:0.88;transform:translateY(-1px)}
+.btn-outline{background:#fff;color:#1c1c1e;border:1.5px solid #ddd}
+.btn-outline:hover{background:#f5f5f5;border-color:#bbb}
+.btn-free{font-size:12px;color:#999;margin-top:10px}
 
 section{padding:64px 24px}
 .section-title{font-family:'Outfit',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;text-align:center;color:#1c1c1e;margin-bottom:8px}
 .section-desc{font-size:14px;color:#6b7280;text-align:center;max-width:480px;margin:0 auto 36px}
 
-/* NASIL ÇALIŞIR */
-.steps{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:720px;margin:0 auto}
-.step{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid #f0f0f0;transition:border-color 0.2s}
-.step:hover{border-color:#e5e5ea}
-.step-num{width:28px;height:28px;border-radius:8px;background:#0f766e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
-.step-text h3{font-size:14px;font-weight:600;color:#1c1c1e;margin-bottom:2px}
-.step-text p{font-size:13px;color:#6b7280;line-height:1.5;margin:0}
+.proof-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:640px;margin:32px auto 0}
+.proof-item{text-align:center;padding:12px;border-radius:10px;background:#f9f9fb}
+.proof-val{font-family:'Outfit',sans-serif;font-size:24px;font-weight:700;color:#1c1c1e;line-height:1.2}
+.proof-label{font-size:11px;color:#999;margin-top:2px}
 
-/* TEST */
-.test-drive{text-align:center;background:#f9f9fb;border-radius:16px;padding:32px 24px;max-width:600px;margin:0 auto}
-.test-drive h2{font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;color:#1c1c1e;margin-bottom:4px}
-.test-drive p{font-size:13px;color:#6b7280;margin-bottom:16px}
+.how-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:720px;margin:0 auto}
+.how-card{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid #eee;transition:border-color 0.2s}
+.how-card:hover{border-color:#ddd}
+.how-num{width:28px;height:28px;border-radius:8px;background:#1c1c1e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0}
+.how-body h3{font-size:14px;font-weight:600;color:#1c1c1e;margin-bottom:2px}
+.how-body p{font-size:13px;color:#6b7280;line-height:1.5;margin:0}
+
+.test{text-align:center;background:#f9f9fb;border-radius:16px;padding:32px 24px;max-width:600px;margin:0 auto}
+.test h2{font-size:18px;font-weight:700;font-family:'Outfit',sans-serif;color:#1c1c1e;margin-bottom:4px}
+.test p{font-size:13px;color:#6b7280;margin-bottom:16px}
 .test-wa{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:30px;border:none;background:#25D366;color:#fff;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none;transition:all 0.2s;box-shadow:0 2px 8px rgba(37,211,102,0.3)}
 .test-wa:hover{background:#20bd5a;transform:translateY(-1px)}
 
-/* ÖZELLİKLER */
-.features{display:grid;grid-template-columns:1fr;gap:12px;max-width:720px;margin:0 auto}
-.feature{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid #f0f0f0;transition:all 0.3s;opacity:0;transform:translateY(12px)}
-.feature.visible{opacity:1;transform:translateY(0)}
-.feature:hover{border-color:#e5e5ea;transform:translateY(-1px)}
-.feature-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:transform 0.3s}
-.feature:hover .feature-icon{transform:scale(1.06)}
-.feature-icon.green{background:#d1fae5}
-.feature-icon.amber{background:#fef3c7}
-.feature-icon.gray{background:#f3f4f6}
-.feature-body h3{font-size:13px;font-weight:600;color:#1c1c1e;margin-bottom:2px}
-.feature-body p{font-size:12px;color:#6b7280;line-height:1.5;margin:0}
+.feat-grid{display:grid;grid-template-columns:1fr;gap:12px;max-width:720px;margin:0 auto}
+.feat-card{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid #eee;transition:all 0.3s;opacity:0;transform:translateY(12px)}
+.feat-card.visible{opacity:1;transform:translateY(0)}
+.feat-card:hover{border-color:#ddd;transform:translateY(-1px)}
+.feat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:transform 0.3s;background:#f3f4f6}
+.feat-card:hover .feat-icon{transform:scale(1.06)}
+.feat-body h3{font-size:13px;font-weight:600;color:#1c1c1e;margin-bottom:2px}
+.feat-body p{font-size:12px;color:#6b7280;line-height:1.5;margin:0}
 
-/* FİYAT */
-.pricing{max-width:420px;margin:0 auto}
+.pricing-wrap{max-width:420px;margin:0 auto}
 .pricing-toggle{display:flex;background:#f3f4f6;border-radius:8px;padding:3px;margin-bottom:20px}
 .pricing-toggle button{flex:1;padding:10px;border:none;border-radius:6px;background:none;cursor:pointer;font-weight:600;font-size:13px;color:#6b7280;transition:all 0.2s}
 .pricing-toggle button.active{background:#fff;color:#1c1c1e;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.pricing-toggle .badge{display:inline-block;background:#0f766e;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:5px;margin-left:4px}
-.pricing-card{border-radius:16px;border:2px solid #e5e5ea;overflow:hidden;position:relative}
-.pricing-pop{position:absolute;top:14px;right:14px;background:#fef3c7;color:#b45309;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:700}
+.pricing-toggle .pbadge{display:inline-block;background:#1c1c1e;color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:5px;margin-left:4px}
+.pricing-card{border-radius:16px;border:2px solid #eee;overflow:hidden;position:relative}
+.pricing-pop{position:absolute;top:14px;right:14px;background:#fee2e2;color:#dc2626;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:600}
 .pricing-body{padding:28px 24px 24px}
 .pricing-name{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:#1c1c1e;margin-bottom:2px}
 .pricing-desc{font-size:12px;color:#6b7280;margin-bottom:14px}
 .pricing-price{font-family:'Outfit',sans-serif;font-size:34px;font-weight:800;color:#1c1c1e;letter-spacing:-0.5px}
 .pricing-period{font-size:13px;color:#6b7280}
-.pricing-note{font-size:11px;color:#9ca3af;margin-top:2px;margin-bottom:14px}
+.pricing-foot{font-size:11px;color:#999;margin-top:2px;margin-bottom:14px}
 .pricing-list{list-style:none;margin-bottom:18px}
 .pricing-list li{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f3f4f6;font-size:12px;color:#374151}
 .pricing-list li:last-child{border-bottom:none}
 .pricing-list li span{color:#16a34a;font-weight:700}
-.pricing-cta{display:block;width:100%;padding:14px;border-radius:10px;border:none;background:#0f766e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;text-align:center;text-decoration:none;transition:opacity 0.2s}
-.pricing-cta:hover{opacity:0.9}
-.pricing-foot{text-align:center;font-size:11px;color:#9ca3af;margin-top:10px}
-.pricing-yearly{display:none;margin-top:14px;padding:14px;background:#f9f9fb;border-radius:10px;border:1px solid #e5e5ea;text-align:center}
+.pricing-cta{display:block;width:100%;padding:14px;border-radius:10px;border:none;background:#1c1c1e;color:#fff;font-weight:700;font-size:14px;cursor:pointer;text-align:center;text-decoration:none;transition:opacity 0.2s}
+.pricing-cta:hover{opacity:0.88}
+.pricing-guarantee{text-align:center;font-size:11px;color:#999;margin-top:10px}
+.pricing-yearly{display:none;margin-top:14px;padding:14px;background:#f9f9fb;border-radius:10px;border:1px solid #eee;text-align:center}
 .pricing-yearly.show{display:block}
 .pricing-yearly strong{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:#1c1c1e;display:block;margin-bottom:2px}
 .pricing-yearly span{font-size:12px;color:#6b7280}
 
-/* SSS */
 .faq{max-width:560px;margin:0 auto}
-.faq-item{padding:14px 0;border-bottom:1px solid #f0f0f0;cursor:pointer}
+.faq-item{padding:14px 0;border-bottom:1px solid #eee;cursor:pointer}
 .faq-q{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;font-weight:600;color:#1c1c1e}
-.faq-arrow{font-size:11px;color:#9ca3af;transition:transform 0.2s;flex-shrink:0}
+.faq-arrow{font-size:11px;color:#999;transition:transform 0.2s;flex-shrink:0}
 .faq-item.open .faq-arrow{transform:rotate(180deg)}
 .faq-a{font-size:13px;color:#6b7280;line-height:1.6;margin-top:6px;display:none}
 .faq-item.open .faq-a{display:block;animation:fa 0.2s}
 @keyframes fa{from{opacity:0}to{opacity:1}}
 
-/* CTA */
 .cta{text-align:center;padding:64px 24px;background:#1c1c1e;color:#fff}
 .cta h2{font-family:'Outfit',sans-serif;font-size:clamp(20px,3vw,28px);font-weight:700;color:#fff;margin-bottom:8px}
-.cta p{font-size:14px;color:#9ca3af;margin-bottom:20px}
+.cta p{font-size:14px;color:#aaa;margin-bottom:20px}
 .cta .btn{background:#fff;color:#1c1c1e;padding:14px 32px}
 
-/* FOOTER */
-.footer{padding:40px 24px 24px;background:#f9f9fb;border-top:1px solid #f0f0f0}
-.footer-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px;max-width:1120px;margin:0 auto}
-.footer-brand{grid-column:span 1}
+.footer{padding:40px 24px 24px;background:#f9f9fb;border-top:1px solid #eee}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px;max-width:1120px;margin:0 auto}
 .footer-brand .fl{display:flex;align-items:center;gap:6px;margin-bottom:6px;text-decoration:none}
 .footer-brand .fl img{width:24px;height:24px;border-radius:6px;object-fit:cover}
 .footer-brand .fl span{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:#1c1c1e}
-.footer-brand p{font-size:12px;color:#6b7280;line-height:1.5}
+.footer-brand p{font-size:12px;color:#6b7280;line-height:1.5;max-width:240px}
 .footer-col h4{font-size:12px;font-weight:600;color:#1c1c1e;margin-bottom:8px}
 .footer-col a{display:block;font-size:12px;color:#6b7280;text-decoration:none;padding:3px 0}
 .footer-col a:hover{color:#1c1c1e}
-.footer-bot{text-align:center;padding-top:20px;margin-top:20px;border-top:1px solid #e5e5ea;font-size:11px;color:#9ca3af;max-width:1120px;margin:20px auto 0}
+.footer-bot{text-align:center;padding-top:20px;margin-top:24px;border-top:1px solid #eee;font-size:11px;color:#999;max-width:1120px;margin:24px auto 0}
 
 @media(max-width:639px){
-  .steps{grid-template-columns:1fr}
+  .proof-grid{grid-template-columns:1fr 1fr}
+  .how-grid{grid-template-columns:1fr}
   .footer-grid{grid-template-columns:1fr 1fr}
   .footer-brand{grid-column:span 2}
 }
 @media(min-width:640px){
-  .features{grid-template-columns:1fr 1fr}
+  .feat-grid{grid-template-columns:1fr 1fr}
 }
 @media(min-width:900px){
-  .features{grid-template-columns:1fr 1fr 1fr}
+  .feat-grid{grid-template-columns:1fr 1fr 1fr}
 }
 </style>
 </head>
@@ -145,7 +141,7 @@ section{padding:64px 24px}
     <nav class="header-nav">
       <a href="#nasil">Nasıl Çalışır?</a>
       <a href="#fiyat">Fiyat</a>
-      <a class="cta" href="https://wa.me/905427450654?text=Merhaba,%20denemek%20istiyorum">30 Gün Ücretsiz</a>
+      <a class="cta" href="https://wa.me/905427450654?text=Merhaba">30 Gün Ücretsiz Dene</a>
     </nav>
   </div>
 </header>
@@ -153,69 +149,75 @@ section{padding:64px 24px}
 <section class="hero">
   <div class="container">
     <div class="hero-badge">30 Gün Ücretsiz Deneme</div>
-    <h1 class="hero-title">7/24 çalışan akıllı resepsiyonistinizle <em>tanışın</em></h1>
+    <h1 class="hero-title">İşletmenize 7/24 çalışan bir <em>dijital resepsiyonist</em> katılıyor</h1>
     <p class="hero-desc">WhatsApp üzerinden misafirlerinizle insan gibi konuşur, rezervasyon alır, soruları yanıtlar. Siz uyurken bile çalışır.</p>
     <div class="hero-btns">
-      <a class="btn btn-teal" href="https://wa.me/905427450654?text=Merhaba,%20denemek%20istiyorum">30 Gün Ücretsiz Dene</a>
+      <a class="btn btn-primary" href="https://wa.me/905427450654?text=Merhaba,%20denemek%20istiyorum">30 Gün Ücretsiz Dene</a>
       <a class="btn btn-outline" href="#nasil">Nasıl Çalışır?</a>
+    </div>
+    <div class="btn-free">Kart bilgisi gerekmez. İstediğiniz an iptal edebilirsiniz.</div>
+    <div class="proof-grid">
+      <div class="proof-item"><div class="proof-val">7/24</div><div class="proof-label">Kesintisiz hizmet</div></div>
+      <div class="proof-item"><div class="proof-val">15 sn</div><div class="proof-label">Ortalama yanıt süresi</div></div>
+      <div class="proof-item"><div class="proof-val">Tek fiyat</div><div class="proof-label">Sınırsız kullanım</div></div>
     </div>
   </div>
 </section>
 
 <section style="padding:0 24px 48px">
-  <div class="container test-drive">
-    <h2>WhatsApp'ta Test Edin</h2>
-    <p>Test hesabımıza mesaj atın. Dijital resepsiyonistimizi bizzat görün — rezervasyon sorun, fiyat sorun.</p>
+  <div class="container test">
+    <h2>WhatsApp'ta Şimdi Test Edin</h2>
+    <p>Test hesabımıza mesaj atın. Dijital resepsiyonistimizi bizzat görün — nasıl konuştuğunu, nasıl rezervasyon aldığını deneyimleyin.</p>
     <a class="test-wa" href="https://wa.me/905427450654?text=Merhaba!%20Test%20etmek%20istiyorum" target="_blank" rel="noopener">💬 WhatsApp'ta Test Edin · 90542 745 0654</a>
   </div>
 </section>
 
 <section id="nasil" style="background:#f9f9fb">
   <div class="container">
-    <h2 class="section-title">10 Dakikada Kurulum</h2>
-    <p class="section-desc">Adım adım, hiçbir teknik bilgi gerekmez.</p>
-    <div class="steps">
-      <div class="step"><div class="step-num">1</div><div class="step-text"><h3>Bilgilerinizi Girin</h3><p>İşletmenizin adı, adresi, birimleri, fiyatları. 12 adımlık sihirbaz her an kaydeder, kaldığınız yerden devam edersiniz.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div class="step-text"><h3>WhatsApp'ı Bağlayın</h3><p>Kendi numaranızı QR kodla bağlayın. 10 saniye sürer.</p></div></div>
-      <div class="step"><div class="step-num">3</div><div class="step-text"><h3>Resepsiyonist Devrede</h3><p>Misafirler yazmaya başlar. Yanıtlar, rezervasyon alır, takvimi günceller.</p></div></div>
-      <div class="step"><div class="step-num">4</div><div class="step-text"><h3>Siz Yönetin</h3><p>Panelden izleyin, devralın, istatistikleri görün.</p></div></div>
+    <h2 class="section-title">10 Dakikada Kurulum, Hemen Yayına Geçin</h2>
+    <p class="section-desc">Hiçbir teknik bilgi gerekmez. Adım adım ilerleyin, her adım kaydedilir.</p>
+    <div class="how-grid">
+      <div class="how-card"><div class="how-num">1</div><div class="how-body"><h3>Bilgilerinizi Girin</h3><p>İşletmenizin adı, adresi, birimleri, fiyatları. 12 adımlık sihirbaz her an kaydeder, kaldığınız yerden devam edersiniz.</p></div></div>
+      <div class="how-card"><div class="how-num">2</div><div class="how-body"><h3>WhatsApp'ı Bağlayın</h3><p>Kendi numaranızı QR kodla bağlayın. 10 saniye sürer.</p></div></div>
+      <div class="how-card"><div class="how-num">3</div><div class="how-body"><h3>Resepsiyonist Devrede</h3><p>Misafirler yazmaya başlar. Yanıtlar, rezervasyon alır, takvimi günceller.</p></div></div>
+      <div class="how-card"><div class="how-num">4</div><div class="how-body"><h3>Siz Yönetin</h3><p>Panelden izleyin, gerektiğinde devralın, konuşmayı WhatsApp'ta kaldığınız yerden devam ettirin.</p></div></div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="container">
-    <h2 class="section-title">Her Şey Dahil</h2>
-    <p class="section-desc">Tek fiyat, sınırsız kullanım.</p>
-    <div class="features" id="features">
-      <div class="feature"><div class="feature-icon green">💬</div><div class="feature-body"><h3>İnsan Gibi Konuşma</h3><p>Doğal Türkçe, samimi ton. Misafir botla değil insanla konuştuğunu sanır.</p></div></div>
-      <div class="feature"><div class="feature-icon amber">📅</div><div class="feature-body"><h3>Akıllı Takvim</h3><p>Birim bazlı takvim, renk kodlu doluluk, tek tıkla ekleme ve düzenleme.</p></div></div>
-      <div class="feature"><div class="feature-icon gray">🔄</div><div class="feature-body"><h3>Kesintisiz Devralma</h3><p>Resepsiyonistten devralın, WhatsApp'ta kaldığınız yerden devam edin.</p></div></div>
-      <div class="feature"><div class="feature-icon green">📍</div><div class="feature-body"><h3>WhatsApp Konum</h3><p>Misafire tek tıkla Google Maps linki gönderir. Yol tarifi sormak tarih olur.</p></div></div>
-      <div class="feature"><div class="feature-icon amber">📊</div><div class="feature-body"><h3>Canlı Panel</h3><p>Konuşmalar, rezervasyonlar, istatistikler. Tüm metrikler tek ekranda.</p></div></div>
-      <div class="feature"><div class="feature-icon gray">🔒</div><div class="feature-body"><h3>Güvenli ve Özel</h3><p>Verileriniz şifreli. IBAN ödeme. Misafir bilgileriniz asla paylaşılmaz.</p></div></div>
+    <h2 class="section-title">Her Şey Dahil, Ek Ücret Yok</h2>
+    <p class="section-desc">Tek paket, tüm özellikler. Sınırsız tesis, sınırsız konuşma.</p>
+    <div class="feat-grid" id="feat-grid">
+      <div class="feat-card"><div class="feat-icon">💬</div><div class="feat-body"><h3>İnsan Gibi Konuşma</h3><p>Doğal Türkçe, samimi ton. Misafir botla değil insanla konuştuğunu sanır.</p></div></div>
+      <div class="feat-card"><div class="feat-icon">📅</div><div class="feat-body"><h3>Akıllı Takvim</h3><p>Birim bazlı takvim, renk kodlu doluluk, tek tıkla ekleme ve düzenleme.</p></div></div>
+      <div class="feat-card"><div class="feat-icon">🔄</div><div class="feat-body"><h3>Kesintisiz Devralma</h3><p>Resepsiyonistten devralın, WhatsApp'ta kaldığınız yerden devam edin.</p></div></div>
+      <div class="feat-card"><div class="feat-icon">📍</div><div class="feat-body"><h3>WhatsApp Konum</h3><p>Misafire tek tıkla Google Maps linki gönderir. Yol tarifi sormak tarih olur.</p></div></div>
+      <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-body"><h3>Canlı Panel</h3><p>Konuşmalar, rezervasyonlar, istatistikler tek ekranda.</p></div></div>
+      <div class="feat-card"><div class="feat-icon">🔒</div><div class="feat-body"><h3>Güvenli ve Özel</h3><p>Verileriniz şifreli. IBAN ödeme. Misafir bilgileriniz asla paylaşılmaz.</p></div></div>
     </div>
   </div>
 </section>
 
 <section style="background:#f9f9fb" id="fiyat">
-  <div class="container pricing">
-    <h2 class="section-title">Basit Tek Fiyat</h2>
-    <p class="section-desc">Karmaşık planlar yok. İhtiyacınız olan her şey dahil.</p>
+  <div class="container pricing-wrap">
+    <h2 class="section-title">Basit ve Tek Fiyat</h2>
+    <p class="section-desc">Karmaşık planlar, gizli ücretler yok. İhtiyacınız olan her şey dahil.</p>
     <div class="pricing-toggle" id="pt">
       <button class="active" data-plan="monthly">Aylık</button>
-      <button data-plan="yearly">Yıllık <span class="badge">%17 avantaj</span></button>
+      <button data-plan="yearly">Yıllık <span class="pbadge">%17 avantaj</span></button>
     </div>
     <div class="pricing-card">
-      <div class="pricing-pop">En Popüler</div>
+      <div class="pricing-pop">En Çok Tercih Edilen</div>
       <div class="pricing-body">
         <div class="pricing-name">Profesyonel Paket</div>
-        <div class="pricing-desc">Sınırsız tesis, sınırsız konuşma</div>
-        <div><span class="pricing-price" id="pp">4.000</span> <span class="pricing-period" id="pper">₺/ay</span></div>
-        <div class="pricing-note" id="pnote">İlk 30 gün ücretsiz — kart bilgisi gerekmez</div>
+        <div class="pricing-desc">Sınırsız tesis, sınırsız konuşma, sınırsız özellik</div>
+        <div><span class="pricing-price" id="pprice">4.000</span> <span class="pricing-period" id="pperiod">₺/ay</span></div>
+        <div class="pricing-foot" id="pfoot">İlk 30 gün ücretsiz — kart bilgisi gerekmez</div>
         <div class="pricing-yearly" id="pyearly">
           <strong>40.000 ₺/yıl</strong>
-          <span>Yıllık ödeyin, 2 ay size hediye — aylık 3.333 ₺</span>
+          <span>Yıllık ödeyin, 2 ay size hediye — aylık sadece 3.333 ₺</span>
         </div>
         <ul class="pricing-list">
           <li><span>✓</span> Sınırsız tesis ekleme</li>
@@ -223,12 +225,14 @@ section{padding:64px 24px}
           <li><span>✓</span> 7/24 dijital resepsiyonist</li>
           <li><span>✓</span> Akıllı takvim ve rezervasyon</li>
           <li><span>✓</span> Kesintisiz devralma</li>
-          <li><span>✓</span> Detaylı panel</li>
+          <li><span>✓</span> Detaylı panel ve istatistikler</li>
           <li><span>✓</span> WhatsApp konum paylaşımı</li>
-          <li><span>✓</span> Çoklu dil (TR/EN/AR)</li>
+          <li><span>✓</span> Çoklu dil desteği (TR/EN/AR)</li>
+          <li><span>✓</span> Web widget</li>
+          <li><span>✓</span> Telegram bildirimleri</li>
         </ul>
         <a class="pricing-cta" href="https://wa.me/905427450654?text=Merhaba,%2030%20g%C3%BCn%20%C3%BCcretsiz%20denemek%20istiyorum" target="_blank" rel="noopener">30 Gün Ücretsiz Başlayın</a>
-        <div class="pricing-foot">Kart bilgisi gerekmez. İstediğiniz an iptal.</div>
+        <div class="pricing-guarantee">🔒 Kart bilgisi gerekmez. İstediğiniz an iptal.</div>
       </div>
     </div>
   </div>
@@ -238,49 +242,43 @@ section{padding:64px 24px}
   <div class="container faq">
     <h2 class="section-title">Sık Sorulanlar</h2>
     <div class="faq-item open"><div class="faq-q">Kurulum ne kadar sürer? <span class="faq-arrow">▼</span></div><div class="faq-a">Ortalama 10-15 dakika. İşletme bilgilerinizi girin, WhatsApp'ı bağlayın, yayına geçin. Her adım kaydedilir, kaldığınız yerden devam edersiniz.</div></div>
-    <div class="faq-item"><div class="faq-q">Kendi WhatsApp numaramı kullanabilir miyim? <span class="faq-arrow">▼</span></div><div class="faq-a">Evet. Mevcut numaranızı QR kodla bağlarsınız. Saniyeler içinde hazır. Ekstra hat almanıza gerek yok.</div></div>
-    <div class="faq-item"><div class="faq-q">Ya yanlış cevap verirse? <span class="faq-arrow">▼</span></div><div class="faq-a">Panelden tüm konuşmaları izlersiniz. Bir hata görürseniz tek tıkla devralır, WhatsApp'tan kaldığınız yerden devam edersiniz.</div></div>
-    <div class="faq-item"><div class="faq-q">Birden fazla tesisim var? <span class="faq-arrow">▼</span></div><div class="faq-a">Tek paket ile sınırsız tesis ekleyebilirsiniz. Her tesis kendi birimleri, fiyatları ve resepsiyonist kişiliği ile çalışır.</div></div>
-    <div class="faq-item"><div class="faq-q">İptal edersem verilerim ne olur? <span class="faq-arrow">▼</span></div><div class="faq-a">İstediğiniz an iptal edebilirsiniz. Verileriniz 30 gün saklanır, dönmek isterseniz kaldığınız yerden devam edersiniz.</div></div>
+    <div class="faq-item"><div class="faq-q">Kendi WhatsApp numaramı kullanabilir miyim? <span class="faq-arrow">▼</span></div><div class="faq-a">Evet. Mevcut numaranızı QR kodla saniyeler içinde bağlarsınız. Ekstra hat almanıza gerek yok.</div></div>
+    <div class="faq-item"><div class="faq-q">Ya dijital resepsiyonist yanlış cevap verirse? <span class="faq-arrow">▼</span></div><div class="faq-a">Panelden tüm konuşmaları izleyebilirsiniz. Bir hata görürseniz tek tıkla devralır, WhatsApp'tan kaldığınız yerden devam edersiniz. Misafir hiçbir şey fark etmez.</div></div>
+    <div class="faq-item"><div class="faq-q">Birden fazla tesisim var, hepsi için ayrı ücret mi? <span class="faq-arrow">▼</span></div><div class="faq-a">Hayır. Tek paket ile sınırsız tesis ekleyebilirsiniz. Her tesis kendi birimleri, fiyatları ve resepsiyonist kişiliği ile çalışır.</div></div>
+    <div class="faq-item"><div class="faq-q">İptal edersem verilerim ne olur? <span class="faq-arrow">▼</span></div><div class="faq-a">İstediğiniz an iptal edebilirsiniz. Verileriniz 30 gün boyunca saklanır, dönmek isterseniz kaldığınız yerden devam edersiniz.</div></div>
   </div>
 </section>
 
 <section class="cta">
   <div class="container">
-    <h2>30 Gün Ücretsiz, Kart Bilgisi Gerekmez</h2>
-    <p>Bugün başlayın, 30 gün boyunca ücretsiz kullanın.</p>
-    <a class="btn" href="https://wa.me/905427450654?text=Merhaba,%20denemek%20istiyorum" target="_blank" rel="noopener">Hemen Başlayın</a>
+    <h2>30 Gün Ücretsiz Deneyin</h2>
+    <p>Kart bilgisi gerekmez. İstediğiniz an iptal edin. Bugün başlayın, misafirlerinizi kaybetmeyin.</p>
+    <a class="btn" href="https://wa.me/905427450654?text=Merhaba,%2030%20g%C3%BCn%20%C3%BCcretsiz%20denemek%20istiyorum" target="_blank" rel="noopener">Hemen Başlayın</a>
   </div>
 </section>
 
 <footer class="footer">
   <div class="footer-grid">
-    <div class="footer-brand"><a class="fl" href="/"><img src="logo-1.jpeg" alt="" /><span>Resepsiyonistim</span></a><p>Konaklama işletmeleri için 7/24 dijital resepsiyonist.</p></div>
+    <div class="footer-brand"><a class="fl" href="/"><img src="logo-1.jpeg" alt="" /><span>Resepsiyonistim</span></a><p>Konaklama işletmeleri için 7/24 çalışan dijital resepsiyonist.</p></div>
     <div class="footer-col"><h4>Sayfalar</h4><a href="#nasil">Nasıl Çalışır?</a><a href="#fiyat">Fiyat</a></div>
     <div class="footer-col"><h4>İletişim</h4><a href="https://wa.me/905427450654">WhatsApp</a><a href="mailto:info@resepsiyonistim.com">E-posta</a></div>
-    <div class="footer-col"><h4>Yasal</h4><a href="#">Gizlilik</a><a href="#">Koşullar</a></div>
+    <div class="footer-col"><h4>Yasal</h4><a href="#">Gizlilik Politikası</a><a href="#">Kullanım Koşulları</a></div>
   </div>
   <div class="footer-bot">© 2026 Resepsiyonistim</div>
 </footer>
 
 <script>
-// Pricing
 const pt=document.getElementById('pt');
 if(pt)pt.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
   pt.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
   b.classList.add('active');const y=b.dataset.plan==='yearly';
-  document.getElementById('pp').textContent=y?'40.000':'4.000';
-  document.getElementById('pper').textContent=y?'₺/yıl':'₺/ay';
-  document.getElementById('pnote').textContent=y?'Ödeyin, 2 ay bedava — 10 ay ödeyin':'İlk 30 gün ücretsiz — kart bilgisi gerekmez';
+  document.getElementById('pprice').textContent=y?'40.000':'4.000';
+  document.getElementById('pperiod').textContent=y?'₺/yıl':'₺/ay';
+  document.getElementById('pfoot').textContent=y?'Ödeyin, 2 ay bedava — 10 ay ödeyin':'İlk 30 gün ücretsiz — kart bilgisi gerekmez';
   document.getElementById('pyearly').classList.toggle('show',y);
 }));
-
-// FAQ
 document.querySelectorAll('.faq-item').forEach(i=>i.querySelector('.faq-q').addEventListener('click',()=>i.classList.toggle('open')));
-
-// Scroll animation
-new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.1})
-  .observe(document.getElementById('features'));
+new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:0.1}).observe(document.getElementById('feat-grid'));
 </script>
 </body>
 </html>
