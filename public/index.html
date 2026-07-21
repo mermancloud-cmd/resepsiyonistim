@@ -27,7 +27,6 @@ a{color:inherit}
 .header-nav .cta{padding:8px 16px;background:var(--ink);color:#fff;font-weight:600}
 .header-nav .cta:hover{opacity:0.9;background:var(--ink)}
 
-/* Animations */
 .anim{opacity:0;transform:translateY(16px);transition:all 0.55s cubic-bezier(0.16,1,0.3,1)}
 .anim.show{opacity:1;transform:translateY(0)}
 .anim-d1{transition-delay:0s}.anim-d2{transition-delay:0.08s}.anim-d3{transition-delay:0.16s}
@@ -70,7 +69,7 @@ section{padding:52px 24px}
 .feat-grid{display:grid;grid-template-columns:1fr;gap:10px;max-width:720px;margin:0 auto}
 .feat-card{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:12px;border:1px solid var(--border);transition:all 0.3s}
 .feat-card:hover{border-color:#ccc;box-shadow:0 2px 8px rgba(0,0,0,0.04);transform:translateY(-1px)}
-.feat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:transform 0.3s;background:var(--fill)}
+.feat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:transform 0.3s;background:var(--fill);color:var(--muted)}
 .feat-card:hover .feat-icon{transform:scale(1.08)}
 .feat-body h3{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.3}
 .feat-body p{font-size:12px;color:var(--muted);line-height:1.5;margin:0}
@@ -114,7 +113,7 @@ section{padding:52px 24px}
 .cta h2{font-family:'Outfit',sans-serif;font-size:clamp(21px,3vw,30px);font-weight:700;color:#fff;margin-bottom:6px}
 .cta p{font-size:14px;color:#a3a3a3;margin-bottom:20px}
 .cta .btn{background:#fff;color:var(--ink);padding:14px 36px;font-weight:700}
-.cta .btn:hover{box-shadow:0 4px 16px rgba(255,255,255,0.15)}
+.cta .btn:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15)}
 
 .footer{padding:36px 24px 20px;background:var(--fill)}
 .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:24px;max-width:1120px;margin:0 auto}
@@ -159,7 +158,7 @@ section{padding:52px 24px}
   <div class="container">
     <div class="hero-badge anim anim-d1 show">30 Gün Ücretsiz Deneme</div>
     <h1 class="hero-title anim anim-d2 show">İşletmeniz 7/24 çalışan bir <em>'Dijital Resepsiyonist'</em> kazanıyor</h1>
-    <p class="hero-desc anim anim-d3 show">WhatsApp üzerinden misafirlerinizle insan gibi konuşur, rezervasyon alır, soruları yanıtlar. Siz uyurken bile çalışır.</p>
+    <p class="hero-desc anim anim-d3 show">Misafirleriniz WhatsApp'tan yazdığında, siz uyusanız bile cevap verir. Rezervasyon alır, soruları yanıtlar, takvimi günceller.</p>
     <div class="hero-btns anim anim-d4 show">
       <a class="btn btn-primary" href="https://wa.me/905427450654?text=Merhaba,%20denemek%20istiyorum">30 Gün Ücretsiz Dene</a>
       <a class="btn btn-outline" href="#nasil">Nasıl Çalışır?</a>
@@ -168,28 +167,28 @@ section{padding:52px 24px}
     <div class="proof-grid anim anim-d6 show">
       <div class="proof-item"><div class="proof-val">7/24</div><div class="proof-label">Kesintisiz hizmet</div></div>
       <div class="proof-item"><div class="proof-val">15 sn</div><div class="proof-label">Ortalama yanıt süresi</div></div>
-      <div class="proof-item"><div class="proof-val">Tek fiyat</div><div class="proof-label">Sınırsız kullanım</div></div>
+      <div class="proof-item"><div class="proof-val">4.000</div><div class="proof-label">Tek fiyat, her şey dahil</div></div>
     </div>
   </div>
 </section>
 
 <section style="padding:0 24px 44px">
   <div class="container test anim" id="test-sec">
-    <h2>WhatsApp'ta Şimdi Test Edin</h2>
-    <p>Test hesabımıza mesaj atın. 'Dijital Resepsiyonist'imizi bizzat görün — nasıl konuştuğunu, nasıl rezervasyon aldığını deneyimleyin.</p>
-    <a class="test-wa" href="https://wa.me/905427450654?text=Merhaba!%20Test%20etmek%20istiyorum" target="_blank" rel="noopener">💬 WhatsApp'ta Test Edin · 90542 745 0654</a>
+    <h2>WhatsApp'tan Deneyin</h2>
+    <p>Test hesabımıza mesaj atın, nasıl konuştuğunu görün. Rezervasyon sorun, fiyat sorun, yol tarifi isteyin. Gerçek bir misafir gibi test edin.</p>
+    <a class="test-wa" href="https://wa.me/905427450654?text=Merhaba!%20Test%20etmek%20istiyorum" target="_blank" rel="noopener">WhatsApp'ta Test Edin &middot; 90542 745 0654</a>
   </div>
 </section>
 
 <section id="nasil" style="background:var(--fill)">
   <div class="container">
     <h2 class="section-title anim" data-anim>10 Dakikada Kurulum</h2>
-    <p class="section-desc anim" data-anim>Hiçbir teknik bilgi gerekmez. Adım adım ilerleyin, her adım kaydedilir.</p>
+    <p class="section-desc anim" data-anim>Hiçbir teknik bilgi gerekmez. Adım adım ilerleyin, her adım otomatik kaydedilir.</p>
     <div class="how-grid">
-      <div class="how-card anim" data-anim><div class="how-num">1</div><div class="how-body"><h3>Bilgilerinizi Girin</h3><p>İşletmenizin adı, adresi, birimleri, fiyatları. 12 adımlık sihirbaz her an kaydeder, kaldığınız yerden devam edersiniz.</p></div></div>
-      <div class="how-card anim" data-anim><div class="how-num">2</div><div class="how-body"><h3>WhatsApp'ı Bağlayın</h3><p>Kendi numaranızı QR kodla bağlayın. 10 saniye sürer.</p></div></div>
-      <div class="how-card anim" data-anim><div class="how-num">3</div><div class="how-body"><h3>'Dijital Resepsiyonist' Devrede</h3><p>Misafirler yazmaya başlar. Yanıtlar, rezervasyon alır, takvimi günceller.</p></div></div>
-      <div class="how-card anim" data-anim><div class="how-num">4</div><div class="how-body"><h3>Siz Yönetin</h3><p>Panelden izleyin, gerektiğinde devralın, konuşmayı WhatsApp'ta kaldığınız yerden devam ettirin.</p></div></div>
+      <div class="how-card anim" data-anim><div class="how-num">1</div><div class="how-body"><h3>İşletme bilgilerinizi girin</h3><p>Adı, adresi, birimleri, fiyatları. 12 adımlık sihirbaz her an kaydeder, kaldığınız yerden devam edersiniz.</p></div></div>
+      <div class="how-card anim" data-anim><div class="how-num">2</div><div class="how-body"><h3>WhatsApp'ı bağlayın</h3><p>Kendi numaranızı QR kodla 10 saniyede bağlayın.</p></div></div>
+      <div class="how-card anim" data-anim><div class="how-num">3</div><div class="how-body"><h3>Resepsiyonist çalışmaya başlasın</h3><p>Misafirler yazmaya başlar. O yanıtlar, rezervasyon alır, takvimi işler.</p></div></div>
+      <div class="how-card anim" data-anim><div class="how-num">4</div><div class="how-body"><h3>Siz yönetin</h3><p>Panelden izleyin, gerektiğinde devralın. Konuşma WhatsApp'ta kaldığınız yerden devam eder.</p></div></div>
     </div>
   </div>
 </section>
@@ -197,21 +196,21 @@ section{padding:52px 24px}
 <section>
   <div class="container">
     <h2 class="section-title anim" data-anim>Her Şey Dahil</h2>
-    <p class="section-desc anim" data-anim>Tek paket, tüm özellikler. İşletmenize özel çözüm.</p>
+    <p class="section-desc anim" data-anim>Tek paket, tüm özellikler. İşletmenize özel.</p>
     <div class="feat-grid" id="feat-grid">
-      <div class="feat-card anim" data-anim><div class="feat-icon">💬</div><div class="feat-body"><h3>İnsan Gibi Konuşma</h3><p>Doğal Türkçe, samimi ton. Misafir botla değil insanla konuştuğunu sanır.</p></div></div>
-      <div class="feat-card anim" data-anim><div class="feat-icon">📅</div><div class="feat-body"><h3>Akıllı Takvim</h3><p>Birim bazlı takvim, renk kodlu doluluk, tek tıkla ekleme ve düzenleme.</p></div></div>
-      <div class="feat-card anim" data-anim><div class="feat-icon">🔄</div><div class="feat-body"><h3>Kesintisiz Devralma</h3><p>'Dijital Resepsiyonist'ten devralın, WhatsApp'ta kaldığınız yerden devam edin.</p></div></div>
-      <div class="feat-card anim" data-anim><div class="feat-icon">📍</div><div class="feat-body"><h3>WhatsApp Konum</h3><p>Misafire tek tıkla Google Maps linki gönderir. Yol tarifi sormak tarih olur.</p></div></div>
-      <div class="feat-card anim" data-anim><div class="feat-icon">📊</div><div class="feat-body"><h3>Canlı Panel</h3><p>Konuşmalar, rezervasyonlar, istatistikler tek ekranda.</p></div></div>
-      <div class="feat-card anim" data-anim><div class="feat-icon">🔒</div><div class="feat-body"><h3>Güvenli ve Özel</h3><p>Verileriniz şifreli. IBAN ödeme. Misafir bilgileriniz asla paylaşılmaz.</p></div></div>
+      <div class="feat-card anim" data-anim><div class="feat-icon">S1</div><div class="feat-body"><h3>Konuşma</h3><p>Doğal Türkçe, samimi bir ton. Misafirler botla değil insanla konuştuklarını sanır.</p></div></div>
+      <div class="feat-card anim" data-anim><div class="feat-icon">S2</div><div class="feat-body"><h3>Takvim</h3><p>Birim bazlı takvim, renk kodlu doluluk. Tek tıkla ekleyin, düzenleyin.</p></div></div>
+      <div class="feat-card anim" data-anim><div class="feat-icon">S3</div><div class="feat-body"><h3>Devralma</h3><p>Resepsiyonistten devralın, WhatsApp'ta kaldığınız yerden devam edin.</p></div></div>
+      <div class="feat-card anim" data-anim><div class="feat-icon">S4</div><div class="feat-body"><h3>Konum</h3><p>Misafire tek tıkla Google Maps linki gönderir. Yol tarifi sormak biter.</p></div></div>
+      <div class="feat-card anim" data-anim><div class="feat-icon">S5</div><div class="feat-body"><h3>Panel</h3><p>Konuşmalar, rezervasyonlar, istatistikler. Hepsi tek ekranda.</p></div></div>
+      <div class="feat-card anim" data-anim><div class="feat-icon">S6</div><div class="feat-body"><h3>Güvenlik</h3><p>Verileriniz şifreli. IBAN ile ödeme. Misafir bilgileriniz asla paylaşılmaz.</p></div></div>
     </div>
   </div>
 </section>
 
 <section style="background:var(--fill)" id="fiyat">
   <div class="container pricing-wrap">
-    <h2 class="section-title anim" data-anim>Basit ve Tek Fiyat</h2>
+    <h2 class="section-title anim" data-anim>Tek Fiyat</h2>
     <p class="section-desc anim" data-anim>Karmaşık planlar, gizli ücretler yok.</p>
     <div class="pricing-toggle anim" data-anim id="pt">
       <button class="active" data-plan="monthly">Aylık</button>
@@ -223,25 +222,25 @@ section{padding:52px 24px}
         <div class="pricing-name">Profesyonel Paket</div>
         <div class="pricing-desc">Tek işletme, sınırsız kullanım</div>
         <div><span class="pricing-price" id="pprice">4.000</span>&nbsp;<span class="pricing-period" id="pperiod">₺/ay</span></div>
-        <div class="pricing-foot" id="pfoot">İlk 30 gün ücretsiz — kart bilgisi gerekmez</div>
+        <div class="pricing-foot" id="pfoot">İlk 30 gün ücretsiz. Kart bilgisi gerekmez.</div>
         <div class="pricing-yearly" id="pyearly">
           <strong>36.000 ₺/yıl</strong>
-          <span>Ayda 3.000 ₺ — %25 tasarruf edin</span>
-          <div class="soon">⏳ Yıllık ödeme seçeneği yakında aktif olacak</div>
+          <span>Ayda 3.000 ₺, %25 tasarruf</span>
+          <div class="soon">Yıllık ödeme yakında aktif olacak</div>
         </div>
         <ul class="pricing-list">
           <li><span>✓</span> 7/24 'Dijital Resepsiyonist' hizmeti</li>
           <li><span>✓</span> Sınırsız WhatsApp konuşması</li>
           <li><span>✓</span> Akıllı takvim ve rezervasyon</li>
           <li><span>✓</span> Kesintisiz devralma</li>
-          <li><span>✓</span> Detaylı panel ve istatistikler</li>
+          <li><span>✓</span> Detaylı panel</li>
           <li><span>✓</span> WhatsApp konum paylaşımı</li>
-          <li><span>✓</span> Çoklu dil desteği (TR/EN/AR)</li>
+          <li><span>✓</span> Çoklu dil (TR/EN/AR)</li>
           <li><span>✓</span> Web widget</li>
           <li><span>✓</span> Telegram bildirimleri</li>
         </ul>
         <a class="pricing-cta" href="https://wa.me/905427450654?text=Merhaba,%2030%20g%C3%BCn%20%C3%BCcretsiz%20denemek%20istiyorum" target="_blank" rel="noopener">30 Gün Ücretsiz Başlayın</a>
-        <div class="pricing-guarantee">🔒 Kart bilgisi gerekmez. İstediğiniz an iptal.</div>
+        <div class="pricing-guarantee">Kart bilgisi gerekmez. İstediğiniz an iptal.</div>
       </div>
     </div>
   </div>
@@ -252,15 +251,15 @@ section{padding:52px 24px}
     <h2 class="section-title anim" data-anim>Sık Sorulanlar</h2>
     <div class="faq-item open anim" data-anim><div class="faq-q">Kurulum ne kadar sürer? <span class="faq-arrow">▼</span></div><div class="faq-a">Ortalama 10-15 dakika. İşletme bilgilerinizi girin, WhatsApp'ı bağlayın, yayına geçin. Her adım kaydedilir, kaldığınız yerden devam edersiniz.</div></div>
     <div class="faq-item anim" data-anim><div class="faq-q">Kendi WhatsApp numaramı kullanabilir miyim? <span class="faq-arrow">▼</span></div><div class="faq-a">Evet. Mevcut numaranızı QR kodla saniyeler içinde bağlarsınız. Ekstra hat almanıza gerek yok.</div></div>
-    <div class="faq-item anim" data-anim><div class="faq-q">Ya 'Dijital Resepsiyonist' yanlış cevap verirse? <span class="faq-arrow">▼</span></div><div class="faq-a">Panelden tüm konuşmaları izleyebilirsiniz. Bir hata görürseniz tek tıkla devralır, WhatsApp'tan kaldığınız yerden devam edersiniz.</div></div>
-    <div class="faq-item anim" data-anim><div class="faq-q">Birden fazla işletmem var? <span class="faq-arrow">▼</span></div><div class="faq-a"><strong>Hayır,</strong> her paket tek işletme içindir. Birden fazla işletmeniz varsa her biri için ayrı paket satın almanız gerekir.</div></div>
-    <div class="faq-item anim" data-anim><div class="faq-q">İptal edersem verilerim ne olur? <span class="faq-arrow">▼</span></div><div class="faq-a">İstediğiniz an iptal edebilirsiniz. Verileriniz 30 gün boyunca saklanır, dönmek isterseniz kaldığınız yerden devam edersiniz.</div></div>
+    <div class="faq-item anim" data-anim><div class="faq-q">Ya yanlış cevap verirse? <span class="faq-arrow">▼</span></div><div class="faq-a">Panelden tüm konuşmaları izleyebilirsiniz. Bir hata görürseniz tek tıkla devralır, WhatsApp'tan kaldığınız yerden devam edersiniz. Misafir hiçbir şey fark etmez.</div></div>
+    <div class="faq-item anim" data-anim><div class="faq-q">Birden fazla işletmem var? <span class="faq-arrow">▼</span></div><div class="faq-a">Her paket tek işletme içindir. Birden fazla işletmeniz varsa her biri için ayrı paket satın almanız gerekir.</div></div>
+    <div class="faq-item anim" data-anim><div class="faq-q">İptal edersem verilerim ne olur? <span class="faq-arrow">▼</span></div><div class="faq-a">İstediğiniz an iptal edebilirsiniz. Verileriniz 30 gün saklanır, dönmek isterseniz kaldığınız yerden devam edersiniz.</div></div>
   </div>
 </section>
 
 <section class="cta">
   <div class="container anim" data-anim>
-    <h2>30 Gün Ücretsiz Deneyin</h2>
+    <h2>30 Gün Ücretsiz</h2>
     <p>Kart bilgisi gerekmez. İstediğiniz an iptal edin.</p>
     <a class="btn" href="https://wa.me/905427450654?text=Merhaba,%2030%20g%C3%BCn%20%C3%BCcretsiz%20denemek%20istiyorum" target="_blank" rel="noopener">Hemen Başlayın</a>
   </div>
@@ -273,7 +272,7 @@ section{padding:52px 24px}
     <div class="footer-col"><h4>İletişim</h4><a href="https://wa.me/905427450654">WhatsApp</a><a href="mailto:info@resepsiyonistim.com">E-posta</a></div>
     <div class="footer-col"><h4>Yasal</h4><a href="#">Gizlilik Politikası</a><a href="#">Kullanım Koşulları</a></div>
   </div>
-  <div class="footer-bot">© 2026 Resepsiyonistim</div>
+  <div class="footer-bot">&copy; 2026 Resepsiyonistim</div>
 </footer>
 
 <script>
@@ -283,7 +282,7 @@ if(pt)pt.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
   b.classList.add('active');const y=b.dataset.plan==='yearly';
   document.getElementById('pprice').textContent=y?'36.000':'4.000';
   document.getElementById('pperiod').textContent=y?'₺/yıl':'₺/ay';
-  document.getElementById('pfoot').textContent=y?'Yıllık ödeyin, ayda 3.000 ₺':'İlk 30 gün ücretsiz — kart bilgisi gerekmez';
+  document.getElementById('pfoot').textContent=y?'Ayda 3.000 ₺, yıllık ödeyin':'İlk 30 gün ücretsiz. Kart bilgisi gerekmez.';
   document.getElementById('pyearly').classList.toggle('show',y);
 }));
 document.querySelectorAll('.faq-item').forEach(i=>i.querySelector('.faq-q').addEventListener('click',()=>i.classList.toggle('open')));
