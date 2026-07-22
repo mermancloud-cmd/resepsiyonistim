@@ -1,22 +1,23 @@
 version: '3.8'
 
 services:
-  bungalow-panel:
+  resepsiyonistim:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+        - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+        - NEXT_PUBLIC_VAPID_PUBLIC_KEY=${NEXT_PUBLIC_VAPID_PUBLIC_KEY}
+        - NEXT_PUBLIC_APP_NAME=${NEXT_PUBLIC_APP_NAME:-Resepsiyonistim}
     ports:
-      - "3000"
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 10s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.bungalow-panel.rule=Host(`panel.merman.sbs`) || Host(`owner.merman.sbs`) || Host(`api.merman.sbs`)"
-      - "traefik.http.routers.bungalow-panel.entrypoints=https"
-      - "traefik.http.routers.bungalow-panel.tls=true"
-      - "traefik.http.routers.bungalow-panel.tls.certresolver=letsencrypt"
-      - "traefik.http.services.bungalow-panel.loadbalancer.server.port=3000"
+      start_period: 15s
+    restart: unless-stopped

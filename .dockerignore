@@ -1,5 +1,10 @@
-
-.next
 .git
+.gitignore
+node_modules
+.next
 *.md
 .env*.local
+.next-old-*
+backups
+functions
+*.tif
