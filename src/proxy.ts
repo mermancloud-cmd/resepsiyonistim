@@ -137,8 +137,8 @@ function getCORSHeaders(request: NextRequest): Record<string, string> {
   };
 }
 
-// --- Main Middleware ---
-export async function middleware(request: NextRequest) {
+// --- Main Proxy (Next.js 16 convention — previously middleware) ---
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Handle CORS preflight
