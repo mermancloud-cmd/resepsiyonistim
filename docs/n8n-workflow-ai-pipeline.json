@@ -1,0 +1,127 @@
+{
+  "name": "WF-AI - WhatsApp AI Pipeline (Qwen 3.7 Plus)",
+  "nodes": [
+    {
+      "id": "webhook-1",
+      "name": "WhatsApp Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300],
+      "parameters": {
+        "path": "whatsapp-ai",
+        "responseMode": "lastNode",
+        "options": {}
+      }
+    },
+    {
+      "id": "code-1",
+      "name": "Parse & Validate Input",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [450, 300],
+      "parameters": {
+        "language": "javascript",
+        "code": "// Evolution API webhook body structure:\n// { event: 'MESSAGES_UPSERT', instance: '...', data: { key: { remoteJid: '...' }, message: { conversation: '...' } } }\n\nconst input = $input.first().json;\n\n// Extract message info\nconst data = input.data || input;\nconst key = data.key || {};\nconst message = data.message || {};\n\nconst remoteJid = key.remoteJid || '';\nconst messageText = message.conversation || message.extendedTextMessage?.text || '';\nconst pushName = data.pushName || 'Misafir';\n\n// Validate\nif (!remoteJid || !messageText) {\n  return [{ json: { error: 'Invalid message format', received: input } }];\n}\n\n// Extract phone number\nconst phone = remoteJid.split('@')[0];\n\nreturn [{\n  json: {\n    phone,\n    remoteJid,\n    message: messageText.trim(),\n    name: pushName,\n    timestamp: new Date().toISOString(),\n    isGroup: remoteJid.includes('@g.us')\n  }\n}];"
+      }
+    },
+    {
+      "id": "http-1",
+      "name": "AI - Qwen 3.7 Plus (OpenRouter)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [650, 300],
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "authentication": "genericCredentialType",
+        "nodeCredentialType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "qwen/qwen3.7-plus"
+            },
+            {
+              "name": "messages",
+              "value": "={{ (() => {\n  const sysPrompt = `Sen bir dijital resepsiyonistsin. Bir konaklama tesisinde çalışıyorsun.\n\nİŞLETME BİLGİLERİ:\n- İşletme Adı: ${$json.businessName || 'Doğa Bungalov'}\n- Konum: ${$json.location || 'Antalya/Kas'\n- Birimler: Bungalov (3 adet), Tiny House (2 adet)\n- Fiyat: Bungalov 2.500₺/gece, Tiny House 1.800₺/gece\n- Hizmetler: Kahvaltı (300₺/kişi), WIFI, Özel havuz, Otopark\n- Giriş: 14:00, Çıkış: 11:00\n- Kurallar: Evcil hayvan yok, sessiz saat 23:00-08:00, sigara içilmez\n\nKONUŞMA KURALLARI:\n1. Kısa, doğal ve samimi cevap ver - bir resepsiyonist gibi konuş\n2. Asla 'AI' veya 'yapay zeka' olduğunu belli etme\n3. Rezervasyon taleplerini al, ama direkt onaylama - önce tarih ve kişi sayısını sor\n4. Dil tespiti yap: Türkçe, İngilizce veya Arapça'ya geçiş yapabilirsin\n5. Karmaşık sorularda yardımcı olamazsan özür dileyip yönlendir\n6. Telefon numarası isteme - zaten WhatsApp'tan yazıyorlar\n7. Fiyat bilgisi verirken güncel rakamları kullan, \"güncel fiyatlar için sorun\" deme\n8. Misafirin adını kullanarak samimi bir ton yakala`;\n  \n  return [\n    { role: 'system', content: sysPrompt },\n    { role: 'user', content: $json.message }\n  ];\n})() }}"
+            },
+            {
+              "name": "max_tokens",
+              "value": 500
+            },
+            {
+              "name": "temperature",
+              "value": 0.7
+            }
+          ]
+        },
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $credentials.httpHeaderAuth.password }}"
+            },
+            {
+              "name": "HTTP-Referer",
+              "value": "https://resepsiyonistim.com"
+            },
+            {
+              "name": "X-Title",
+              "value": "Resepsiyonistim"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "code-2",
+      "name": "Parse AI Response",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [850, 300],
+      "parameters": {
+        "language": "javascript",
+        "code": "const data = $input.first().json;\n\nconst choices = data?.choices;\nif (!choices || choices.length === 0) {\n  return [{ json: { error: 'AI yanıt vermedi', raw: data } }];\n}\n\nconst reply = choices[0]?.message?.content || '';\nconst finishReason = choices[0]?.finish_reason || '';\n\nreturn [{\n  json: {\n    ok: true,\n    reply: reply,\n    model: data?.model || 'unknown',\n    finish_reason: finishReason,\n    usage: data?.usage || {},\n    timestamp: new Date().toISOString()\n  }\n}];"
+      }
+    },
+    {
+      "id": "respond-1",
+      "name": "Respond to WhatsApp",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1050, 300],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}"
+      }
+    }
+  ],
+  "connections": {
+    "WhatsApp Webhook": {
+      "main": [[{ "node": "Parse & Validate Input", "type": "main", "index": 0 }]]
+    },
+    "Parse & Validate Input": {
+      "main": [[{ "node": "AI - Qwen 3.7 Plus (OpenRouter)", "type": "main", "index": 0 }]]
+    },
+    "AI - Qwen 3.7 Plus (OpenRouter)": {
+      "main": [[{ "node": "Parse AI Response", "type": "main", "index": 0 }]]
+    },
+    "Parse AI Response": {
+      "main": [[{ "node": "Respond to WhatsApp", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {},
+  "versionId": "1.0.0",
+  "triggerCount": 0,
+  "active": false,
+  "tags": []
+}
